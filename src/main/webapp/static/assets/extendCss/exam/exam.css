@@ -1,0 +1,453 @@
+@charset "utf-8";
+/* CSS Document */
+/*通用样式*/
+a, address, b, big, blockquote, body, center, cite, code, dd, del, div, dl, dt, em, fieldset, font, form, h1, h2, h3, h4, h5, h6, html, i, iframe, img, ins, label, legend, li, ol, p, pre, small, span, strong, u, ul, var {
+    margin: 0;
+    padding: 0;
+}
+body, p, form, input, button, dl, dt, dd, ul, ol, li, h1, h2, h3, h4 {
+    list-style: outside none none;
+}
+
+body, button, input, select, textarea {
+    color: #333;
+    font: 12px Microsoft YaHei,Arial,Helvetica,sans-serif;
+}
+button, html input[type="button"], input[type="submit"] {
+    cursor: pointer;
+}
+button[disabled], html input[disabled] {
+    cursor: default;
+}
+input, select, textarea {
+    font-size: 100%;
+}
+button::-moz-focus-inner{
+	border: medium none;
+    padding: 0;}
+
+img {
+    border: 0 none;
+    vertical-align: middle;
+}
+em, i, u {
+    font-style: normal;
+}
+a{
+	color:#333;
+	text-decoration:none;
+	outline:none}
+.fl {
+    float: left;
+}
+.fr {
+    float: right;
+}
+.al {
+    text-align: left;
+}
+.ac {
+    text-align: center;
+}
+.ar {
+    text-align: right;
+}
+.hide {
+    display: none;
+}
+.center{
+	margin:0 auto;}
+.wrap{
+	width:1200px;
+	}
+.transparent{
+	filter:alpha(opacity=50);
+	-moz-opacity:0.5;
+	-khtml-opacity: 0.5;
+	opacity: 0.5;}
+html,body{
+	width:100%; height:100%;}
+
+/*************************************统一考试页*************************************/
+.myexam_login_bj {
+    position:absolute;
+    width:100%;
+	height: 100%;
+    z-index:-1;
+}
+.myexam_login_bj img {
+    width:100%;
+    height:100%;
+    }
+.myexam_login_memo {
+    position:absolute;
+    width:300px;
+    top:50%;
+    left:50%;
+    margin:-50px 0 0 -150px;
+    color:#fff;
+    font-size:16px;
+}
+.myexam_login_memo table {
+    width:100%;
+    border-collapse:collapse;
+    }
+.myexam_login_memo table td {
+    padding:5px 0;
+    }
+
+.myexam_head{
+    background:#77B8F7;
+    width:100%;
+}
+.myexam_head table {
+    width:100%;
+    border-collapse:collapse;
+    color:#fff;
+    font-size:14px;
+    font-weight:bold;
+}
+.myexam_head table td {
+    vertical-align:middle;
+    height:120px;}
+.myexam_head .myexam_pic {
+    width:100px;
+    padding-left:20px;
+    }
+.myexam_head .myexam_pic img {
+    width:90px;
+    height:110px;
+}
+.myexam_head .myexam_identity{
+    width:240px;
+    }
+.myexam_head .myexam_identity li {
+    height:25%;
+    line-height:25px;
+    }
+.myexam_head .myexam_tt {
+    font-size:20px;
+    line-height:40px;
+    }
+.myexam_head .myexam_time {
+    width:220px;
+    padding-right:20px;
+}
+.myexam_head .myexam_time dt {
+    background:url(../../img/exam/time.png) no-repeat right center;
+    height:47px;
+    color:blue;
+    font-size:14px;
+    line-height:47px;
+    }
+.myexam_head .myexam_time dt #papertime,.myexam_head .myexam_time dt #myclock {
+    display:inline-block;
+    font-size:20px;
+    float:right;
+    color:#fff;
+    padding-left:5px;
+
+    text-align:center;
+    }
+.myexam_head .myexam_time dd {
+    }
+.myexam_head .myexam_time dd div {
+    background:url(../../img/exam/jj.jpg) no-repeat;
+    width:80px;
+    height:28px;
+    margin:auto;
+    }
+
+.myexam_body {
+    width:100%;
+    position:relative;
+}
+
+.myexam_body table {
+    width:100%;
+    border-collapse:collapse;
+}
+.myexam_body table td {
+    vertical-align:top;
+    position:relative;
+    }
+.myexam_body table .myexam_options {
+    width:255px;
+    background:#c8e1fa;
+    }
+.myexam_body table .myexam_wrap {
+    height:100%;
+    overflow:auto;
+    }
+.myexam_body table .myexam_options #submitpaper {
+    background:url(../../img/exam/rjj2.png) no-repeat;
+    width:200px;
+    height:40px;
+    margin:10px auto;
+    cursor:pointer;
+    }
+.myexam_body table .myexam_options #submitpaper:hover {
+    background:url(../../img/exam/rjj1.png) no-repeat;
+    }
+.myexam_body table .myexam_options .type {
+    background:#3399ff url(../../img/exam/jia.png) no-repeat 5px 5px;
+    height:30px;
+    line-height:30px;
+    padding-left:30px;
+    color:#fff;
+    cursor:pointer;
+    margin-bottom:2px;
+}
+.myexam_body table .myexam_options .type_1 {
+    background:#3399ff url(../../img/exam/-.png) no-repeat 5px 5px;
+    height:30px;
+    line-height:30px;
+    padding-left:30px;
+    color:#fff;
+    cursor:pointer;
+}
+.myexam_body table .myexam_options .numberlist {
+    overflow:auto;}
+.myexam_body table .myexam_options .numberlist li {
+    background: #fff;
+    float: left;
+    font-size: 10px;
+    height: 20px;
+    line-height:20px;
+    margin: 5px 0 0 5px;
+    text-align: center;
+    width: 20px;
+    cursor:pointer;
+}
+.myexam_body table .myexam_options .numberlist li.havebg {
+    background:#0066e5;
+    color:#fff;
+}
+
+.myexam_body table .myexam_main {
+    padding-left:10px;
+}
+.myexam_body table .myexam_main .smallproblem {
+    font-size:14px;
+    font-weight:bold;
+    line-height:25px;
+}
+.myexam_body table .myexam_main .slidingList_none{
+    display:none;
+    overflow:auto;
+}
+.myexam_body table .myexam_main .slidingList{
+    overflow:auto;
+}
+.myexam_body table .myexam_main table {
+    width:auto;
+    margin:10px 0 0;
+    }
+
+.template ul {
+    width:346px;
+    margin:0 auto;
+}
+.template li {
+    float:left;
+    width:82px;
+}
+.prior_1,.next ,.etcico,.last,.determined {
+    background:url(../../img/exam/btn.jpg) no-repeat;
+    height:29px;
+    line-height:29px;
+    text-align:center;
+    cursor:pointer;
+}
+.myexam_body table .myexam_main .jsfenxi {
+    overflow:auto;
+}
+
+/*按钮放下*/
+.myexam_body table .myexam_main .divrcon{
+    padding-bottom:100px
+}
+.myexam_body table .myexam_main .divrda{
+    width:100%;
+    position: fixed;
+    bottom:5px;
+    z-index:99;
+}
+.myexam_body table .myexam_main .lan2 {
+    visibility:hidden;
+}
+
+/*山东*/
+.myexam_body table .myexam_main .options {
+    line-height:25px;
+}
+
+.myexam_body table .myexam_main .problemsr {
+    padding-bottom:35px;
+}
+.myexam_body table .myexam_main .templates {
+    width:100%;
+    height:29px;
+    position: fixed;
+    bottom:5px;
+    z-index:99;
+}
+.myexam_body table .myexam_main .templates ul {
+    padding-left:200px;
+}
+.myexam_body table .myexam_main .templates ul li {
+    float:left;
+    width:50px;
+    text-align:center;
+    height:29px;
+    line-height:29px;
+    margin-right:5px;
+}
+.myexam_body table .myexam_main .templates input[type='checkbox'] {
+    vertical-align:middle; margin:0 5px 0 0;height:29px; padding:0;
+}
+.myexam_body table .myexam_main .templates .bjli {
+    line-height:29px;
+}
+.myexam_body table .myexam_main .templates .prior_1s {
+    background:url(../../img/exam/btn_z.gif) no-repeat;
+    width:100px;
+    cursor:pointer;
+}
+.myexam_body table .myexam_main .templates .nexts {
+    background:url(../../img/exam/btn_z.gif) no-repeat;
+    width:100px;
+    cursor:pointer;
+}
+
+/*考试弹窗*/
+.entriesdialog {
+    background-color: #fff;
+    border: 1px solid #c8c8c8;
+    font-size: 12px;
+    padding: 1px;
+    width: 560px;
+    z-index: 1;
+}
+
+.entriesdialogtitle {
+    background:#A8D8E0 ;
+    text-align:right;
+    line-height:30px;
+    padding-right:10px;
+}
+.borrowtype h1 {
+    background:url(../../img/exam/btn.jpg) no-repeat;
+    font-size: 12px;
+    font-weight: normal;
+    line-height: 29px;
+    width: 77px;
+    text-align:center;
+}
+.entriesdialogcontent h2 {
+    color: #e880e8;
+    font-size: 14px;
+    font-weight: normal;
+    line-height: 32px;
+    text-align: center;
+}
+#kemulist {
+    height: 300px;
+    overflow: auto;
+}
+.subjects {
+    border: 1px solid #7898b8;
+    color: #000000;
+    font-size: 12px;
+    height: 20px;
+    line-height: 20px;
+    padding-left: 2px;
+    width: 151px;
+}
+.subjects_1 {
+    border: 1px solid #7898b8;
+    color: #000;
+    font-size: 12px;
+    height: 20px;
+    line-height: 20px;
+    padding-left: 2px;
+    width: 121px;
+}
+.borrowtype {
+    border: 1px solid #c8c8c8;
+    margin-left: 1px;
+    margin-right: 1px;
+    padding-bottom: 4px;
+    padding-top: 4px;
+}
+.borrowtype .type {
+    background-image: url("../img/exam/typeico.png");
+    background-position: 2px center;
+    background-repeat: no-repeat;
+    cursor: pointer;
+    display: block;
+    height: 18px;
+    line-height: 18px;
+    padding-left: 32px;
+    text-indent: 2px;
+}
+.borrowtype .type_1 {
+    background-image: url("../img/exam/typeico_1.png");
+    background-position: 2px center;
+    background-repeat: no-repeat;
+    cursor: pointer;
+    display: block;
+    height: 18px;
+    line-height: 18px;
+    padding-left: 32px;
+    text-indent: 2px;
+}
+.borrowtype .margin {
+    background-position: 22px center;
+    text-indent: 22px;
+}
+.borrowtype .subtype {
+    background-image: url("../img/exam/nomakeico.png");
+    background-position: 34px center;
+    background-repeat: no-repeat;
+    display: block;
+    height: 18px;
+    line-height: 18px;
+    padding-left: 18px;
+    text-indent: 34px;
+}
+.borrowtype .nowbg {
+    background-color: #f8e888;
+    display: block;
+    height: 18px;
+    line-height: 18px;
+}
+
+
+/*广东*/
+.myexam_body table .myexam_main .operbtn ul li {
+    width:77px;
+    float:left;
+    margin-right:5px;
+}
+.myexam_body table .myexam_main .operbtn {
+    width:100%;
+    height:29px;
+    position: fixed;
+    bottom:5px;
+    z-index:99;
+}
+.myexam_body table .myexam_main .topic {
+    font-size:14px;
+    font-weight:bold;
+    line-height:24px;
+    margin:0 10px;
+}
+.myexam_body table .myexam_options .nomakebg.daiding {
+    background:#ffd800;
+}
+.myexam_body table .myexam_options .havebg.daiding {
+    background:#0066e5;
+    color:#fff;
+}
+/*************************************统一考试页end*************************************/
