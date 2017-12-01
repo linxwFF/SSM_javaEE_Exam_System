@@ -46,45 +46,24 @@
         <!-- 左侧导航 -->
         <div class="col-md-3 left_col">
 
-        <@left.left 1/>
+            <@left.left 1/>
 
         </div>
 
         <!-- 右侧顶部导航 -->
         <div class="top_nav">
-        <@top.top 1/>
+            <@top.top 1/>
         </div>
         <!-- /右侧顶部导航 -->
 
         <!-- 页面内容 -->
         <div class="right_col" role="main">
-            <div class="col-md-10">
-                <h2>个人资料</h2>
-                <hr>
-                <table class="table table-bordered">
-                    <tr>
-                        <th>昵称</th>
-                        <td>${token.nickname?default('未设置')}</td>
-                    </tr>
-                    <tr>
-                        <th>Email/帐号</th>
-                        <td>${token.email?default('未设置')}</td>
-                    </tr>
-                    <tr>
-                        <th>创建时间</th>
-                        <td>${token.createTime?string('yyyy-MM-dd HH:mm')}</td>
-                    </tr>
-                    <tr>
-                        <th>最后登录时间</th>
-                        <td>${token.lastLoginTime?string('yyyy-MM-dd HH:mm')}</td>
-                    </tr>
-                </table>
-            </div>
+        <@main.main 1/>
         </div>
         <!-- /页面内容 -->
 
         <!-- 脚部内容 -->
-    <@footer.footer 1/>
+        <@footer.footer 1/>
         <!-- /脚部内容  -->
     </div>
 </div>

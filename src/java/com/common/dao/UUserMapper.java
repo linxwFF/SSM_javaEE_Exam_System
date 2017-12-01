@@ -25,4 +25,7 @@ public interface UUserMapper {
 
 	List<URoleBo> selectRoleByUserId(Long id);
 
+    //查询所有的用户信息Table
+    List<UUser> findAllTable();
+
 }

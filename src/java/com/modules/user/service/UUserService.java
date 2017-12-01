@@ -27,6 +27,7 @@ public interface UUserService {
 
 	UUser findUserByEmail(String email);
 
+	//获取某一页的数据
 	Pagination<UUser> findByPage(Map<String, Object> resultMap, Integer pageNo,
 								 Integer pageSize);
 
@@ -42,4 +43,7 @@ public interface UUserService {
 	Map<String, Object> addRole2User(Long userId, String ids);
 
 	Map<String, Object> deleteRoleByUserIds(String userIds);
+
+	//获取用户的列表的全部数据
+	List<UUser> findAllTable();
 }

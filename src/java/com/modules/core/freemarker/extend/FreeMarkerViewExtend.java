@@ -23,16 +23,17 @@ public class FreeMarkerViewExtend extends FreeMarkerView {
 		model.putAll(Ferrmarker.initMap);
 		UUser token = TokenManager.getToken();
 		//String ip = IPUtils.getIP(request);
+
 		if(TokenManager.isLogin()){
-			model.put("token", token);//登录的token
+			model.put("token", token);				//登录的用户token
 		}
 		
-		model.put("_time", new Date().getTime());
-		model.put("NOW_YEAY", Constant.NOW_YEAY);//今年
+		model.put("_time", new Date().getTime());	//当前时间戳
+		model.put("NOW_YEAY", Constant.NOW_YEAY);	//今年
 		
-		model.put("_v", Constant.VERSION);//版本号，重启的时间
-		model.put("cdn", Constant.DOMAIN_CDN);//CDN域名
-		model.put("basePath", request.getContextPath());//base目录。
+		model.put("_v", Constant.VERSION);			//版本号，重启的时间
+		model.put("cdn", Constant.DOMAIN_CDN); 		//CDN域名
+		model.put("basePath", request.getContextPath());//base目录。   webapp/
 		
 	}
 }

@@ -79,6 +79,8 @@ public class UUserServiceImpl extends BaseMybatisDao<UUserMapper> implements UUs
 		return userMapper.findUserByEmail(email);
 	}
 
+
+	//获取用户某一页的数据
 	@SuppressWarnings("unchecked")
 	@Override
 	public Pagination<UUser> findByPage(Map<String, Object> resultMap,
@@ -198,7 +200,12 @@ public class UUserServiceImpl extends BaseMybatisDao<UUserMapper> implements UUs
 		return resultMap;
 	
 	}
-	
-	
-	
+
+	@Override
+	public List<UUser> findAllTable() {
+
+		return userMapper.findAllTable();
+	}
+
+
 }

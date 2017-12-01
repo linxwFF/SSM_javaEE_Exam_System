@@ -16,21 +16,7 @@ import java.util.*;
 /**
  * 
  * freemarker 工具类
- * 
- * 开发：tomeili.com<br/>
- * 版权：tomeili.com<br/>
- * <p>
- * 
- * <p>
- * 
- * 区分　责任人　日期　　　　说明<br/>
- * 创建　周柏成　2013-6-08　<br/>
- * <p>
- * 
- * @author
- * 
- * @version 1.0, 2013-6-08
- * 
+ *
  */
 @SuppressWarnings({  "unchecked"})
 public class Ferrmarker {

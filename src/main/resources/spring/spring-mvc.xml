@@ -129,8 +129,13 @@
 				<prop key="whitespace_stripping">true</prop>
 				<prop key="auto_import">
 					<!-- 自动装载，引入Freemarker，用于Freemarker Macro引入 -->
+					<!-- 公共模块的拼接 -->
 					/common/config/top.ftl as _top,
-					/common/config/left.ftl as _left
+					/common/config/left.ftl as _left,
+					/common/public/left.ftl as left,
+					/common/public/top.ftl as top,
+					/common/public/main.ftl as main,
+					/common/public/footer.ftl as footer
 				</prop>
 			</props>
 		</property>

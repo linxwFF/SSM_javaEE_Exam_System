@@ -71,5 +71,5 @@
 			  </@shiro.hasPermission>
 			</ul>
 		</div>
-	</@shiro.hasAnyRoles>   
+	</@shiro.hasAnyRoles>
 </#macro>

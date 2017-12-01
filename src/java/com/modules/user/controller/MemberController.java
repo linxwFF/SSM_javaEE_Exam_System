@@ -1,5 +1,6 @@
 package com.modules.user.controller;
 
+import com.alibaba.fastjson.JSON;
 import com.common.controller.BaseController;
 import com.common.model.UUser;
 import com.modules.core.mybatis.page.Pagination;
@@ -20,23 +21,8 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * 
- * 开发公司：itboy.net<br/>
- * 版权：itboy.net<br/>
- * <p>
- * 
+ *
  * 用户会员管理
- * 
- * <p>
- * 
- * 区分　责任人　日期　　　　说明<br/>
- * 创建　周柏成　2016年5月26日 　<br/>
- * <p>
- * *******
- * <p>
- * @author zhou-baicheng
- * @email  i@itboy.net
- * @version 1.0,2016年5月26日 <br/>
  * 
  */
 @Controller
@@ -50,18 +36,29 @@ public class MemberController extends BaseController {
 	CustomSessionManager customSessionManager;
 	@Autowired
 	UUserService userService;
+
 	/**
-	 * 用户列表管理
+	 * 用户列表管理 list页面
+	 */
+	@RequestMapping(value="list",method=RequestMethod.GET)
+	public ModelAndView list(){
+		return new ModelAndView("member/list2");
+	}
+
+	/**
+	 * 用户列表管理 dataTables
 	 * @return
 	 */
-	@RequestMapping(value="list")
-	public ModelAndView list(ModelMap map,Integer pageNo,String findContent){
-		
-		map.put("findContent", findContent);
-		Pagination<UUser> page = userService.findByPage(map,pageNo,pageSize);
-		map.put("page", page);
-		return new ModelAndView("member/list");
+	//dataTables 返回json数据
+	@RequestMapping(value="list_table")
+	@ResponseBody
+	public String list_Table(ModelMap map){
+		List<UUser> userList = userService.findAllTable();
+		map.put("data", userList);
+		String jsonString = JSON.toJSONString(map);
+		return jsonString;
 	}
+
 	/**
 	 * 在线用户管理
 	 * @return
