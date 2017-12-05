@@ -110,10 +110,6 @@
                                         <div class="col-md-2 col-sm-2 col-xs-12" id="email">
                                             <input readonly="readonly" class="form-control col-md-2 col-xs-12" value="${token.email?default('未设置')}" placeholder="请输入帐号" readonly="true">
                                         </div>
-
-                                        <div class="col-md-2 col-sm-2 col-xs-12 hidden" id="email_change">
-                                            <input type="text" required="required" class="form-control col-md-2 col-sm-2 col-xs-12" name="email" value="">
-                                        </div>
                                     </div>
 
                                 </form>
@@ -122,8 +118,6 @@
                                 <div class="ln_solid"></div>
                                 <div class="form-group">
                                     <div class="col-md-9 col-sm-9 col-xs-12 col-md-offset-3">
-
-                                        <button type="button" class="btn btn-primary" id="go_back">返回列表</button>
                                         <button type="button" class="btn btn-warning" id="edit">修改</button>
                                         <button type="button" class="btn btn-success hidden" id="submit">提交</button>
                                     </div>
@@ -175,18 +169,16 @@
 
             $("#submit").removeClass("hidden");
         });
-        //返回列表
-        $("#go_back").click(function(){
-            history.go(-1);
-        });
 
         //提交
         $("#submit").click(function(){
             var url = "${basePath}/user/updateSelf.shtml";
+
             var form = $('#form').serializeJSON();
 
             var data = {
-                form : form,
+                id : form.id,
+                nickname : form.nickname,
             };
 
             if($("input[name = 'nickname']").val() == ""){
@@ -198,13 +190,8 @@
                 return;
             }
 
-            var result = Util.ajaxHelper(url, 'POST', data);
-            if(result.is_true){
-                Util.notify(result.data.message, 1);
+           Util.ajaxHelper(url, 'POST', data);
 
-                $("input").attr("readonly", "readonly");
-                $("textarea").attr("readonly", "readonly");
-            }
         });
     } );
 
