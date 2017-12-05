@@ -32,8 +32,8 @@
 
                     <li><a href="#">个人中心</a>
                         <ul class="nav child_menu">
-                            <li class="sub_menu"><a href="${basePath}/user/updateSelf.shtml">资料修改</a></li>
-                            <li class="sub_menu"><a href="${basePath}/user/updatePswd.shtml">密码修改</a></li>
+                            <li class="sub_menu"><a href="${basePath}/user/updateSelf2.shtml">资料修改</a></li>
+                            <li class="sub_menu"><a href="${basePath}/user/updatePswd2.shtml">密码修改</a></li>
                             <li class="sub_menu"><a href="${basePath}/role/mypermission.shtml">我的权限</a></li>
                         </ul>
                     </li>

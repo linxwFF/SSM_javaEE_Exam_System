@@ -1,6 +1,8 @@
 package com.modules.permission.controller;
 
+import com.alibaba.fastjson.JSON;
 import com.common.controller.BaseController;
+import com.common.model.URole;
 import com.modules.core.mybatis.page.Pagination;
 import com.modules.permission.bo.URoleBo;
 import com.modules.permission.bo.UserRoleAllocationBo;
@@ -17,25 +19,6 @@ import org.springframework.web.servlet.ModelAndView;
 import java.util.List;
 import java.util.Map;
 
-/**
- * 
- * 开发公司：SOJSON在线工具 <p>
- * 版权所有：© www.sojson.com<p>
- * 博客地址：http://www.sojson.com/blog/ <p>
- * <p>
- * 
- * 用户角色分配
- * 
- * <p>
- * 
- * 区分　责任人　日期　　　　说明<br/>
- * 创建　周柏成　2016年6月2日 　<br/>
- *
- * @author zhou-baicheng
- * @email  so@sojson.com
- * @version 1.0,2016年6月2日 <br/>
- * 
- */
 @Controller
 @Scope(value="prototype")
 @RequestMapping("role")
@@ -51,14 +34,21 @@ public class UserRoleAllocationController extends BaseController {
 	 * @param findContent
 	 * @return
 	 */
-		@RequestMapping(value="allocation")
-	public ModelAndView allocation(ModelMap modelMap,Integer pageNo,String findContent){
-		modelMap.put("findContent", findContent);
-		Pagination<UserRoleAllocationBo> boPage = userService.findUserAndRole(modelMap,pageNo,pageSize);
-		modelMap.put("page", boPage);
-		return new ModelAndView("role/allocation");
+	@RequestMapping(value="allocation")
+	public ModelAndView allocation(){
+		return new ModelAndView("role/allocation2");
 	}
-	
+
+	//用户角色权限 数据
+	@RequestMapping(value="allocation_table")
+	@ResponseBody
+	public String allocationTable(ModelMap map){
+		List<UserRoleAllocationBo> list = userService.findAllUserAndRole();
+		map.put("data",list);
+		String jsonString = JSON.toJSONString(map);
+		return jsonString;
+	}
+
 	/**
 	 * 根据用户ID查询权限
 	 * @param id

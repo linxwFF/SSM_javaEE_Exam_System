@@ -18,26 +18,7 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.annotation.Resource;
 import java.util.Map;
 
-/**
- * 
- * 开发公司：itboy.net<br/>
- * 版权：itboy.net<br/>
- * <p>
- * 
- * 用户管理
- * 
- * <p>
- * 
- * 区分　责任人　日期　　　　说明<br/>
- * 创建　周柏成　2016年5月3日 　<br/>
- * <p>
- * *******
- * <p>
- * @author zhou-baicheng
- * @email  i@itboy.net
- * @version 1.0,2016年5月3日 <br/>
- * 
- */
+
 @Controller
 @Scope(value="prototype")
 @RequestMapping("user")
@@ -45,26 +26,26 @@ public class UserCoreController extends BaseController {
 
 	@Resource
 	UUserService userService;
+
 	/**
 	 * 个人资料
 	 * @return
 	 */
 	@RequestMapping(value="index",method=RequestMethod.GET)
 	public ModelAndView userIndex(){
-		
 		return new ModelAndView("user/index");
 	}
-	
-	
+
 	/**
-	 * 偷懒一下，通用页面跳转
-	 * @param page
+	 * 通用页面跳转
+	 * @param page   @PathVariable 是根据URL地址获取参数到方法中
 	 * @return
 	 */
 	@RequestMapping(value="{page}",method=RequestMethod.GET)
 	public ModelAndView toPage(@PathVariable("page")String page){
 		return new ModelAndView(String.format("user/%s", page));
 	}
+
 	/**
 	 * 密码修改
 	 * @return

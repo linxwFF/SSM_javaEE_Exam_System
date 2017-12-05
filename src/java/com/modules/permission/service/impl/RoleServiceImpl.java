@@ -122,5 +122,11 @@ public class RoleServiceImpl extends BaseMybatisDao<URoleMapper> implements Role
 	public void initData() {
 		roleMapper.initData();
 	}
-	
+
+	//获取所有的角色列表
+	@Override
+	public List<URole> findAllRole() {
+		return roleMapper.findAllRole();
+	}
+
 }

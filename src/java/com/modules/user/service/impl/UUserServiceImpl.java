@@ -207,5 +207,10 @@ public class UUserServiceImpl extends BaseMybatisDao<UUserMapper> implements UUs
 		return userMapper.findAllTable();
 	}
 
+	@Override
+	public List<UserRoleAllocationBo> findAllUserAndRole() {
+		return userMapper.findAllUserAndRole();
+	}
+
 
 }

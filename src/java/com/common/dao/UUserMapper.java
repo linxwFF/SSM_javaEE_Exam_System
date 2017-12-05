@@ -5,6 +5,7 @@ import java.util.Map;
 
 import com.common.model.UUser;
 import com.modules.permission.bo.URoleBo;
+import com.modules.permission.bo.UserRoleAllocationBo;
 
 public interface UUserMapper {
     int deleteByPrimaryKey(Long id);
@@ -27,5 +28,8 @@ public interface UUserMapper {
 
     //查询所有的用户信息Table
     List<UUser> findAllTable();
+
+    //查询所有用户的信息和权限
+    List<UserRoleAllocationBo> findAllUserAndRole();
 
 }

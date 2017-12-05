@@ -24,4 +24,7 @@ public interface URoleMapper {
 	List<URole> findNowAllPermission(Map<String, Object> map);
 	
 	void initData();
+
+    //查询所有role列表
+    List<URole> findAllRole();
 }

@@ -66,8 +66,20 @@ public class MemberController extends BaseController {
 	@RequestMapping(value="online")
 	public ModelAndView online(){
 		List<UserOnlineBo> list = customSessionManager.getAllUser();
-		return new ModelAndView("member/online","list",list);
+		return new ModelAndView("member/online2","list",list);
 	}
+
+	//在线用户列表
+	@RequestMapping(value="online_table")
+	@ResponseBody
+	public String online_Table(ModelMap map){
+		List<UserOnlineBo> list = customSessionManager.getAllUser();
+		map.put("data",list);
+		String jsonString = JSON.toJSONString(map);
+		return jsonString;
+	}
+
+
 	/**
 	 * 在线用户详情
 	 * @return

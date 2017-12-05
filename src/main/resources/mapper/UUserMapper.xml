@@ -56,8 +56,8 @@
         )
       </if>
       </where>
-	group by u.id 
-  </select>
+	group by u.id
+</select>
   <select id="selectRoleByUserId" resultType="com.modules.permission.bo.URoleBo">
   		
 		select ur.id,ur.name,ur.type,ifnull(uu.id,0)marker,uu.id userId from u_role ur
@@ -194,4 +194,14 @@
     <include refid="Base_Column_List"/>
     FROM u_user;
   </select>
+
+  <!-- 用户权限分配的所有数据 -->
+  <select id="findAllUserAndRole" resultType="com.modules.permission.bo.UserRoleAllocationBo">
+    select u.id,u.nickname,u.email,u.create_time,u.last_login_time,u.status ,group_concat(ur.name) roleNames,group_concat(ur.id)roleIds from
+    u_user u
+    left join u_user_role uur on uur.uid = u.id
+    left join u_role ur on ur.id = uur.rid
+    group by u.id
+  </select>
+
 </mapper>

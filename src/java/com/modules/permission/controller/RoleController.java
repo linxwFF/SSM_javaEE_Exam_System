@@ -1,10 +1,12 @@
 package com.modules.permission.controller;
 
+import com.alibaba.fastjson.JSON;
 import com.common.controller.BaseController;
 import com.common.model.URole;
 import com.common.utils.LoggerUtils;
 import com.modules.core.mybatis.page.Pagination;
 import com.modules.permission.service.RoleService;
+import com.modules.user.bo.UserOnlineBo;
 import com.modules.user.manager.UserManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
@@ -18,26 +20,6 @@ import org.springframework.web.servlet.ModelAndView;
 import java.util.List;
 import java.util.Map;
 
-/**
- * 
- * 开发公司：itboy.net<br/>
- * 版权：itboy.net<br/>
- * <p>
- * 
- * 用户角色管理
- * 
- * <p>
- * 
- * 区分　责任人　日期　　　　说明<br/>
- * 创建　周柏成　2016年5月26日 　<br/>
- * <p>
- * *******
- * <p>
- * @author zhou-baicheng
- * @email  i@itboy.net
- * @version 1.0,2016年5月26日 <br/>
- * 
- */
 @Controller
 @Scope(value="prototype")
 @RequestMapping("role")
@@ -49,11 +31,20 @@ public class RoleController extends BaseController {
 	 * @return
 	 */
 	@RequestMapping(value="index")
-	public ModelAndView index(String findContent,ModelMap modelMap){
-		modelMap.put("findContent", findContent);
-		Pagination<URole> role = roleService.findPage(modelMap,pageNo,pageSize);
-		return new ModelAndView("role/index","page",role);
+	public ModelAndView index(){
+		return new ModelAndView("role/index2");
 	}
+
+	//角色列表 数据
+	@RequestMapping(value="role_table")
+	@ResponseBody
+	public String online_Table(ModelMap map){
+		List<URole> list = roleService.findAllRole();
+		map.put("data",list);
+		String jsonString = JSON.toJSONString(map);
+		return jsonString;
+	}
+
 	/**
 	 * 角色添加
 	 * @param role

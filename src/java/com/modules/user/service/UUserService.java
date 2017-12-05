@@ -46,4 +46,7 @@ public interface UUserService {
 
 	//获取用户的列表的全部数据
 	List<UUser> findAllTable();
+
+	//获取所有的用户权限
+	List<UserRoleAllocationBo> findAllUserAndRole();
 }
