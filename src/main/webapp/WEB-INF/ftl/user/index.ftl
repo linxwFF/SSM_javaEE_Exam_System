@@ -94,7 +94,7 @@
                                 </span>
                                 </td>
                                 <td class="text-center">
-                                    <input readonly="readonly"  class="form-control col-md-3 col-xs-12 " value="${token.nickname?default('未设置')}" placeholder="密码">
+                                    <input readonly="readonly"  class="form-control col-md-3 col-xs-12 " value="${token.real_nem?default('未设置')}" placeholder="密码">
                                 </td>
                             </tr>
 
@@ -105,7 +105,7 @@
                                 </span>
                                 </td>
                                 <td class="text-center">
-                                    <input readonly="readonly"  class="form-control col-md-3 col-xs-12 " value="${token.nickname?default('未设置')}" placeholder="请输入昵称">
+                                    <input readonly="readonly"  class="form-control col-md-3 col-xs-12 " value="${token.identityNumber?default('未设置')}" placeholder="请输入昵称">
                                 </td>
 
                                 <td class="text-center">
@@ -114,18 +114,18 @@
                                 </span>
                                 </td>
                                 <td class="text-center">
-                                    <input readonly="readonly"  class="form-control col-md-3 col-xs-12 " value="${token.nickname?default('未设置')}" placeholder="请输入昵称">
+                                    <input readonly="readonly"  class="form-control col-md-3 col-xs-12 " value="${token.tel?default('未设置')}" placeholder="请输入昵称">
                                 </td>
                             </tr>
                             <tr>
                                 <td class="text-center">
                             <span class="form-control col-md-3 col-xs-12">
-                                    帐号邮箱：
+                                    用户身份权限
                                 </span>
                                 </td>
                                 <td class="text-center">
                                 <span class="form-control col-md-3 col-xs-12">
-                                ${token.email?default('未设置')}
+                                    普通用户
                                 </span>
                                 </td>
 
@@ -135,7 +135,7 @@
                                 </span>
                                 </td>
                                 <td class="text-center">
-                                    <input readonly="readonly"  class="form-control col-md-3 col-xs-12 " value="${token.nickname?default('未设置')}" placeholder="请输入昵称">
+                                    <input readonly="readonly"  class="form-control col-md-3 col-xs-12 " value="${token.address?default('未设置')}" placeholder="请输入昵称">
                                 </td>
                             </tr>
 
@@ -156,9 +156,9 @@
                             </tr>
                             <tr>
                                 <td class="text-center">创建时间：</td>
-                                <td class="text-center">2016-06-16 11:15</td>
+                                <td class="text-center">${token.createTime?string('yyyy-MM-dd hh:mm:ss')}</td>
                                 <td class="text-center">最后登录时间：</td>
-                                <td class="text-center">2017-12-01 17:01</td>
+                                <td class="text-center">${token.lastLoginTime?string('yyyy-MM-dd hh:mm:ss')}</td>
                             </tr>
 
                             <tr>

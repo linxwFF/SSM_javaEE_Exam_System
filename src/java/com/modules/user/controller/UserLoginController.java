@@ -100,11 +100,10 @@ public class UserLoginController extends BaseController {
 	public Map<String,Object> submitLogin(UUser entity,Boolean rememberMe,HttpServletRequest request){
 		
 		try {
-			entity = TokenManager.login(entity,rememberMe);
+			TokenManager.login(entity,rememberMe);
 			resultMap.put("status", 200);
 			resultMap.put("message", "登录成功");
-			
-			
+
 			/**
 			 * shiro 获取登录之前的地址
 			 * 之前0.1版本这个没判断空。
@@ -125,7 +124,7 @@ public class UserLoginController extends BaseController {
 //				url = request.getContextPath() + "/user/index.shtml";
 				url = request.getContextPath() + "/user/index2.shtml";
 			}
-			//跳转地址
+			//跳转地址  给JS前端跳转
 			resultMap.put("back_url", url);
 		/**
 		 * 这里其实可以直接catch Exception，然后抛出 message即可，但是最好还是各种明细catch 好点。。
