@@ -31,7 +31,14 @@ function initTable() {
             // }
         },
         // 显示字段
-        "aoColumns": [{ "mData": null,
+        "aoColumns": [
+            {
+                "class":          'details-control',
+                "orderable":      false,
+                "mData":           null,
+                "sDefaultContent": '',
+                "sWidth" : "5%",
+            },{ "mData": null,
               "orderable": false,
               "sDefaultContent" : "",
               "sWidth" : "5%",
@@ -55,6 +62,7 @@ function initTable() {
               "orderable": true,
               "sDefaultContent" : "",
               "sWidth" : "10%",
+
             },{ "mData": "lastLoginTime",
               "orderable": false,
               "sDefaultContent" : "",
@@ -87,7 +95,7 @@ function initTable() {
         "sLast": "尾页"
         },
         "sZeroRecords": "没有检索到数据",
-        "sProcessing": "<img src='static/assets/img/loading.gif' />",
+        "sProcessing": "<img src='/static/assets/img/loading.gif' />",
         "sSearch": "搜索"
         },
         // 初始化回调函数
@@ -100,18 +108,18 @@ function initTable() {
 //----------------------------自定义操作------------------------
 
 
-    //单击行，改变行的样式
-    $('#table tbody').on('click', 'tr', function () {
-        //联动checkbox 选中状态
-        $($(this).children()[0]).children().each(function(){
-            if(!this.checked){
-					this.checked = true;
-                }else{
-					this.checked = false;
-				}
-        });
-       $(this).toggleClass('selected');
-    } );
+    ////单击行，改变行的样式
+    //$('#table tbody').on('click', 'tr', function () {
+    //    //联动checkbox 选中状态
+    //    $($(this).children()[0]).children().each(function(){
+    //        if(!this.checked){
+		//			this.checked = true;
+    //            }else{
+		//			this.checked = false;
+		//		}
+    //    });
+    //   $(this).toggleClass('selected');
+    //} );
 
 
     //删除选中行
@@ -189,6 +197,57 @@ function initTable() {
            }
         });
     });
+
+    /* 格式化每一行的数据隐藏格式 */
+    function format ( d ) {
+        // `d` is the original data object for the row
+        var real_name = d.real_name == undefined ? '未设置' : d.real_name;
+        var identityNumber = d.identityNumber == undefined ? '未设置' : d.identityNumber;
+        var address = d.address == undefined ? '未设置' : d.address;
+        var tel = d.tel == undefined ? '未设置' : d.tel;
+        var status = d.status == 1 ? '激活' : '禁止';
+        var updateTime = d.updateTime;
+
+        var html = '<table class="table table-striped table-bordered dataTable no-footer dtr-inline" width="100%"  cellspacing="0" border="0">'+
+
+        '<tr>'+
+        '<td>真实名字:</td>'+
+        '<td>'+ real_name +'</td>'+
+        '<td>身份证号码:</td>'+
+        '<td>'+ identityNumber +'</td>'+
+        '</tr>'+
+
+        '<tr>'+
+        '<td>地址:</td>'+
+        '<td>'+address+'</td>'+
+        '<td>tel(手机):</td>'+
+        '<td>'+tel+'</td>'+
+        '</tr>'+
+
+        '<tr>'+
+        '<td>状态:</td>'+
+        '<td>'+status+'</td>'+
+        '</tr>'+
+
+        '</table>';
+        return html;
+    }
+
+    // Add event listener for opening and closing details
+    $('#table tbody').on('click', 'td.details-control', function () {
+        var tr = $(this).closest('tr');
+        var row = table.row( tr );
+        if ( row.child.isShown() ) {
+            // This row is already open - close it
+            row.child.hide();
+            tr.removeClass('shown');
+        }
+        else {
+            // Open this row
+            row.child( format(row.data()) ).show();
+            tr.addClass('shown');
+        }
+    } );
 
 }
 })();

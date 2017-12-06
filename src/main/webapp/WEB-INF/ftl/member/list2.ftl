@@ -37,6 +37,13 @@
             background-color:#00FFFF;
         }
 
+        td.details-control {
+            background: url('${basePath}/static/assets/img/details_open.png') no-repeat center center;
+            cursor: pointer;
+        }
+        tr.shown td.details-control {
+            background: url('${basePath}/static/assets/img/details_close.png') no-repeat center center;
+        }
 
     </style>
 </head>
@@ -69,14 +76,6 @@
                             <!-- 右侧工具栏 -->
                             <ul class="nav navbar-right panel_toolbox">
                                 <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a></li>
-                                <li class="dropdown">
-                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
-
-                                    <ul class="dropdown-menu" role="menu">
-                                        <li><a href="#">Settings 1</a></li>
-                                        <li><a href="#">Settings 2</a></li>
-                                    </ul>
-                                </li>
                                 <li><a class="close-link"><i class="fa fa-close"></i></a></li>
                             </ul>
 
@@ -84,7 +83,7 @@
                         </div>
                         <div class="x_content">
                             <!-- 验证 -->
-                            <div class="alert alert-warning">
+                            <div class="alert alert-warning hidden">
                                 状态
                             </div>
 			            <span class="section">
@@ -93,6 +92,7 @@
                             <table id="table" class="table table-hover table-bordered table-condensed " cellspacing="0" width="100%">
                                 <thead>
                                 <tr>
+                                    <th></th>
                                     <th><input name="selectAll" type="checkbox" /></th>
                                     <th>ID</th>
                                     <th>姓名</th>
@@ -102,17 +102,6 @@
                                     <th>操作</th>
                                 </tr>
                                 </thead>
-                                <tfoot>
-                                <tr>
-                                    <th></th>
-                                    <th>ID</th>
-                                    <th>姓名</th>
-                                    <th>邮箱</th>
-                                    <th>创建时间</th>
-                                    <th>最后登录时间</th>
-                                    <th>操作</th>
-                                </tr>
-                                </tfoot>
                                 <tbody>
                                 </tbody>
                             </table>
