@@ -65,7 +65,12 @@
                         <h4>个人资料</h4>
                     </div>
 
-                    <div class="ln_solid"></div>
+                    <div class="alert alert-danger hidden" id="error">
+                        <ul style="color:red;">
+                            <li id="errorMsg">  </li>
+                        </ul>
+                    </div>
+
 
                     <form action="" method="post" id="_form">
                         <input type="hidden" name="id" value="${token.id}" id="id">
@@ -85,7 +90,7 @@
                                 </td>
                                 <td class="text-center">
                                     <input readonly="readonly"  class="form-control col-md-2 col-xs-12 "
-                                           name= "nickname" id="nickname" value="${token.nickname?default('未设置')}" placeholder="请输入昵称">
+                                           name= "nickname" id="nickname" value="${userInfo.nickname?default('未设置')}" placeholder="请输入昵称">
                                 </td>
 
                                 <td class="text-center">
@@ -94,7 +99,7 @@
                                 </span>
                                 </td>
                                 <td class="text-center">
-                                    <input readonly="readonly"  class="form-control col-md-3 col-xs-12 " value="${token.real_nem?default('未设置')}" placeholder="密码">
+                                    <input readonly="readonly" name="real_name"  class="form-control col-md-3 col-xs-12 " value="${userInfo.real_name?default('未设置')}" placeholder="密码">
                                 </td>
                             </tr>
 
@@ -105,7 +110,7 @@
                                 </span>
                                 </td>
                                 <td class="text-center">
-                                    <input readonly="readonly"  class="form-control col-md-3 col-xs-12 " value="${token.identityNumber?default('未设置')}" placeholder="请输入昵称">
+                                    <input readonly="readonly" name="identityNumber"  class="form-control col-md-3 col-xs-12 " value="${userInfo.identityNumber?default('未设置')}" placeholder="请输入昵称">
                                 </td>
 
                                 <td class="text-center">
@@ -114,7 +119,7 @@
                                 </span>
                                 </td>
                                 <td class="text-center">
-                                    <input readonly="readonly"  class="form-control col-md-3 col-xs-12 " value="${token.tel?default('未设置')}" placeholder="请输入昵称">
+                                    <input readonly="readonly" name="tel"  class="form-control col-md-3 col-xs-12 " value="${userInfo.tel?default('未设置')}" placeholder="请输入昵称">
                                 </td>
                             </tr>
                             <tr>
@@ -135,7 +140,7 @@
                                 </span>
                                 </td>
                                 <td class="text-center">
-                                    <input readonly="readonly"  class="form-control col-md-3 col-xs-12 " value="${token.address?default('未设置')}" placeholder="请输入昵称">
+                                    <input readonly="readonly" name="address"  class="form-control col-md-3 col-xs-12 " value="${userInfo.address?default('未设置')}" placeholder="请输入昵称">
                                 </td>
                             </tr>
 
@@ -144,7 +149,7 @@
                                     帐号邮箱：
                                 </td>
                                 <td class="text-center">
-                                ${token.email?default('未设置')}
+                                ${userInfo.email?default('未设置')}
                                 </td>
 
                                 <td class="text-center">
@@ -156,9 +161,9 @@
                             </tr>
                             <tr>
                                 <td class="text-center">创建时间：</td>
-                                <td class="text-center">${token.createTime?string('yyyy-MM-dd hh:mm:ss')}</td>
+                                <td class="text-center">${userInfo.createTime?string('yyyy-MM-dd hh:mm:ss')}</td>
                                 <td class="text-center">最后登录时间：</td>
-                                <td class="text-center">${token.lastLoginTime?string('yyyy-MM-dd hh:mm:ss')}</td>
+                                <td class="text-center">${userInfo.lastLoginTime?string('yyyy-MM-dd hh:mm:ss')}</td>
                             </tr>
 
                             <tr>
@@ -212,22 +217,20 @@
             var load = layer.load();
 
             //数据验证
-            var form = $('#_form');     //获取表单
-            var inputs = $("input");    //获取表单中input对象
-            for(var i=0;i<inputs.length;i++){
-                var self = $(inputs[i]);
-                if(self.val() == ''){
-                    displayErrorMsg(self.attr("placeholder")+"不能为空",self.attr("id"));
-                    return !1;
-                }
-            }
-
-            var nickname = $("#nickname").val();
-            var id = $("#id").val();
+            var id = $("input[name = 'id'] ").val();
+            var nickname = $("input[name = 'nickname'] ").val();
+            var real_name = $("input[name = 'real_name'] ").val();
+            var identityNumber = $("input[name = 'identityNumber'] ").val();
+            var tel = $("input[name = 'tel'] ").val();
+            var address = $("input[name = 'address']").val();
 
             var data = {
                 id : id,
-                nickname : nickname
+                nickname : nickname,
+                real_name : real_name,
+                identityNumber : identityNumber,
+                tel : tel,
+                address : address
             };
 
             $.ajax({
@@ -237,20 +240,18 @@
                 dataType:"json",
                 //发送
                 beforeSend:function(){
-                    layer.msg('开始登录，请注意后台控制台。');
+                    layer.msg('发送修改请求····');
                 },
                 success:function(result){
                     layer.close(load);
                     if(result && result.status != 200){
                         //登录失败
                         layer.msg(result.message,function(){});
-
                         return;
                     }else{
-                        layer.msg('登录成功！');
+                        layer.msg(result.message);
                         setTimeout(function(){
-                            //登录返回
-                            // window.location.href= result.back_url || "${basePath}/";
+                             window.location.href= "${basePath}/user/index.shtml";
                         },1000)
                     }
                 },
@@ -259,17 +260,6 @@
                 }
             });
         });
-
-        //显示错误信息
-        function displayErrorMsg(str,focus=null)
-        {
-            $("#error").removeClass("hidden");
-            $("#errorMsg").text(str);
-            if(focus != null){
-                $("#"+focus).focus();
-            }
-        }
-
     });
 </script>
 

@@ -9,6 +9,7 @@ import com.modules.user.service.UUserService;
 import net.sf.json.JSONObject;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -25,12 +26,13 @@ public class UserCoreController extends BaseController {
 	UUserService userService;
 
 	/**
-	 * 个人资料
+	 * 个人资料 = 需要自己再构建 用户数据回传给前端页面
 	 * @return
 	 */
 	@RequestMapping(value="index",method=RequestMethod.GET)
 	public ModelAndView userIndex(){
-		return new ModelAndView("user/index");
+		UUser user = userService.findUserInfo(TokenManager.getUserId());
+		return new ModelAndView("user/index","userInfo",user);
 	}
 
 	/**
@@ -84,18 +86,15 @@ public class UserCoreController extends BaseController {
 	@RequestMapping(value="updateSelf",method=RequestMethod.POST)
 	@ResponseBody
 	public Map<String,Object> updateSelf(UUser entity){
-//		try {
-//			userService.updateByPrimaryKeySelective(entity);
-//			resultMap.put("status", 200);
-//			resultMap.put("message", "修改成功!");
-//		} catch (Exception e) {
-//			resultMap.put("status", 500);
-//			resultMap.put("message", "修改失败!");
-//			LoggerUtils.fmtError(getClass(), e, "修改个人资料出错。[%s]", JSONObject.fromObject(entity).toString());
-//		}
-
-		resultMap.put("status", 200);
-		resultMap.put("message", "修改成功!");
+		try {
+			userService.updateByPrimaryKeySelective(entity);
+			resultMap.put("status", 200);
+			resultMap.put("message", "修改成功!");
+		} catch (Exception e) {
+			resultMap.put("status", 500);
+			resultMap.put("message", "修改失败!");
+			LoggerUtils.fmtError(getClass(), e, "修改个人资料出错。[%s]", JSONObject.fromObject(entity).toString());
+		}
 
 		return resultMap;
 	}

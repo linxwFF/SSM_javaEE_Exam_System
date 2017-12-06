@@ -49,4 +49,7 @@ public interface UUserService {
 
 	//获取所有的用户权限
 	List<UserRoleAllocationBo> findAllUserAndRole();
+
+	//获取用户个人信息
+	UUser findUserInfo(Long userId);
 }
