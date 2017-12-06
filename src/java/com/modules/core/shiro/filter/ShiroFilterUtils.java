@@ -11,24 +11,8 @@ import java.io.PrintWriter;
 import java.util.Map;
 
 /**
- * 
- * 开发公司：itboy.net<br/>
- * 版权：itboy.net<br/>
- * <p>
- * 
+ *
  * Shiro Filter 工具类
- * 
- * <p>
- * 
- * 区分　责任人　日期　　　　说明<br/>
- * 创建　周柏成　2016年5月27日 　<br/>
- * <p>
- * *******
- * <p>
- * 
- * @author zhou-baicheng
- * @email i@itboy.net
- * @version 1.0,2016年5月27日 <br/>
  * 
  */
 public class ShiroFilterUtils {

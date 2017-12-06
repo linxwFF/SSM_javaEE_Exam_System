@@ -1,5 +1,5 @@
 
-var QuestionManage = (function() {
+(function() {
     'use strict';
 
     $(document).ready(function() {
@@ -65,7 +65,7 @@ function initTable() {
               "sWidth" : "10%",
                 // 返回自定义内容
                 "render": function(data, type, full) {
-                    return "<a type='button' class='btn btn-warning btn-sm' href='/admin/userManage/" + full.id + "/edit'>修改</a>&nbsp; "
+                    return "<a type='button' class='btn btn-warning btn-sm' href='/admin/userManage/" + full.id + "/edit'>详情</a>&nbsp; "
                     + "<a type='button' class='delete btn btn-danger btn-sm' href='javascript:void(0);' >删除</a>";
                 }
             },

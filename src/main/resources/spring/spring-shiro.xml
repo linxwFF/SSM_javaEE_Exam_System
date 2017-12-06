@@ -16,6 +16,7 @@
 	<bean id="sessionIdGenerator" class="org.apache.shiro.session.mgt.eis.JavaUuidSessionIdGenerator"/>
 
 	<!-- 会话Cookie模板 -->
+	<!-- 适用于登录一个主域名网站，共享子域名的登录信息 -->
 	<bean id="sessionIdCookie" class="org.apache.shiro.web.servlet.SimpleCookie">
 		<!--cookie的name，我故意取名叫xxxxbaidu -->
 	    <constructor-arg value="v_v-s-baidu"/>
@@ -26,6 +27,7 @@
 	    <property name="domain" value="xxx.net"/>
 	     -->
 	</bean>
+
 	<!-- custom shiro session listener 自定义的shiro session监听 -->
 	<bean id="customSessionListener" class="com.modules.core.shiro.listenter.CustomSessionListener">
 	    <property name="shiroSessionRepository" ref="jedisShiroSessionRepository"/>
@@ -72,6 +74,8 @@
         <property name="rememberMeManager" ref="rememberMeManager"/>
         <property name="cacheManager" ref="customShiroCacheManager"/>
     </bean>
+
+
 	<!-- 用户缓存 -->
 	<bean id="customShiroCacheManager" class="com.modules.core.shiro.cache.impl.CustomShiroCacheManager">
 	    <property name="shiroCacheManager" ref="jedisShiroCacheManager"/>

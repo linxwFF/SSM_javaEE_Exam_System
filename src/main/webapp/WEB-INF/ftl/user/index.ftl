@@ -60,114 +60,125 @@
         <div class="right_col" role="main">
             <div class="row">
 
-                <div class="panel panel-primary">
-                    <div class="panel-body">
-                        <h4>个人资料</h4>
-                    </div>
+                <div class="col-md-12 col-sm-12 col-xs-12">
+                    <div class="x_panel">
+                        <div class="x_title">
+                            <h2>个人资料</h2>
 
-                    <div class="alert alert-danger hidden" id="error">
-                        <ul style="color:red;">
-                            <li id="errorMsg">  </li>
-                        </ul>
-                    </div>
+                            <!-- 右侧工具栏 -->
+                            <ul class="nav navbar-right panel_toolbox">
+                                <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a></li>
+                                <li><a class="close-link"><i class="fa fa-close"></i></a></li>
+                            </ul>
 
+                            <div class="clearfix"></div>
+                        </div>
+                        <div class="x_content" style="display: block;">
 
-                    <form action="" method="post" id="_form">
-                        <input type="hidden" name="id" value="${token.id}" id="id">
-                        <table class="table table-bordered">
-                            <thead>
-                            <tr>
-                                <th class="text-center" colspan="4"><span style="color:#FF4500;">您的到期时间为：2019-2-1 9:42:57</span></th>
-                            </tr>
-                            </thead>
-                            <tbody>
+                            <div class="panel panel-primary">
+                                <div class="panel-body">
+                                    <h4>个人资料</h4>
+                                </div>
 
-                            <tr>
-                                <td class="text-center">
+                                <form action="" method="post" id="_form">
+                                    <input type="hidden" name="id" value="${token.id}" id="id">
+                                    <table class="table table-bordered">
+                                        <thead>
+                                        <tr>
+                                            <th class="text-center" colspan="4"><span style="color:#FF4500;">您的到期时间为：2019-2-1 9:42:57</span></th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+
+                                        <tr>
+                                            <td class="text-center">
                                 <span class="form-control col-md-3 col-xs-12 ">
                                     账号名：
                                 </span>
-                                </td>
-                                <td class="text-center">
-                                    <input readonly="readonly"  class="form-control col-md-2 col-xs-12 "
-                                           name= "nickname" id="nickname" value="${userInfo.nickname?default('未设置')}" placeholder="请输入昵称">
-                                </td>
+                                            </td>
+                                            <td class="text-center">
+                                                <input readonly="readonly"  class="form-control col-md-2 col-xs-12 "
+                                                       name= "nickname" id="nickname" value="${userInfo.nickname?default('未设置')}" placeholder="请输入昵称">
+                                            </td>
 
-                                <td class="text-center">
+                                            <td class="text-center">
                             <span class="form-control col-md-3 col-xs-12">
                                     真实姓名：
                                 </span>
-                                </td>
-                                <td class="text-center">
-                                    <input readonly="readonly" name="real_name"  class="form-control col-md-3 col-xs-12 " value="${userInfo.real_name?default('未设置')}" placeholder="密码">
-                                </td>
-                            </tr>
+                                            </td>
+                                            <td class="text-center">
+                                                <input readonly="readonly" name="real_name"  class="form-control col-md-3 col-xs-12 " value="${userInfo.real_name?default('未设置')}" placeholder="密码">
+                                            </td>
+                                        </tr>
 
-                            <tr>
-                                <td class="text-center">
+                                        <tr>
+                                            <td class="text-center">
                             <span class="form-control col-md-3 col-xs-12">
                                     身份证号：
                                 </span>
-                                </td>
-                                <td class="text-center">
-                                    <input readonly="readonly" name="identityNumber"  class="form-control col-md-3 col-xs-12 " value="${userInfo.identityNumber?default('未设置')}" placeholder="请输入昵称">
-                                </td>
+                                            </td>
+                                            <td class="text-center">
+                                                <input readonly="readonly" name="identityNumber"  class="form-control col-md-3 col-xs-12 " value="${userInfo.identityNumber?default('未设置')}" placeholder="请输入昵称">
+                                            </td>
 
-                                <td class="text-center">
+                                            <td class="text-center">
                             <span class="form-control col-md-3 col-xs-12">
                                     手机号：
                                 </span>
-                                </td>
-                                <td class="text-center">
-                                    <input readonly="readonly" name="tel"  class="form-control col-md-3 col-xs-12 " value="${userInfo.tel?default('未设置')}" placeholder="请输入昵称">
-                                </td>
-                            </tr>
-                            <tr>
-                                <td class="text-center">
+                                            </td>
+                                            <td class="text-center">
+                                                <input readonly="readonly" name="tel"  class="form-control col-md-3 col-xs-12 " value="${userInfo.tel?default('未设置')}" placeholder="请输入昵称">
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="text-center">
                                 <span class="form-control col-md-3 col-xs-12">
                                     地址:
                                 </span>
-                                </td>
-                                <td class="text-center" colspan="3">
-                                    <input readonly="readonly" name="address"  class="form-control col-md-3 col-xs-12 " value="${userInfo.address?default('未设置')}" placeholder="请输入昵称">
-                                </td>
-                            </tr>
+                                            </td>
+                                            <td class="text-center" colspan="3">
+                                                <input readonly="readonly" name="address"  class="form-control col-md-3 col-xs-12 " value="${userInfo.address?default('未设置')}" placeholder="请输入昵称">
+                                            </td>
+                                        </tr>
 
-                            <tr>
-                                <td class="text-center">
-                                    帐号邮箱：
-                                </td>
-                                <td class="text-center">
-                                ${userInfo.email?default('未设置')}
-                                </td>
+                                        <tr>
+                                            <td class="text-center">
+                                                帐号邮箱：
+                                            </td>
+                                            <td class="text-center">
+                                            ${userInfo.email?default('未设置')}
+                                            </td>
 
-                                <td class="text-center">
-                                    修改密码请点击
-                                </td>
-                                <td class="text-center">
-                                    <a href="${basePath}/user/updatePswd2.shtml" style="color: red;"><b>修改密码</b><a>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td class="text-center">创建时间：</td>
-                                <td class="text-center">${userInfo.createTime?string('yyyy-MM-dd hh:mm:ss')}</td>
-                                <td class="text-center">最后登录时间：</td>
-                                <td class="text-center">${userInfo.lastLoginTime?string('yyyy-MM-dd hh:mm:ss')}</td>
-                            </tr>
+                                            <td class="text-center">
+                                                修改密码请点击
+                                            </td>
+                                            <td class="text-center">
+                                                <a href="${basePath}/user/updatePswd2.shtml" style="color: red;"><b>修改密码</b><a>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="text-center">创建时间：</td>
+                                            <td class="text-center">${userInfo.createTime?string('yyyy-MM-dd hh:mm:ss')}</td>
+                                            <td class="text-center">最后登录时间：</td>
+                                            <td class="text-center">${userInfo.lastLoginTime?string('yyyy-MM-dd hh:mm:ss')}</td>
+                                        </tr>
 
 
-                            <tr>
-                                <th class="text-center" colspan="4">
-                                    <button type="button" class="btn btn-warning btn-lg" id="edit">修改</button>
-                                    <button type="button" class="btn btn-success hidden btn-lg" id="submit">提交</button>
-                                </th>
-                            </tr>
-                            </tbody>
-                        </table>
-                    </form>
+                                        <tr>
+                                            <th class="text-center" colspan="4">
+                                                <button type="button" class="btn btn-warning btn-lg" id="edit">修改</button>
+                                                <button type="button" class="btn btn-success hidden btn-lg" id="submit">提交</button>
+                                            </th>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </form>
+                            </div>
+                            </div>
+
+                        </div>
+                    </div>
                 </div>
-
-            </div>
 
             <div class="row">
                 <div class="col-md-12 col-sm-12 col-xs-12">
@@ -188,6 +199,7 @@
                     </div>
                 </div>
             </div>
+
         </div>
         <!-- /页面内容 -->
 

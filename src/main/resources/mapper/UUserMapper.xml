@@ -117,19 +117,11 @@
 
   <insert id="insert" useGeneratedKeys="true" keyProperty="id" parameterType="com.common.model.UUser" >
     insert into u_user
-    <include refid="Base_Column_List"/>
+    (id, nickname, email,pswd,update_time,create_time,last_login_time)
     values (#{id,jdbcType=BIGINT},
     #{nickname,jdbcType=VARCHAR},
     #{email,jdbcType=VARCHAR},
     #{pswd,jdbcType=VARCHAR},
-    #{status,jdbcType=BIGINT},
-    #{question,jdbcType=VARCHAR},
-    #{answer,jdbcType=VARCHAR},
-    #{address,jdbcType=VARCHAR},
-    #{identityNumber,jdbcType=VARCHAR},
-    #{real_name,jdbcType=VARCHAR},
-    #{user_img,jdbcType=VARCHAR},
-    #{tel,jdbcType=VARCHAR},
     now(),
     now(),
     now()
@@ -154,46 +146,36 @@
       <if test="status != null" >
         status,
       </if>
-
       <if test="question != null" >
         question,
       </if>
-
       <if test="answer != null" >
         answer,
       </if>
-
       <if test="address != null" >
         address,
       </if>
-
       <if test="identityNumber != null" >
         identityNumber,
       </if>
-
       <if test="real_name != null" >
         real_name,
       </if>
-
-      <if test="use_img != null" >
-        use_img,
+      <if test="user_img != null" >
+        user_img,
       </if>
-
       <if test="tel != null" >
         tel,
       </if>
-
       <if test="updateTime != null" >
-        now(),
+        update_time,
       </if>
-
       <if test="createTime != null" >
-        now(),
+        create_time,
       </if>
       <if test="lastLoginTime != null" >
-        now()
+        last_login_time,
       </if>
-
     </trim>
 
     <trim prefix="values (" suffix=")" suffixOverrides="," >
@@ -240,7 +222,7 @@
         #{createTime,jdbcType=TIMESTAMP},
       </if>
       <if test="lastLoginTime != null" >
-        #{lastLoginTime,jdbcType=TIMESTAMP}
+        #{lastLoginTime,jdbcType=TIMESTAMP},
       </if>
 
     </trim>

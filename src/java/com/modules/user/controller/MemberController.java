@@ -5,6 +5,7 @@ import com.common.controller.BaseController;
 import com.common.model.UUser;
 import com.modules.core.mybatis.page.Pagination;
 import com.modules.core.shiro.session.CustomSessionManager;
+import com.modules.core.shiro.token.manager.TokenManager;
 import com.modules.user.bo.UserOnlineBo;
 import com.modules.user.service.UUserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,7 +23,7 @@ import java.util.Map;
 
 /**
  *
- * 用户会员管理
+ * 用户中心
  * 
  */
 @Controller
@@ -58,6 +59,18 @@ public class MemberController extends BaseController {
 		String jsonString = JSON.toJSONString(map);
 		return jsonString;
 	}
+
+	//用户信息详情
+	@RequestMapping(value="get_user_info/{id}",method=RequestMethod.GET)
+	@ResponseBody
+	public String getUserInfo(@PathVariable("id") long userId,ModelMap map){
+		UUser user = userService.selectByPrimaryKey(userId);
+		map.put("data", user);
+		String jsonString = JSON.toJSONString(map);
+		return jsonString;
+//		return new ModelAndView("user/index","userInfo",user);
+	}
+
 
 	/**
 	 * 在线用户管理
