@@ -24,19 +24,13 @@
 <div id="sidebar-menu" class="main_menu_side hidden-print main_menu">
 <div class="menu_section">
     <h3>${token.nickname?default('no none')}</h3>
+
     <ul class="nav side-menu">
 
             <li class="${(index==1)?string('active','')}"><a><i class="fa fa-edit"></i> 个人中心 <span class="fa fa-chevron-down"></span></a>
                 <ul class="nav child_menu" style="display: ${(index==1)?string('block','none')}" >
                     <li><a href="${basePath}/user/index.shtml">个人资料</a></li>
-
-                    <li><a href="#">个人中心</a>
-                        <ul class="nav child_menu">
-                            <li class="sub_menu"><a href="${basePath}/user/updateSelf2.shtml">资料修改</a></li>
-                            <li class="sub_menu"><a href="${basePath}/user/updatePswd2.shtml">密码修改</a></li>
-                            <li class="sub_menu"><a href="${basePath}/role/mypermission.shtml">我的权限</a></li>
-                        </ul>
-                    </li>
+                    <li><a href="${basePath}/user/updatePswd2.shtml">密码修改</a></li>
                 </ul>
             </li>
 

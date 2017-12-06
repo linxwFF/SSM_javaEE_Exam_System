@@ -124,22 +124,11 @@
                             </tr>
                             <tr>
                                 <td class="text-center">
-                            <span class="form-control col-md-3 col-xs-12">
-                                    用户身份权限
-                                </span>
-                                </td>
-                                <td class="text-center">
                                 <span class="form-control col-md-3 col-xs-12">
-                                    普通用户
+                                    地址:
                                 </span>
                                 </td>
-
-                                <td class="text-center">
-                            <span class="form-control col-md-3 col-xs-12">
-                                    地址
-                                </span>
-                                </td>
-                                <td class="text-center">
+                                <td class="text-center" colspan="3">
                                     <input readonly="readonly" name="address"  class="form-control col-md-3 col-xs-12 " value="${userInfo.address?default('未设置')}" placeholder="请输入昵称">
                                 </td>
                             </tr>
@@ -156,7 +145,7 @@
                                     修改密码请点击
                                 </td>
                                 <td class="text-center">
-                                    <a href="" style="color: red;"><b>修改密码</b><a>
+                                    <a href="${basePath}/user/updatePswd2.shtml" style="color: red;"><b>修改密码</b><a>
                                 </td>
                             </tr>
                             <tr>
@@ -165,6 +154,7 @@
                                 <td class="text-center">最后登录时间：</td>
                                 <td class="text-center">${userInfo.lastLoginTime?string('yyyy-MM-dd hh:mm:ss')}</td>
                             </tr>
+
 
                             <tr>
                                 <th class="text-center" colspan="4">
@@ -177,6 +167,26 @@
                     </form>
                 </div>
 
+            </div>
+
+            <div class="row">
+                <div class="col-md-12 col-sm-12 col-xs-12">
+                    <div class="x_panel">
+                    <div class="x_title">
+                        <h2>拥有的权限： </h2>
+                        <ul class="nav navbar-right panel_toolbox">
+                            <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                            </li>
+                            <li><a class="close-link"><i class="fa fa-close"></i></a>
+                            </li>
+                        </ul>
+                        <div class="clearfix"></div>
+                    </div>
+                    <div class="x_content">
+                            <div id="getPermissionTree" >loding... ...</div>
+                    </div>
+                    </div>
+                </div>
             </div>
         </div>
         <!-- /页面内容 -->
@@ -260,6 +270,28 @@
                 }
             });
         });
+    });
+</script>
+
+<!-- treeview 我的权限加载JS-->
+<script  src="${basePath}/js/common/bootstrap/bootstrap-treeview.js"></script>
+<script >
+    $(function(){
+        //加载 permission tree data
+        var load = layer.load();
+        $.post("${basePath}/role/getPermissionTree.shtml",{},function(data){
+            layer.close(load);
+            if(data && !data.length){
+                return $("#getPermissionTree").html('<code>您没有任何权限。只有默认的个人中心。</code>'),!1;
+            }
+            $('#getPermissionTree').treeview({
+                levels: 1,//层级
+                color: "#428bca",
+                nodeIcon: "glyphicon glyphicon-user",
+                showTags: true,//显示数量
+                data: data//数据
+            });
+        },'json');
     });
 </script>
 
