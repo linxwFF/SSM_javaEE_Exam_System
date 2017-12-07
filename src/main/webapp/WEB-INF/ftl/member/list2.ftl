@@ -86,14 +86,24 @@
                             <div class="alert alert-warning hidden">
                                 状态
                             </div>
-			            <span class="section">
-			            <button id="delete" type="button" class="btn btn-danger">删除选中的行</button>
-			            </span>
+                            <!-- 判读是否拥有查看用户信息的权限 -->
+                            <@shiro.hasPermission name="/member/get_user_info/**">
+                                <input type="hidden" name="hasGetDetail" value="1">
+                            </@shiro.hasPermission>
+                            <!-- 判读是否拥有删除用户的权限 -->
+                            <@shiro.hasPermission name="/member/deleteUserById.shtml">
+                                <input type="hidden" name="hasDel" value="1">
+                            </@shiro.hasPermission>
+                            <!-- 判读是否拥有禁止激活用户的权限 -->
+                            <@shiro.hasPermission name="/member/forbidUserById.shtml">
+                                <input type="hidden" name="hasFor" value="1">
+                            </@shiro.hasPermission>
+
                             <table id="table" class="table table-hover table-bordered table-condensed " cellspacing="0" width="100%">
                                 <thead>
                                 <tr>
                                     <th></th>
-                                    <th><input name="selectAll" type="checkbox" /></th>
+                                    <th></th>
                                     <th>ID</th>
                                     <th>姓名</th>
                                     <th>邮箱</th>
@@ -129,6 +139,8 @@
 <script type="text/javascript" charset="utf8" src="${basePath}/static/src/js/layer/layer.js"></script>
 <!-- 自定义扩展JS -->
 <script src="${basePath}/static/build/js/custom.js"></script>
+<!-- 退出url -->
+<script baseUrl="${basePath}" src="${basePath}/static/build/js/user.login.js"></script>
 <!-- Datatables -->
 <script type="text/javascript" charset="utf8" src="${basePath}/static/assets/js/jquery.dataTables.min.js"></script>
 <script type="text/javascript" charset="utf8" src="${basePath}/static/build/js/loadDate_menber_list.js"></script>

@@ -27,8 +27,8 @@
 
     <ul class="nav side-menu">
 
-            <li class="${(index==1)?string('active','')}"><a><i class="fa fa-edit"></i> 个人中心 <span class="fa fa-chevron-down"></span></a>
-                <ul class="nav child_menu" style="display: ${(index==1)?string('block','none')}" >
+            <li ><a><i class="fa fa-edit"></i> 个人中心 <span class="fa fa-chevron-down"></span></a>
+                <ul class="nav child_menu"  >
                     <li><a href="${basePath}/user/index.shtml">个人资料</a></li>
                     <li><a href="${basePath}/user/updatePswd2.shtml">密码修改</a></li>
                 </ul>
@@ -36,8 +36,8 @@
 
         <@shiro.hasAnyRoles name='888888,100002'>
         <#--拥有 角色888888（管理员） ||  100002（用户中心）-->
-            <li class="${(index==2)?string('active','')}"><a><i class="fa fa-edit"></i> 用户中心 <span class="fa fa-chevron-down"></span></a>
-                <ul class="nav child_menu" style="display: ${(index==2)?string('block','none')}">
+            <li "><a><i class="fa fa-edit"></i> 用户中心 <span class="fa fa-chevron-down"></span></a>
+                <ul class="nav child_menu" >
                     <@shiro.hasPermission name="/member/list.shtml">
                     <li><a href="${basePath}/member/list.shtml">用户列表</a></li>
                     </@shiro.hasPermission>
@@ -51,8 +51,8 @@
 
         <@shiro.hasAnyRoles name='888888,100003'>
         <#--拥有 角色888888（管理员） ||  100003（权限频道）-->
-            <li class="${(index==3)?string('active','')}"><a><i class="fa fa-edit"></i> 权限管理 <span class="fa fa-chevron-down"></span></a>
-                <ul class="nav child_menu" style="display: ${(index==3)?string('block','none')}">
+            <li "><a><i class="fa fa-edit"></i> 权限管理 <span class="fa fa-chevron-down"></span></a>
+                <ul class="nav child_menu" >
                     <@shiro.hasPermission name="/role/index.shtml">
                         <li><a href="${basePath}/role/index.shtml">角色列表</a></li>
                     </@shiro.hasPermission>

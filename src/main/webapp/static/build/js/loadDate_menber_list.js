@@ -1,3 +1,44 @@
+/*
+ *激活 | 禁止用户登录
+ */
+function forbidUserById(status,id){
+    if(id == 1){
+        layer.msg('管理员帐号无法操作');
+        return;
+    }
+    var text = status?'激活登录':'禁止登录';
+    var index = layer.confirm("确定"+text+"这个用户？",function(){
+        var load = layer.load();
+        $.post('/member/forbidUserById.shtml',{status:status,id:id},function(result){
+            layer.close(load);
+            if(result && result.status != 200){
+                return layer.msg(result.message,so.default),!0;
+            }else{
+                layer.msg(text +'成功');
+                var forItem = $("#forItem_"+id);
+
+                if(text=="激活登录"){
+                    forItem.text("禁止登录");
+
+                    var text1 = "javascript:forbidUserById(0,"+id+")";
+                    forItem.attr("href",text1);
+
+                    forItem.removeClass("btn-success");
+                    forItem.addClass("btn-danger");
+                }else{
+                    forItem.text("激活登录");
+
+                    var text1 = "javascript:forbidUserById(1,"+id+")";
+                    forItem.attr("href",text1);
+                    forItem.removeClass("btn-danger");
+                    forItem.addClass("btn-success");
+                }
+
+            }
+        },'json');
+        layer.close(index);
+    });
+}
 
 (function() {
     'use strict';
@@ -58,23 +99,42 @@ function initTable() {
               "orderable": true,
               "sDefaultContent" : "",
               "sWidth" : "10%",
-            },{ "mData": "createTime",
+            },{ "mData": "null",
               "orderable": true,
               "sDefaultContent" : "",
               "sWidth" : "10%",
-
-            },{ "mData": "lastLoginTime",
+                // 格式化时间戳
+                "render": function(data, type, full) {
+                    var dt = new Date(full.createTime);
+                    return dt.Format("yyyy-MM-dd HH:mm:ss");
+                }
+            },{ "mData": "null",
               "orderable": false,
               "sDefaultContent" : "",
               "sWidth" : "10%",
+                "render": function(data, type, full) {
+                    var dt = new Date(full.lastLoginTime);
+                    return dt.Format("yyyy-MM-dd HH:mm:ss");;
+                }
             },{ "mData": "null",
               "orderable": false,
               "sDefaultContent" : "",
               "sWidth" : "10%",
                 // 返回自定义内容
                 "render": function(data, type, full) {
-                    return "<a type='button' class='btn btn-warning btn-sm' href='/admin/userManage/" + full.id + "/edit'>详情</a>&nbsp; "
-                    + "<a type='button' class='delete btn btn-danger btn-sm' href='javascript:void(0);' >删除</a>";
+                    var html = "";
+
+                    if($("input[name='hasGetDetail']").length > 0 && $("input[name='hasGetDetail']").length)
+                    {
+                        html +="<a type='button' class='btn btn-warning btn-sm' href='/member/get_user_info/" + full.id + ".shtml'>详情</a>";
+                    }
+
+                    if($("input[name='hasDel']").length > 0 && $("input[name='hasDel']").length)
+                    {
+                        html += "<a type='button' class='delete btn btn-danger btn-sm' href='javascript:void(0);' >删除</a>";
+                    }
+
+                    return html;
                 }
             },
         ],
@@ -98,79 +158,11 @@ function initTable() {
         "sProcessing": "<img src='/static/assets/img/loading.gif' />",
         "sSearch": "搜索"
         },
-        // 初始化回调函数
-        // initComplete:initComplete,
-        // drawCallback: function( settings) {
-        //     $('input[name=selectAll]')[0].checked = false; //取消全选状态
-        // }
     });
 
 //----------------------------自定义操作------------------------
 
-
-    ////单击行，改变行的样式
-    //$('#table tbody').on('click', 'tr', function () {
-    //    //联动checkbox 选中状态
-    //    $($(this).children()[0]).children().each(function(){
-    //        if(!this.checked){
-		//			this.checked = true;
-    //            }else{
-		//			this.checked = false;
-		//		}
-    //    });
-    //   $(this).toggleClass('selected');
-    //} );
-
-
-    //删除选中行
-    $('#delete').click( function () {
-       var Tdata = new Array();
-       var ids = new Array();
-       var table = $('#table').DataTable(); //获取DataTable对象
-       Tdata = table.rows('.selected').data(); //获取选择行对象
-       for (var i = 0; i < Tdata.length; i++) {
-           ids[i] = Tdata[i]['id'];
-       }
-       if(ids.length<1){
-           layer.alert('请至少选择一个');
-	   }else{
-           layer.msg('确定删除这些项目？', {
-            time: 0
-            ,btn: ['确定', '取消']
-            ,yes: function(index){
-              layer.close(index);
-              var url = '/admin/userManage/destroy_many';
-              var csrfToken = $("meta[name='csrf-token']").attr("content");
-              var data = {
-                  _token : csrfToken,
-                  ids : ids,
-              };
-
-              var result = Util.ajaxHelper(url, 'POST', data);
-              if(result.is_true){
-                    table.rows('.selected').remove().draw( true ); //删除选中行
-                    Util.notify(result.data.message, 1);
-                }
-              }
-           });
-
-	   }
-    } );
-
-    // 全选按钮被点击事件
-    $('input[name=selectAll]').click(function(){
-        if(this.checked){
-            $('#table tbody tr').each(function(){
-                if(!$(this).hasClass('selected')){
-                    $(this).click();
-                }
-            });
-        }else{
-            $('#table tbody tr').click();
-        }
-    });
-
-
+    //单个选中删除按钮事件
     $('#table tbody').on('click', 'a.delete', function(e) {
        e.preventDefault();
 
@@ -178,35 +170,44 @@ function initTable() {
        var row = table.row($(this).parents('tr'))
        var id = row.data().id; //获取选中行数据.id
 
-        layer.msg('确定删除？', {
-         time: 0
-         ,btn: ['确定', '取消']
-         ,yes: function(index){
-           layer.close(index);
-           var url = '/admin/userManage/' + id;
-           var csrfToken = $("meta[name='csrf-token']").attr("content");
-           var data = {
-               _token: csrfToken
-           };
-
-           var result = Util.ajaxHelper(url, 'DELETE', data);
-           if(result.is_true){
-               row.remove().draw( true ); //删除选择行
-               Util.notify(result.data.message, 1);
-           }
-           }
+       var index =  layer.confirm("确定这个用户？",function(){
+            var load = layer.load();
+            $.post('/member/deleteUserById.shtml',{ids:id},function(result){
+                layer.close(load);
+                if(result && result.status != 200){
+                    layer.msg(result.message);
+                    return ;
+                }else{
+                    row.remove().draw( true ); //删除选择行
+                    layer.msg(result.message);
+                }
+            },'json');
+            layer.close(index);
         });
+
     });
 
     /* 格式化每一行的数据隐藏格式 */
     function format ( d ) {
         // `d` is the original data object for the row
+        var id = d.id;
         var real_name = d.real_name == undefined ? '未设置' : d.real_name;
         var identityNumber = d.identityNumber == undefined ? '未设置' : d.identityNumber;
         var address = d.address == undefined ? '未设置' : d.address;
         var tel = d.tel == undefined ? '未设置' : d.tel;
-        var status = d.status == 1 ? '激活' : '禁止';
-        var updateTime = d.updateTime;
+
+        var html_status = "";
+        var status = d.status == 1 ? 0 : 1;
+        var status_text = d.status == 1 ? '禁止登录' : '激活登录';
+        var status_class = d.status == 1 ? 'btn-danger' : 'btn-success';
+
+        if($("input[name='hasFor']").length > 0 && $("input[name='hasFor']").length)
+        {
+            html_status += '<a id="forItem_'+id+'" type="button" class="forbid btn '+status_class+' btn-sm" href="javascript:forbidUserById('+status+','+id+')">'+status_text+'</a>';
+        }
+
+        var dt = new Date(d.updateTime);
+        var updateTime = dt.Format("yyyy-MM-dd HH:mm:ss");
 
         var html = '<table class="table table-striped table-bordered dataTable no-footer dtr-inline" width="100%"  cellspacing="0" border="0">'+
 
@@ -226,7 +227,9 @@ function initTable() {
 
         '<tr>'+
         '<td>状态:</td>'+
-        '<td>'+status+'</td>'+
+        '<td>'+html_status+'</td>'+
+        '<td>更新时间:</td>'+
+        '<td>'+updateTime+'</td>'+
         '</tr>'+
 
         '</table>';
@@ -248,6 +251,5 @@ function initTable() {
             tr.addClass('shown');
         }
     } );
-
 }
 })();

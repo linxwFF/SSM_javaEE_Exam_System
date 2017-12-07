@@ -26,9 +26,9 @@ public class UUser implements Serializable{
     private Long status;
 
     //问题
-    private String question;
+    private transient String question;
     //密码
-    private String answer;
+    private transient String answer;
     //地址
     private String address;
     //身份证号码

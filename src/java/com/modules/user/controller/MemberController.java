@@ -8,6 +8,7 @@ import com.modules.core.shiro.session.CustomSessionManager;
 import com.modules.core.shiro.token.manager.TokenManager;
 import com.modules.user.bo.UserOnlineBo;
 import com.modules.user.service.UUserService;
+import org.apache.shiro.authz.annotation.RequiresRoles;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -19,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -54,22 +56,18 @@ public class MemberController extends BaseController {
 	//dataTables 返回json数据
 	@RequestMapping(value="list_table")
 	@ResponseBody
-	public String list_Table(ModelMap map){
+	public Map<String,List<UUser>> list_Table(){
 		List<UUser> userList = userService.findAllTable();
+		Map<String,List<UUser>> map = new HashMap<>();
 		map.put("data", userList);
-		String jsonString = JSON.toJSONString(map);
-		return jsonString;
+		return map;
 	}
 
-	//用户信息详情
+	//获取指定的用户的信息详情
 	@RequestMapping(value="get_user_info/{id}",method=RequestMethod.GET)
 	@ResponseBody
-	public String getUserInfo(@PathVariable("id") long userId,ModelMap map){
-		UUser user = userService.selectByPrimaryKey(userId);
-		map.put("data", user);
-		String jsonString = JSON.toJSONString(map);
-		return jsonString;
-//		return new ModelAndView("user/index","userInfo",user);
+	public UUser getUserInfo(@PathVariable("id") long userId){
+		return userService.selectByPrimaryKey(userId);
 	}
 
 
@@ -80,7 +78,7 @@ public class MemberController extends BaseController {
 	@RequestMapping(value="online")
 	public ModelAndView online(){
 		List<UserOnlineBo> list = customSessionManager.getAllUser();
-		return new ModelAndView("member/online2","list",list);
+		return new ModelAndView("member/online","list",list);
 	}
 
 	//在线用户列表
@@ -122,7 +120,12 @@ public class MemberController extends BaseController {
 	@RequestMapping(value="deleteUserById",method=RequestMethod.POST)
 	@ResponseBody
 	public Map<String,Object> deleteUserById(String ids){
-		return userService.deleteUserById(ids);
+		Map<String,Object> resultMap = new HashMap<String,Object>();
+		resultMap.put("status", 200);
+		resultMap.put("count", 1);
+		resultMap.put("message","假装删除成功了");
+		return resultMap;
+		//return userService.deleteUserById(ids);	//真正的删除
 	}
 	/**
 	 * 禁止登录
