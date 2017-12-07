@@ -99,21 +99,21 @@ function initTable() {
               "orderable": true,
               "sDefaultContent" : "",
               "sWidth" : "10%",
-            },{ "mData": "null",
+            },{ "mData": "createTime",
               "orderable": true,
               "sDefaultContent" : "",
               "sWidth" : "10%",
                 // 格式化时间戳
                 "render": function(data, type, full) {
-                    var dt = new Date(full.createTime);
+                    var dt = new Date(data);
                     return dt.Format("yyyy-MM-dd HH:mm:ss");
                 }
-            },{ "mData": "null",
+            },{ "mData": "lastLoginTime",
               "orderable": false,
               "sDefaultContent" : "",
               "sWidth" : "10%",
                 "render": function(data, type, full) {
-                    var dt = new Date(full.lastLoginTime);
+                    var dt = new Date(data);
                     return dt.Format("yyyy-MM-dd HH:mm:ss");;
                 }
             },{ "mData": "null",

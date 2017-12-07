@@ -26,7 +26,7 @@ public class UserCoreController extends BaseController {
 	UUserService userService;
 
 	/**
-	 * 个人资料 = 需要自己再构建 用户数据回传给前端页面
+	 * 个人资料
 	 * @return
 	 */
 	@RequestMapping(value="index",method=RequestMethod.GET)

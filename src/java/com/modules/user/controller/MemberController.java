@@ -63,7 +63,13 @@ public class MemberController extends BaseController {
 		return map;
 	}
 
-	//获取指定的用户的信息详情
+	/**
+	 * //获取指定的用户的信息详情
+	 * 直接放过了权限限制  查看resources/shiro/shiro_base_auth.ini 配置文件
+	 * @param userId
+	 * @return
+     */
+
 	@RequestMapping(value="get_user_info/{id}",method=RequestMethod.GET)
 	@ResponseBody
 	public UUser getUserInfo(@PathVariable("id") long userId){
@@ -78,7 +84,7 @@ public class MemberController extends BaseController {
 	@RequestMapping(value="online")
 	public ModelAndView online(){
 		List<UserOnlineBo> list = customSessionManager.getAllUser();
-		return new ModelAndView("member/online","list",list);
+		return new ModelAndView("member/online2","list",list);
 	}
 
 	//在线用户列表
@@ -93,7 +99,8 @@ public class MemberController extends BaseController {
 
 
 	/**
-	 * 在线用户详情
+	 * //在线用户详情
+	 * 直接放过了权限限制  查看resources/shiro/shiro_base_auth.ini 配置文件
 	 * @return
 	 */
 	@RequestMapping(value="onlineDetails/{sessionId}",method=RequestMethod.GET)
@@ -101,6 +108,7 @@ public class MemberController extends BaseController {
 		UserOnlineBo bo = customSessionManager.getSession(sessionId);
 		return new ModelAndView("member/onlineDetails","bo",bo);
 	}
+
 	/**
 	 * 改变Session状态
 	 * @param status
@@ -136,6 +144,7 @@ public class MemberController extends BaseController {
 	@RequestMapping(value="forbidUserById",method=RequestMethod.POST)
 	@ResponseBody
 	public Map<String,Object> forbidUserById(Long id,Long status){
+
 		return userService.updateForbidUserById(id,status);
 	}
 	

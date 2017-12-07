@@ -1,5 +1,5 @@
-
-var QuestionManage = (function() {
+//DataTable
+(function() {
     'use strict';
 
     $(document).ready(function() {
@@ -31,14 +31,12 @@ var QuestionManage = (function() {
                 // }
             },
             // 显示字段
-            "aoColumns": [{ "mData": null,
-                "orderable": false,
-                "sDefaultContent" : "",
+            "aoColumns": [{
+                "class":          $("input[name='hasGetDetail']").length > 0 && $("input[name='hasGetDetail']").length ?'details-control':'',
+                "orderable":      false,
+                "mData":           null,
+                "sDefaultContent": '',
                 "sWidth" : "5%",
-                // 返回自定义内容
-                "render": function(data, type, full) {
-                    return '<input name="selectItem" type="checkbox" value="' + full.sessionId + '" />';
-                },
             },{ "mData": "sessionId",
                 "orderable": false,
                 "sDefaultContent" : "",
@@ -55,22 +53,37 @@ var QuestionManage = (function() {
                 "orderable": true,
                 "sDefaultContent" : "",
                 "sWidth" : "10%",
+                // 格式化时间戳
+                "render": function(data, type, full) {
+                    var dt = new Date(data);
+                    return dt.Format("yyyy-MM-dd HH:mm:ss");
+                }
             },{ "mData": "lastLoginTime",
                 "orderable": false,
                 "sDefaultContent" : "",
                 "sWidth" : "10%",
+                // 格式化时间戳
+                "render": function(data, type, full) {
+                    var dt = new Date(data);
+                    return dt.Format("yyyy-MM-dd HH:mm:ss");
+                }
             },{ "mData": "sessionStatus",
                 "orderable": false,
                 "sDefaultContent" : "",
                 "sWidth" : "5%",
+                // 格式化时间戳
+                "render": function(data, type, full) {
+                    return data?"有效":"已踢出";
+                }
             },{ "mData": "null",
                 "orderable": false,
                 "sDefaultContent" : "",
                 "sWidth" : "10%",
                 // 返回自定义内容
                 "render": function(data, type, full) {
-                    return "<a type='button' class='btn btn-warning btn-sm' href='/admin/userManage/" + full.id + "/edit'>修改</a>&nbsp; "
-                        + "<a type='button' class='delete btn btn-danger btn-sm' href='javascript:void(0);' >删除</a>";
+                    if($("input[name='changeSessionStatus']").length > 0 && $("input[name='changeSessionStatus']").length) {
+                        return "<a type='button' class='btn btn-danger btn-sm kickout' href='javascript:void(0);' sessionid='" + full.sessionId + "' >踢出</a>";
+                    }
                 }
             },
             ],
@@ -91,7 +104,7 @@ var QuestionManage = (function() {
                     "sLast": "尾页"
                 },
                 "sZeroRecords": "没有检索到数据",
-                "sProcessing": "<img src='static/assets/img/loading.gif' />",
+                "sProcessing": "<img src='/static/assets/img/loading.gif' />",
                 "sSearch": "搜索"
             },
             // 初始化回调函数
@@ -102,97 +115,101 @@ var QuestionManage = (function() {
         });
 
 //----------------------------自定义操作------------------------
-
-
-        //单击行，改变行的样式
-        $('#table tbody').on('click', 'tr', function () {
-            //联动checkbox 选中状态
-            $($(this).children()[0]).children().each(function(){
-                if(!this.checked){
-                    this.checked = true;
-                }else{
-                    this.checked = false;
-                }
-            });
-            $(this).toggleClass('selected');
-        } );
-
-
-        //删除选中行
-        $('#delete').click( function () {
-            var Tdata = new Array();
-            var ids = new Array();
-            var table = $('#table').DataTable(); //获取DataTable对象
-            Tdata = table.rows('.selected').data(); //获取选择行对象
-            for (var i = 0; i < Tdata.length; i++) {
-                ids[i] = Tdata[i]['id'];
-            }
-            if(ids.length<1){
-                layer.alert('请至少选择一个');
-            }else{
-                layer.msg('确定删除这些项目？', {
-                    time: 0
-                    ,btn: ['确定', '取消']
-                    ,yes: function(index){
-                        layer.close(index);
-                        var url = '/admin/userManage/destroy_many';
-                        var csrfToken = $("meta[name='csrf-token']").attr("content");
-                        var data = {
-                            _token : csrfToken,
-                            ids : ids,
-                        };
-
-                        var result = Util.ajaxHelper(url, 'POST', data);
-                        if(result.is_true){
-                            table.rows('.selected').remove().draw( true ); //删除选中行
-                            Util.notify(result.data.message, 1);
-                        }
-                    }
-                });
-
-            }
-        } );
-
-        // 全选按钮被点击事件
-        $('input[name=selectAll]').click(function(){
-            if(this.checked){
-                $('#table tbody tr').each(function(){
-                    if(!$(this).hasClass('selected')){
-                        $(this).click();
-                    }
-                });
-            }else{
-                $('#table tbody tr').click();
-            }
-        });
-
-
-        $('#table tbody').on('click', 'a.delete', function(e) {
+        //单个选中删除按钮事件
+        $('#table tbody').on('click', 'a.kickout', function(e) {
             e.preventDefault();
 
             var table = $('#table').DataTable(); //获取DataTable对象
             var row = table.row($(this).parents('tr'))
-            var id = row.data().id; //获取选中行数据.id
+            var sessionId = row.data().sessionId; //获取选中行数据.id
+            var status = row.data().status?0:1;
 
-            layer.msg('确定删除？', {
-                time: 0
-                ,btn: ['确定', '取消']
-                ,yes: function(index){
-                    layer.close(index);
-                    var url = '/admin/userManage/' + id;
-                    var csrfToken = $("meta[name='csrf-token']").attr("content");
-                    var data = {
-                        _token: csrfToken
-                    };
-
-                    var result = Util.ajaxHelper(url, 'DELETE', data);
-                    if(result.is_true){
+            var index =  layer.confirm("确定踢出这个用户？",function(){
+                var load = layer.load();
+                $.post('/member/changeSessionStatus.shtml',{status:status,sessionIds:sessionId},function(result){
+                    layer.close(load);
+                    if(result && result.status != 200){
+                        return layer.msg(result.message,function(){}),!1;
+                    }else{
                         row.remove().draw( true ); //删除选择行
-                        Util.notify(result.data.message, 1);
+                        layer.msg(result.message);
                     }
-                }
+                },'json');
+                layer.close(index);
             });
+
         });
+
+        /* 格式化每一行的数据隐藏格式 */
+        function format ( d ) {
+            //session状态
+            var sessionId = d.sessionId == undefined ? '—' : d.sessionId;
+            var startTime = d.startTime == undefined ? '—' : d.startTime;
+            var lastAccess = d.lastAccess == undefined ? '—' : d.lastAccess;
+            var host = d.host == undefined ? '—' : d.host;
+            var timeout = d.timeout == undefined ? '—' : d.timeout;
+            var timeout_text = timeout+"(毫秒)= "+timeout/1000+"(秒)=" + timeout/1000/60+"(分钟)";
+
+            var real_name = d.real_name == undefined ? '未设置' : d.real_name;
+            var identityNumber = d.identityNumber == undefined ? '未设置' : d.identityNumber;
+            var address = d.address == undefined ? '未设置' : d.address;
+            var tel = d.tel == undefined ? '未设置' : d.tel;
+
+            var html = '<table class="table table-striped table-bordered dataTable no-footer dtr-inline" width="100%"  cellspacing="0" border="0">'+
+
+                '<tr>'+
+                '<td>Session Id:</td>'+
+                '<td>'+ sessionId +'</td>'+
+                '<td>Session创建时间:</td>'+
+                '<td>'+ startTime +'</td>'+
+                '</tr>'+
+
+                '<tr>'+
+                '<td>Session最后交互时间:</td>'+
+                '<td>'+ lastAccess +'</td>'+
+                '<td>Session Host:</td>'+
+                '<td>'+ host +'</td>'+
+                '</tr>'+
+
+                '<tr>'+
+                '<td>真实名字:</td>'+
+                '<td>'+ real_name +'</td>'+
+                '<td>身份证号码:</td>'+
+                '<td>'+ identityNumber +'</td>'+
+                '</tr>'+
+
+                '<tr>'+
+                '<td>地址:</td>'+
+                '<td>'+address+'</td>'+
+                '<td>tel(手机):</td>'+
+                '<td>'+tel+'</td>'+
+                '</tr>'+
+
+                '<tr>'+
+                '<td >Session timeout:</td>'+
+                '<td colspan="3">'+timeout_text+'</td>'+
+                '</tr>'+
+
+                '</table>';
+            return html;
+        }
+
+        // Add event listener for opening and closing details
+        $('#table tbody').on('click', 'td.details-control', function () {
+            var tr = $(this).closest('tr');
+            var row = table.row( tr );
+            if ( row.child.isShown() ) {
+                // This row is already open - close it
+                row.child.hide();
+                tr.removeClass('shown');
+            }
+            else {
+                // Open this row
+                row.child( format(row.data()) ).show();
+                tr.addClass('shown');
+            }
+        } );
+
 
     }
 })();

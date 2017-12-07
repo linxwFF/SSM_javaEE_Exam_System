@@ -37,6 +37,14 @@
             background-color:#00FFFF;
         }
 
+        td.details-control {
+            background: url('${basePath}/static/assets/img/details_open.png') no-repeat center center;
+            cursor: pointer;
+        }
+        tr.shown td.details-control {
+            background: url('${basePath}/static/assets/img/details_close.png') no-repeat center center;
+        }
+
 
     </style>
 </head>
@@ -69,41 +77,24 @@
                             <!-- 右侧工具栏 -->
                             <ul class="nav navbar-right panel_toolbox">
                                 <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a></li>
-                                <li class="dropdown">
-                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
-
-                                    <ul class="dropdown-menu" role="menu">
-                                        <li><a href="#">Settings 1</a></li>
-                                        <li><a href="#">Settings 2</a></li>
-                                    </ul>
-                                </li>
                                 <li><a class="close-link"><i class="fa fa-close"></i></a></li>
                             </ul>
 
                             <div class="clearfix"></div>
                         </div>
                         <div class="x_content">
-                            <!-- 验证 -->
-                            <div class="alert alert-warning">
-                                状态
-                            </div>
 			            <span class="section">
-			            <button id="delete" type="button" class="btn btn-danger">删除选中的行</button>
+			                <p>这里是在线已经登录的有效Session，不能等同于当前在线用户，来源于Redis。</p>
 			            </span>
+                            <!-- 判读是否拥有查看Session信息的权限 -->
+                            <input type="hidden" name="hasGetDetail" value="1">
+                            <!-- 判读是否拥有查看改变Session状态的权限 -->
+                        <@shiro.hasPermission name="/member/changeSessionStatus.shtml">
+                            <input type="hidden" name="changeSessionStatus" value="1">
+                        </@shiro.hasPermission>
+
                             <table id="table" class="table table-hover table-bordered table-condensed " cellspacing="0" width="100%">
                                 <thead>
-                                <tr>
-                                    <th><input name="selectAll" type="checkbox" /></th>
-                                    <th>SessionID</th>
-                                    <th>昵称</th>
-                                    <th>Email/帐号</th>
-                                    <th>创建回话</th>
-                                    <th>回话最后活动</th>
-                                    <th>状态</th>
-                                    <th>操作</th>
-                                </tr>
-                                </thead>
-                                <tfoot>
                                 <tr>
                                     <th></th>
                                     <th>SessionID</th>
@@ -114,7 +105,7 @@
                                     <th>状态</th>
                                     <th>操作</th>
                                 </tr>
-                                </tfoot>
+                                </thead>
                                 <tbody>
                                 </tbody>
                             </table>
