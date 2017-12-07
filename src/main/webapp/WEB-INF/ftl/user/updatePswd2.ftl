@@ -15,6 +15,8 @@
     <link href="${basePath}/static/vendors/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- Font Awesome -->
     <link href="${basePath}/static/vendors/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+    <!-- NProgress -->
+    <link href="${basePath}/static//vendors/nprogress/nprogress.css" rel="stylesheet">
     <!-- 自定义样式 -->
     <link href="${basePath}/static/build/css/custom.css" rel="stylesheet">
     <style>
@@ -159,6 +161,8 @@
 <script src="${basePath}/static/vendors/jquery/dist/jquery.min.js "></script>
 <!-- Bootstrap -->
 <script src="${basePath}/static/vendors/bootstrap/dist/js/bootstrap.min.js "></script>
+<!-- NProgress -->
+<script src="${basePath}/static/vendors/nprogress/nprogress.js"></script>
 <!-- 工具类 -->
 <script src="${basePath}/static/src/js/util.js "></script>
 <!-- Layer -->

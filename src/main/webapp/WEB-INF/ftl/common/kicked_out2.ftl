@@ -28,9 +28,9 @@
         <div class="col-md-12">
             <div class="col-middle">
                 <div class="text-center text-center">
-                    <h1 class="error-number">404</h1>
-                    <h2>Sorry but we couldn't find this page</h2>
-                    <p>This page you are looking for does not exist <a href="${basePath}/user/index.shtml"><span style="color:red;">主页</span></a>
+                    <h1 class="error-number">被T出系统！</h1>
+                    <h2>系统提示</h2>
+                    <p>您已经被系统踢出。请重新登录或者联系管理员！ <a href="${basePath}/u/login.shtml"><span style="color:red;">登录</span></a>
                     </p>
                     <div class="mid_center">
                         <h3>Search</h3>

@@ -182,7 +182,7 @@ public class CommonController extends BaseController {
 		if(StringUtils.isBlank(request.getHeader("Referer"))){
 			return redirect("/");
 		}
-		return new ModelAndView("common/kicked_out");
+		return new ModelAndView("common/kicked_out2");
 	}
 	/**
 	 * 没有权限提示页面

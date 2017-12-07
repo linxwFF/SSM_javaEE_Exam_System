@@ -35,18 +35,18 @@
                 <div class="m-b"></div>
                 <h4>欢迎使用 <strong>模拟考试系统</strong></h4>
                 <ul class="m-b">
-                    <li><i class="fa fa-arrow-circle-o-right m-r-xs"></i> 优势一</li>
-                    <li><i class="fa fa-arrow-circle-o-right m-r-xs"></i> 优势二</li>
-                    <li><i class="fa fa-arrow-circle-o-right m-r-xs"></i> 优势三</li>
-                    <li><i class="fa fa-arrow-circle-o-right m-r-xs"></i> 优势四</li>
-                    <li><i class="fa fa-arrow-circle-o-right m-r-xs"></i> 优势五</li>
+                    <li><i class="fa fa-arrow-circle-o-right m-r-xs"></i> 优势一 <p><b>全真模拟：</b>全面模拟机考流程，给考生最贴近实际的机考体验</p></li>
+                    <li><i class="fa fa-arrow-circle-o-right m-r-xs"></i> 优势二 <p><b>名师题库：</b>顶级名师团队精心编写，题型全面，覆盖各类考点</p></li>
+                    <li><i class="fa fa-arrow-circle-o-right m-r-xs"></i> 优势三 <p><b>随机组卷：</b>模拟机考随机精选试题组卷，含金量高，直击考试</p></li>
+                    <li><i class="fa fa-arrow-circle-o-right m-r-xs"></i> 优势四 <p><b>错题分析：</b>错题大数据分析，针对个人，提高通过率，错题加强练习</p></li>
+                    <li><i class="fa fa-arrow-circle-o-right m-r-xs"></i> 优势五 <p><b>随机组卷：</b>模拟机考随机精选试题组卷，含金量高，直击考试</p></li>
                 </ul>
                 <strong>还没有账号？ <a href="#" id="register">立即注册&raquo;</a></strong><br />
                 <strong>试用账号获取 <a href="#" >立即获取&raquo;</a></strong>
             </div>
         </div>
 
-        <div class="col-sm-5">
+        <div class="col-sm-5" style="margin-top:80px;">
             <div class="alert alert-danger hidden" id="error">
                 <ul style="color:red;">
                     <li id="errorMsg"> </li>
