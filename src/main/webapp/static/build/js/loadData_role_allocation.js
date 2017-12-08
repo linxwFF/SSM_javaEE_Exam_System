@@ -23,7 +23,8 @@
 
             // ajax请求
             "ajax": {
-                'url' : '/role/allocation_table.shtml', //请求地址
+                'url' : '/role/allocation.shtml', //请求地址
+                type:"POST",
                 //传递额外参数 (条件搜索)
                 // 'data' : function (d) {
                 //     d.test = 1;

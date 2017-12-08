@@ -39,13 +39,13 @@ public class RoleController extends BaseController {
 //		return new ModelAndView("role/index","page",role);
 //	}
 
-	@RequestMapping(value="index")
+	@RequestMapping(value="index",method = RequestMethod.GET)
 	public ModelAndView index(){
 		return new ModelAndView("role/index2");
 	}
 
 	//角色列表 数据
-	@RequestMapping(value="role_table")
+	@RequestMapping(value="index",method = RequestMethod.POST)
 	@ResponseBody
 	public String online_Table(ModelMap map){
 		List<URole> list = roleService.findAllRole();

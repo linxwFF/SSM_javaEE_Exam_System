@@ -13,6 +13,7 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -48,13 +49,13 @@ public class PermissionAllocationController extends BaseController {
 //		return new ModelAndView("permission/allocation");
 //	}
 
-	@RequestMapping(value="allocation")
+	@RequestMapping(value="allocation",method = RequestMethod.GET)
 	public ModelAndView allocation(){
 		return new ModelAndView("permission/allocation2");
 	}
 
 	//权限分配 _table
-	@RequestMapping(value="allocation_table")
+	@RequestMapping(value="allocation",method = RequestMethod.POST)
 	@ResponseBody
 	public String allocation(ModelMap map){
 

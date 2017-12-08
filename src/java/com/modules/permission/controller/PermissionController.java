@@ -48,13 +48,13 @@ public class PermissionController extends BaseController {
 	/**
 	 * 权限列表
 	 */
-	@RequestMapping(value="index")
+	@RequestMapping(value="index",method = RequestMethod.GET)
 	public ModelAndView allocation(){
 		return new ModelAndView("permission/index2");
 	}
 
 	//权限列表 _table
-	@RequestMapping(value="list_table")
+	@RequestMapping(value="index",method = RequestMethod.POST)
 	@ResponseBody
 	public String allocation(ModelMap map){
 

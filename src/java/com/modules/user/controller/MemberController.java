@@ -54,7 +54,7 @@ public class MemberController extends BaseController {
 	 * @return
 	 */
 	//dataTables 返回json数据
-	@RequestMapping(value="list_table")
+	@RequestMapping(value="list",method=RequestMethod.POST)
 	@ResponseBody
 	public Map<String,List<UUser>> list_Table(){
 		List<UUser> userList = userService.findAllTable();
@@ -81,14 +81,14 @@ public class MemberController extends BaseController {
 	 * 在线用户管理
 	 * @return
 	 */
-	@RequestMapping(value="online")
+	@RequestMapping(value="online",method = RequestMethod.GET)
 	public ModelAndView online(){
 		List<UserOnlineBo> list = customSessionManager.getAllUser();
 		return new ModelAndView("member/online2","list",list);
 	}
 
 	//在线用户列表
-	@RequestMapping(value="online_table")
+	@RequestMapping(value="online",method = RequestMethod.POST)
 	@ResponseBody
 	public String online_Table(ModelMap map){
 		List<UserOnlineBo> list = customSessionManager.getAllUser();

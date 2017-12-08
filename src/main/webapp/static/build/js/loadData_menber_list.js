@@ -65,7 +65,8 @@ function initTable() {
 
         // ajax请求
         "ajax": {
-            'url' : '/member/list_table.shtml', //请求地址
+            'url' : '/member/list.shtml', //请求地址
+            type:"POST",
             //传递额外参数 (条件搜索)
             // 'data' : function (d) {
             //     d.test = 1;

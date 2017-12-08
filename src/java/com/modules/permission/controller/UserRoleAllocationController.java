@@ -12,6 +12,7 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -45,13 +46,13 @@ public class UserRoleAllocationController extends BaseController {
 	/**
 	 * 用户角色权限分配
 	 */
-	@RequestMapping(value="allocation")
+	@RequestMapping(value="allocation",method = RequestMethod.GET)
 	public ModelAndView allocation(){
 		return new ModelAndView("role/allocation2");
 	}
 
 	//用户角色权限 数据
-	@RequestMapping(value="allocation_table")
+	@RequestMapping(value="allocation",method = RequestMethod.POST)
 	@ResponseBody
 	public String allocationTable(ModelMap map){
 		List<UserRoleAllocationBo> list = userService.findAllUserAndRole();
