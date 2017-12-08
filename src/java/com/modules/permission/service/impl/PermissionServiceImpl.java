@@ -189,5 +189,10 @@ public class PermissionServiceImpl extends BaseMybatisDao<UPermissionMapper> imp
 		return permissionMapper.findPermissionByUserId(userId);
 	}
 
-	
+	@Override
+	public List<UPermission> findAllPermission() {
+		return permissionMapper.findAllPermission();
+	}
+
+
 }

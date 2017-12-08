@@ -1,10 +1,12 @@
 package com.modules.permission.controller;
 
+import com.alibaba.fastjson.JSON;
 import com.common.controller.BaseController;
 import com.common.model.UPermission;
 import com.common.utils.LoggerUtils;
 import com.modules.core.mybatis.page.Pagination;
 import com.modules.permission.service.PermissionService;
+import com.modules.user.bo.UserOnlineBo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
@@ -14,27 +16,13 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
- * 
- * 开发公司：itboy.net<br/>
- * 版权：itboy.net<br/>
- * <p>
- * 
  * 用户权限管理
- * 
- * <p>
- * 
- * 区分　责任人　日期　　　　说明<br/>
- * 创建　周柏成　2016年5月26日 　<br/>
- * <p>
- * *******
- * <p>
- * @author zhou-baicheng
- * @email  i@itboy.net
- * @version 1.0,2016年5月26日 <br/>
- * 
+ *
  */
 @Controller
 @Scope(value="prototype")
@@ -50,12 +38,32 @@ public class PermissionController extends BaseController {
 	 * @param modelMap		参数回显
 	 * @return
 	 */
+//	@RequestMapping(value="index")
+//	public ModelAndView index(String findContent,ModelMap modelMap,Integer pageNo){
+//		modelMap.put("findContent", findContent);
+//		Pagination<UPermission> permissions = permissionService.findPage(modelMap,pageNo,pageSize);
+//		return new ModelAndView("permission/index","page",permissions);
+//	}
+
+	/**
+	 * 权限列表
+	 */
 	@RequestMapping(value="index")
-	public ModelAndView index(String findContent,ModelMap modelMap,Integer pageNo){
-		modelMap.put("findContent", findContent);
-		Pagination<UPermission> permissions = permissionService.findPage(modelMap,pageNo,pageSize);
-		return new ModelAndView("permission/index","page",permissions);
+	public ModelAndView allocation(){
+		return new ModelAndView("permission/index2");
 	}
+
+	//权限列表 _table
+	@RequestMapping(value="list_table")
+	@ResponseBody
+	public String allocation(ModelMap map){
+
+		List<UPermission> uPermissionList = permissionService.findAllPermission();
+		map.put("data",uPermissionList);
+		String jsonString = JSON.toJSONString(map);
+		return jsonString;
+	}
+
 	/**
 	 * 权限添加
 	 * @param role
@@ -83,6 +91,13 @@ public class PermissionController extends BaseController {
 	@RequestMapping(value="deletePermissionById",method=RequestMethod.POST)
 	@ResponseBody
 	public Map<String,Object> deleteRoleById(String ids){
-		return permissionService.deletePermissionById(ids);
+
+		Map<String,Object> resultMap = new HashMap<String,Object>();
+		resultMap.put("status", 200);
+		resultMap.put("count", 1);
+		resultMap.put("message","假装删除成功了");
+		return resultMap;
+
+//		return permissionService.deletePermissionById(ids);
 	}
 }
