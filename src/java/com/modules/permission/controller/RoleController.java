@@ -89,16 +89,18 @@ public class RoleController extends BaseController {
 
 //		return roleService.deleteRoleById(ids);
 	}
+
+//	/**
+//	 * 我的权限页面
+//	 * @return
+//	 */
+//	@RequestMapping(value="mypermission",method=RequestMethod.GET)
+//	public ModelAndView mypermission(){
+//		return new ModelAndView("permission/mypermission");
+//	}
+
 	/**
-	 * 我的权限页面
-	 * @return
-	 */
-	@RequestMapping(value="mypermission",method=RequestMethod.GET)
-	public ModelAndView mypermission(){
-		return new ModelAndView("permission/mypermission");
-	}
-	/**
-	 * 我的权限 bootstrap tree data
+	 * 个人资料-我的权限 bootstrap tree data
 	 * @return
 	 */
 	@RequestMapping(value="getPermissionTree",method=RequestMethod.POST)

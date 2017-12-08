@@ -153,9 +153,11 @@
 <script type="text/javascript" charset="utf8" src="${basePath}/static/src/js/layer/layer.js"></script>
 <!-- 自定义扩展JS -->
 <script src="${basePath}/static/build/js/custom.js"></script>
+<!-- 退出url -->
+<script baseUrl="${basePath}" src="${basePath}/static/build/js/user.login.js"></script>
 <!-- Datatables -->
 <script type="text/javascript" charset="utf8" src="${basePath}/static/assets/js/jquery.dataTables.min.js"></script>
-<script type="text/javascript" charset="utf8" src="${basePath}/static/build/js/loadDate_role_list.js"></script>
+<script type="text/javascript" charset="utf8" src="${basePath}/static/build/js/loadData_role_list.js"></script>
 
 <script>
     <@shiro.hasPermission name="/role/addRole.shtml">
@@ -164,10 +166,10 @@
         var name = $('#name').val(),
                 type = $('#type').val();
         if($.trim(name) == ''){
-            return layer.msg('角色名称不能为空。',so.default),!1;
+            return layer.msg('角色名称不能为空。');
         }
         if(!/^[a-z0-9A-Z]{6}$/.test(type)){
-            return layer.msg('角色类型为6数字字母。',so.default),!1;
+            return layer.msg('角色类型为6数字字母。');
         }
     <#--loding-->
         var load = layer.load();

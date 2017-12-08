@@ -137,8 +137,10 @@
 <script type="text/javascript" charset="utf8" src="${basePath}/static/src/js/layer/layer.js"></script>
 <!-- 自定义扩展JS -->
 <script src="${basePath}/static/build/js/custom.js"></script>
+<!-- 退出url -->
+<script baseUrl="${basePath}" src="${basePath}/static/build/js/user.login.js"></script>
 <!-- Datatables -->
 <script type="text/javascript" charset="utf8" src="${basePath}/static/assets/js/jquery.dataTables.min.js"></script>
-<script type="text/javascript" charset="utf8" src="${basePath}/static/build/js/loadDate_menber_online.js"></script>
+<script type="text/javascript" charset="utf8" src="${basePath}/static/build/js/loadData_menber_online.js"></script>
 </body>
 </html>

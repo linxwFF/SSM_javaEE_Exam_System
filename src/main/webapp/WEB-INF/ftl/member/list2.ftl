@@ -147,6 +147,6 @@
 <script baseUrl="${basePath}" src="${basePath}/static/build/js/user.login.js"></script>
 <!-- Datatables -->
 <script type="text/javascript" charset="utf8" src="${basePath}/static/assets/js/jquery.dataTables.min.js"></script>
-<script type="text/javascript" charset="utf8" src="${basePath}/static/build/js/loadDate_menber_list.js"></script>
+<script type="text/javascript" charset="utf8" src="${basePath}/static/build/js/loadData_menber_list.js"></script>
 </body>
 </html>

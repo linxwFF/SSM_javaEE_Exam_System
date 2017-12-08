@@ -83,17 +83,19 @@
                             <div class="clearfix"></div>
                         </div>
                         <div class="x_content">
-                            <!-- 验证 -->
-                            <div class="alert alert-warning">
-                                状态
-                            </div>
-			            <span class="section">
-			            <button id="delete" type="button" class="btn btn-danger">删除选中的行</button>
-			            </span>
+                            <!-- 判读是否拥有清空用户权限的权限 -->
+                        <@shiro.hasPermission name="/role/clearRoleByUserIds.shtml">
+                            <input type="hidden" name="hasClearRole" value="1">
+                        </@shiro.hasPermission>
+                            <!-- 判读是否拥有分配用户角色的权限 -->
+                        <@shiro.hasPermission name="/role/addRole2User.shtml">
+                            <input type="hidden" name="hasAddRole" value="1">
+                        </@shiro.hasPermission>
+                            <#--存储用户id-->
+                            <input type="hidden" id="selectUserId">
                             <table id="table" class="table table-hover table-bordered table-condensed " cellspacing="0" width="100%">
                                 <thead>
                                 <tr>
-                                    <th><input name="selectAll" type="checkbox" /></th>
                                     <th>ID</th>
                                     <th>用户昵称</th>
                                     <th>Email/帐号</th>
@@ -102,17 +104,6 @@
                                     <th>操作</th>
                                 </tr>
                                 </thead>
-                                <tfoot>
-                                <tr>
-                                    <th></th>
-                                    <th>ID</th>
-                                    <th>用户昵称</th>
-                                    <th>Email/帐号</th>
-                                    <th>状态</th>
-                                    <th>拥有的角色</th>
-                                    <th>操作</th>
-                                </tr>
-                                </tfoot>
                                 <tbody>
                                 </tbody>
                             </table>
@@ -128,6 +119,30 @@
         <!-- 脚部内容 -->
     <@footer.footer 1/>
         <!-- /脚部内容  -->
+
+    <#--弹框-->
+        <div class="modal fade bs-example-modal-sm"  id="selectRole" tabindex="-1" role="dialog" aria-labelledby="selectRoleLabel">
+            <div class="modal-dialog modal-sm" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title" id="selectRoleLabel">添加角色</h4>
+                    </div>
+                    <div class="modal-body">
+                        <#--通过ajax请求加载角色信息到模态框-->
+                        <form id="boxRoleForm">
+                            loading...
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        <button type="button" onclick="selectRole();" class="btn btn-primary">Save</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    <#--/弹框-->
+
     </div>
 </div>
 <!-- jQuery -->
@@ -140,8 +155,39 @@
 <script type="text/javascript" charset="utf8" src="${basePath}/static/src/js/layer/layer.js"></script>
 <!-- 自定义扩展JS -->
 <script src="${basePath}/static/build/js/custom.js"></script>
+<!-- 退出url -->
+<script baseUrl="${basePath}" src="${basePath}/static/build/js/user.login.js"></script>
 <!-- Datatables -->
 <script type="text/javascript" charset="utf8" src="${basePath}/static/assets/js/jquery.dataTables.min.js"></script>
-<script type="text/javascript" charset="utf8" src="${basePath}/static/build/js/loadDate_role_allocation.js"></script>
+<script type="text/javascript" charset="utf8" src="${basePath}/static/build/js/loadData_role_allocation.js"></script>
+
+<script>
+
+    <@shiro.hasPermission name="/role/addRole2User.shtml">
+    <#--选择角色后保存-->
+    function selectRole(){
+        //全选操作
+        var checked = $("#boxRoleForm  :checked");
+        var ids=[],names=[];
+        $.each(checked,function(){
+            ids.push(this.id);
+            names.push($.trim($(this).attr('name')));
+        });
+        var index = layer.confirm("确定操作？",function(){
+        <#--loding-->
+            var load = layer.load();
+            $.post('/role/addRole2User.shtml',{ids:ids.join(','),userId:$('#selectUserId').val()},function(result){
+                layer.close(load);
+                if(result && result.status != 200){
+                    return layer.msg(result.message);
+                }
+                layer.msg('添加成功。');
+                location.reload();
+            },'json');
+        });
+    }
+    </@shiro.hasPermission>
+
+</script>
 </body>
 </html>

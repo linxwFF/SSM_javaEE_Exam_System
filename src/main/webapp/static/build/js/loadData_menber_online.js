@@ -71,7 +71,7 @@
                 "orderable": false,
                 "sDefaultContent" : "",
                 "sWidth" : "5%",
-                // 格式化时间戳
+                // 格式化状态
                 "render": function(data, type, full) {
                     return data?"有效":"已踢出";
                 }

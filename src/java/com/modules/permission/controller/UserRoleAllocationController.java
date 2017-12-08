@@ -2,7 +2,6 @@ package com.modules.permission.controller;
 
 import com.alibaba.fastjson.JSON;
 import com.common.controller.BaseController;
-import com.common.model.URole;
 import com.modules.core.mybatis.page.Pagination;
 import com.modules.permission.bo.URoleBo;
 import com.modules.permission.bo.UserRoleAllocationBo;
@@ -27,6 +26,7 @@ public class UserRoleAllocationController extends BaseController {
 	UUserService userService;
 	@Autowired
 	PermissionService permissionService;
+
 	/**
 	 * 用户角色权限分配
 	 * @param modelMap
@@ -35,9 +35,20 @@ public class UserRoleAllocationController extends BaseController {
 	 * @return
 	 */
 	@RequestMapping(value="allocation")
-	public ModelAndView allocation(){
+	public ModelAndView allocation(ModelMap modelMap,Integer pageNo,String findContent){
+		modelMap.put("findContent", findContent);
+		Pagination<UserRoleAllocationBo> boPage = userService.findUserAndRole(modelMap,pageNo,pageSize);
+		modelMap.put("page", boPage);
 		return new ModelAndView("role/allocation2");
 	}
+
+//	/**
+//	 * 用户角色权限分配
+//	 */
+//	@RequestMapping(value="allocation")
+//	public ModelAndView allocation(){
+//		return new ModelAndView("role/allocation2");
+//	}
 
 	//用户角色权限 数据
 	@RequestMapping(value="allocation_table")
