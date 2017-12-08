@@ -23,7 +23,7 @@
 
             // ajax请求
             "ajax": {
-                'url' : '/role/allocation_table.shtml', //请求地址
+                'url' : '/permission/allocation_table.shtml', //请求地址
                 //传递额外参数 (条件搜索)
                 // 'data' : function (d) {
                 //     d.test = 1;
@@ -34,43 +34,31 @@
                 "orderable": false,
                 "sDefaultContent" : "",
                 "sWidth" : "5%",
-            },{ "mData": "nickname",
+            },{ "mData": "name",
                 "orderable": true,
                 "sDefaultContent" : "",
                 "sWidth" : "10%",
-            },{ "mData": "email",
+            },{ "mData": "type",
                 "orderable": true,
                 "sDefaultContent" : "",
                 "sWidth" : "10%",
-            },{ "mData": "status",
+            },{ "mData": "permissionNames",
                 "orderable": true,
                 "sDefaultContent" : "",
-                "sWidth" : "10%",
-                // 格式化状态
-                "render": function(data, type, full) {
-                    return data?"有效":"<span style='color:red;'>禁止</span>";
-                }
-            },{ "mData": "roleNames",
-                "orderable": true,
-                "sDefaultContent" : "",
-                "sWidth" : "15%",
+                "sWidth" : "20%",
             },{ "mData": "null",
                 "orderable": false,
                 "sDefaultContent" : "",
-                "sWidth" : "15%",
+                "sWidth" : "10%",
                 // 返回自定义内容
                 "render": function(data, type, full) {
                     var html = "";
 
-                    if($("input[name='hasAddRole']").length > 0 && $("input[name='hasAddRole']").length)
+                    if($("input[name='hasSelectPermission']").length > 0 && $("input[name='hasSelectPermission']").length)
                     {
-                        html += "<a type='button' class='AddRole btn btn-info btn-sm' href='javascript:void(0);' >分配用户角色</a>";
+                        html += "<a type='button' class='selectPermission btn btn-info btn-sm' href='javascript:void(0);' >选择权限</a>";
                     }
 
-                    if($("input[name='hasClearRole']").length > 0 && $("input[name='hasClearRole']").length)
-                    {
-                        html +="<a type='button' class='ClearRole btn btn-danger btn-sm' href='javascript:void(0);'>清空用户角色</a>";
-                    }
                     return html;
                 }
             },
@@ -103,34 +91,8 @@
         });
 
 //----------------------------自定义操作------------------------
-        //清空用户角色
-        $('#table tbody').on('click', 'a.ClearRole', function(e) {
-            e.preventDefault();
-
-            var table = $('#table').DataTable(); //获取DataTable对象
-            var row = table.row($(this).parents('tr'))
-            var id = row.data().id; //获取选中行数据.id
-
-            var index =  layer.confirm("确定清空用户角色？",function(){
-                var load = layer.load();
-                $.post('/role/clearRoleByUserIds.shtml',{userIds:id},function(result){
-                    layer.close(load);
-                    if(result && result.status != 200){
-                        layer.msg(result.message);
-                        return ;
-                    }else{
-                        layer.msg(result.message);
-                        location.reload();
-                    }
-                },'json');
-                layer.close(index);
-            });
-
-        });
-
-
         //显示出角色列表到模态框中
-        $('#table tbody').on('click', 'a.AddRole', function(e) {
+        $('#table tbody').on('click', 'a.selectPermission', function(e) {
             e.preventDefault();
 
             var table = $('#table').DataTable(); //获取DataTable对象
@@ -138,13 +100,13 @@
             var id = row.data().id; //获取选中行数据.id
 
             var load = layer.load();
-            $.post("/role/selectRoleByUserId.shtml",{id:id},function(result){
+            $.post("/permission/selectPermissionById.shtml",{id:id},function(result){
                 layer.close(load);
                 if(result && result.length){
                     var html =[];
                     $.each(result,function(){
                         html.push("<div class='checkbox'><label>");
-                        html.push("<input type='checkbox' id='");
+                        html.push("<input type='checkbox' selectBox='' id='");
                         html.push(this.id);
                         html.push("'");
                         if(this.check){
@@ -156,9 +118,11 @@
                         html.push(this.name);
                         html.push('</label></div>');
                     });
-                    return $('#boxRoleForm').html(html.join('')) & $('#selectRole').modal(),$('#selectUserId').val(id);
+                    //初始化全选。
+                     $('#boxRoleForm').html(html.join(''));
+                     $('#selectPermission').modal(),$('#selectRoleId').val(id);
                 }else{
-                    return layer.msg('没有获取到用户数据，请先注册数据。');
+                    return layer.msg('没有获取到权限数据，请先添加权限数据。');
                 }
             },'json');
 

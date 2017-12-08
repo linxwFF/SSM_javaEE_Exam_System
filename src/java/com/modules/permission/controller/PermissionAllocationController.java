@@ -1,6 +1,8 @@
 package com.modules.permission.controller;
 
+import com.alibaba.fastjson.JSON;
 import com.common.controller.BaseController;
+import com.common.model.UPermission;
 import com.modules.core.mybatis.page.Pagination;
 import com.modules.permission.bo.RolePermissionAllocationBo;
 import com.modules.permission.bo.UPermissionBo;
@@ -18,24 +20,9 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * 
- * 开发公司：itboy.net<br/>
- * 版权：itboy.net<br/>
- * <p>
- * 
+ *
  * 用户权限分配
- * 
- * <p>
- * 
- * 区分　责任人　日期　　　　说明<br/>
- * 创建　周柏成　2016年5月26日 　<br/>
- * <p>
- * *******
- * <p>
- * @author zhou-baicheng
- * @email  i@itboy.net
- * @version 1.0,2016年5月26日 <br/>
- * 
+ *
  */
 @Controller
 @Scope(value="prototype")
@@ -53,14 +40,30 @@ public class PermissionAllocationController extends BaseController {
 	 * @param findContent
 	 * @return
 	 */
+//	@RequestMapping(value="allocation")
+//	public ModelAndView allocation(ModelMap modelMap,Integer pageNo,String findContent){
+//		modelMap.put("findContent", findContent);
+//		Pagination<RolePermissionAllocationBo> boPage = roleService.findRoleAndPermissionPage(modelMap,pageNo,pageSize);
+//		modelMap.put("page", boPage);
+//		return new ModelAndView("permission/allocation");
+//	}
+
 	@RequestMapping(value="allocation")
-	public ModelAndView allocation(ModelMap modelMap,Integer pageNo,String findContent){
-		modelMap.put("findContent", findContent);
-		Pagination<RolePermissionAllocationBo> boPage = roleService.findRoleAndPermissionPage(modelMap,pageNo,pageSize);
-		modelMap.put("page", boPage);
-		return new ModelAndView("permission/allocation");
+	public ModelAndView allocation(){
+		return new ModelAndView("permission/allocation2");
 	}
-	
+
+	//权限分配 _table
+	@RequestMapping(value="allocation_table")
+	@ResponseBody
+	public String allocation(ModelMap map){
+
+		List<RolePermissionAllocationBo> list = roleService.findAllRoleAndPermission();
+		map.put("data",list);
+		String jsonString = JSON.toJSONString(map);
+		return jsonString;
+	}
+
 	/**
 	 * 根据角色ID查询权限
 	 * @param id
@@ -83,14 +86,14 @@ public class PermissionAllocationController extends BaseController {
 	public Map<String,Object> addPermission2Role(Long roleId,String ids){
 		return permissionService.addPermission2Role(roleId,ids);
 	}
-	/**
-	 * 根据角色id清空权限。
-	 * @param roleIds	角色ID ，以‘,’间隔
-	 * @return
-	 */
-	@RequestMapping(value="clearPermissionByRoleIds")
-	@ResponseBody
-	public Map<String,Object> clearPermissionByRoleIds(String roleIds){
-		return permissionService.deleteByRids(roleIds);
-	}
+//	/**
+//	 * 根据角色id清空权限。
+//	 * @param roleIds	角色ID ，以‘,’间隔
+//	 * @return
+//	 */
+//	@RequestMapping(value="clearPermissionByRoleIds")
+//	@ResponseBody
+//	public Map<String,Object> clearPermissionByRoleIds(String roleIds){
+//		return permissionService.deleteByRids(roleIds);
+//	}
 }

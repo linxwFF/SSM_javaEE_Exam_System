@@ -174,10 +174,21 @@
   </update>
 
 
+    <!-- //查询所有role列表  - 不分页 -->
     <select id="findAllRole" resultMap="BaseResultMap">
         SELECT
         <include refid="Base_Column_List"/>
         FROM u_role
+    </select>
+
+
+    <!-- 查询所有的角色和角色拥有的所有权限 - 不分页 -->
+    <select id="findAllRoleAndPermission" resultType="com.modules.permission.bo.RolePermissionAllocationBo">
+        select ur.id,ur.type,ur.name,group_concat(up.name) permissionNames,group_concat(up.id)permissionIds from
+        u_role ur
+        left join u_role_permission urp on urp.rid = ur.id
+        left join u_permission up on up.id = urp.pid
+        group by ur.id
     </select>
 
 </mapper>

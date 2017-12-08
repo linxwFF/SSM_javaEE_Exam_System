@@ -5,6 +5,7 @@ import java.util.Map;
 import java.util.Set;
 
 import com.common.model.URole;
+import com.modules.permission.bo.RolePermissionAllocationBo;
 
 public interface URoleMapper {
     int deleteByPrimaryKey(Long id);
@@ -25,6 +26,9 @@ public interface URoleMapper {
 	
 	void initData();
 
-    //查询所有role列表
+    //查询所有role列表  - 不分页
     List<URole> findAllRole();
+
+    //查询所有的角色和角色拥有的所有权限 - 不分页
+    List<RolePermissionAllocationBo> findAllRoleAndPermission();
 }

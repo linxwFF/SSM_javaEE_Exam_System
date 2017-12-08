@@ -38,4 +38,7 @@ public interface RoleService {
 
 	//获取所有的角色列表
 	List<URole> findAllRole();
+
+	//获取 角色和角色拥有的权限列表
+	List<RolePermissionAllocationBo> findAllRoleAndPermission();
 }

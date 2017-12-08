@@ -129,4 +129,9 @@ public class RoleServiceImpl extends BaseMybatisDao<URoleMapper> implements Role
 		return roleMapper.findAllRole();
 	}
 
+	//获取 角色和角色拥有的权限列表
+	@Override
+	public List<RolePermissionAllocationBo> findAllRoleAndPermission() {
+		return roleMapper.findAllRoleAndPermission();
+	}
 }

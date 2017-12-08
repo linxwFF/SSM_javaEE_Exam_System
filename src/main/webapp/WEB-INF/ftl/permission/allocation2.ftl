@@ -76,22 +76,19 @@
                         </div>
                         <div class="x_content">
 
-                            <!-- 判读是否拥有删除权限的权限 -->
-                        <@shiro.hasPermission name="/permission/deletePermissionById.shtml">
-                            <input type="hidden" name="hasDel" value="1">
-                        </@shiro.hasPermission>
-                        <@shiro.hasPermission name="/permission/addPermission.shtml">
-                            <span class="section">
-                                    <button onclick="$('#addPermission').modal();" type="button" class="btn btn-success">新增权限</button>
-                                </span>
+                            <!-- 判读是否拥有分配权限的权限 -->
+                        <@shiro.hasPermission name="/permission/addPermission2Role.shtml">
+                            <input type="hidden" name="hasSelectPermission" value="1">
                         </@shiro.hasPermission>
 
+                            <input type="hidden" id="selectRoleId">
                             <table id="table" class="table table-hover table-bordered table-condensed " cellspacing="0" width="100%">
                                 <thead>
                                 <tr>
                                     <th>ID</th>
                                     <th>角色名称</th>
                                     <th>角色类型</th>
+                                    <th>拥有的权限</th>
                                     <th>操作</th>
                                 </tr>
                                 </thead>
@@ -111,34 +108,28 @@
     <@footer.footer 1/>
         <!-- /脚部内容  -->
 
-    <@shiro.hasPermission name="/permission/addPermission.shtml">
+    <@shiro.hasPermission name="/permission/addPermission2Role.shtml">
     <#--弹框-->
-        <div class="modal fade" id="addPermission" tabindex="-1" role="dialog" aria-labelledby="addPermissionLabel">
-            <div class="modal-dialog" role="document">
+        <div class="modal fade bs-example-modal-sm"  id="selectPermission" tabindex="-1" role="dialog" aria-labelledby="selectPermissionLabel">
+            <div class="modal-dialog modal-sm" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                        <h4 class="modal-title" id="addPermissionLabel">添加权限</h4>
+                        <h4 class="modal-title" id="selectPermissionLabel">添加权限</h4>
                     </div>
                     <div class="modal-body">
                         <form id="boxRoleForm">
-                            <div class="form-group">
-                                <label for="recipient-name" class="control-label">权限名称:</label>
-                                <input type="text" class="form-control" name="name" id="name" placeholder="请输入权限名称"/>
-                            </div>
-                            <div class="form-group">
-                                <label for="recipient-name" class="control-label">权限URL地址:</label>
-                                <input type="text" class="form-control" id="url" name="url"  placeholder="请输入权限URL地址">
-                            </div>
+                            loading...
                         </form>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                        <button type="button" onclick="addPermission();" class="btn btn-primary">Save</button>
+                        <button type="button" onclick="selectPermission();" class="btn btn-primary">Save</button>
                     </div>
                 </div>
             </div>
         </div>
+    <#--/弹框-->
     <#--/弹框-->
     </@shiro.hasPermission>
     </div>
@@ -157,31 +148,30 @@
 <script baseUrl="${basePath}" src="${basePath}/static/build/js/user.login.js"></script>
 <!-- Datatables -->
 <script type="text/javascript" charset="utf8" src="${basePath}/static/assets/js/jquery.dataTables.min.js"></script>
-<script type="text/javascript" charset="utf8" src="${basePath}/static/build/js/loadData_permission_list.js"></script>
+<script type="text/javascript" charset="utf8" src="${basePath}/static/build/js/loadData_allocation.js"></script>
 
 <script>
-    <@shiro.hasPermission name="/permission/addPermission.shtml">
-    <#--添加权限-->
-    function addPermission(){
-        var name = $('#name').val(),
-                url  = $('#url').val();
-        if($.trim(name) == ''){
-            return layer.msg('权限名称不能为空。');
-        }
-        if($.trim(url) == ''){
-            return layer.msg('权限Url不能为空。');
-        }
-    <#--loding-->
-        var load = layer.load();
-        $.post('${basePath}/permission/addPermission.shtml',{name:name,url:url},function(result){
-            layer.close(load);
-            if(result && result.status != 200){
-                return layer.msg(result.message);
-            }
-            layer.msg('添加成功。');
-            location.reload();
-
-        },'json');
+    <@shiro.hasPermission name="/permission/addPermission2Role.shtml">
+    <#--选择权限后保存-->
+    function selectPermission(){
+        var checked = $("#boxRoleForm  :checked");
+        var ids=[],names=[];
+        $.each(checked,function(){
+            ids.push(this.id);
+            names.push($.trim($(this).attr('name')));
+        });
+        var index = layer.confirm("确定操作？",function(){
+        <#--loding-->
+            var load = layer.load();
+            $.post('${basePath}/permission/addPermission2Role.shtml',{ids:ids.join(','),roleId:$('#selectRoleId').val()},function(result){
+                layer.close(load);
+                if(result && result.status != 200){
+                    return layer.msg(result.message);
+                }
+                layer.msg('添加成功。');
+                location.reload();
+            },'json');
+        });
     }
     </@shiro.hasPermission>
 </script>
