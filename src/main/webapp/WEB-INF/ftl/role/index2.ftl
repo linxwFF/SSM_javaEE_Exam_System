@@ -69,46 +69,32 @@
                             <!-- 右侧工具栏 -->
                             <ul class="nav navbar-right panel_toolbox">
                                 <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a></li>
-                                <li class="dropdown">
-                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
-
-                                    <ul class="dropdown-menu" role="menu">
-                                        <li><a href="#">Settings 1</a></li>
-                                        <li><a href="#">Settings 2</a></li>
-                                    </ul>
-                                </li>
                                 <li><a class="close-link"><i class="fa fa-close"></i></a></li>
                             </ul>
 
                             <div class="clearfix"></div>
                         </div>
                         <div class="x_content">
-                            <!-- 验证 -->
-                            <div class="alert alert-warning">
-                                状态
-                            </div>
-			            <span class="section">
-			            <button id="delete" type="button" class="btn btn-danger">删除选中的行</button>
-			            </span>
+
+                                <!-- 判读是否拥有删除角色的权限 -->
+                            <@shiro.hasPermission name="/role/deleteRoleById.shtml">
+                                <input type="hidden" name="hasDel" value="1">
+                            </@shiro.hasPermission>
+                            <@shiro.hasPermission name="/role/addRole.shtml">
+                                <span class="section">
+                                    <button onclick="$('#addrole').modal();" type="button" class="btn btn-success">新增角色</button>
+                                </span>
+                            </@shiro.hasPermission>
+
                             <table id="table" class="table table-hover table-bordered table-condensed " cellspacing="0" width="100%">
                                 <thead>
                                 <tr>
-                                    <th><input name="selectAll" type="checkbox" /></th>
                                     <th>ID</th>
                                     <th>角色名称</th>
                                     <th>角色类型</th>
                                     <th>操作</th>
                                 </tr>
                                 </thead>
-                                <tfoot>
-                                <tr>
-                                    <th></th>
-                                    <th>ID</th>
-                                    <th>角色名称</th>
-                                    <th>角色类型</th>
-                                    <th>操作</th>
-                                </tr>
-                                </tfoot>
                                 <tbody>
                                 </tbody>
                             </table>
@@ -124,6 +110,37 @@
         <!-- 脚部内容 -->
     <@footer.footer 1/>
         <!-- /脚部内容  -->
+
+    <@shiro.hasPermission name="/role/addRole.shtml">
+    <#--添加弹框-->
+        <div class="modal fade" id="addrole" tabindex="-1" role="dialog" aria-labelledby="addroleLabel">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title" id="addroleLabel">添加角色</h4>
+                    </div>
+                    <div class="modal-body">
+                        <form id="boxRoleForm">
+                            <div class="form-group">
+                                <label for="recipient-name" class="control-label">角色名称:</label>
+                                <input type="text" class="form-control" name="name" id="name" placeholder="请输入角色名称"/>
+                            </div>
+                            <div class="form-group">
+                                <label for="recipient-name" class="control-label">角色类型:</label>
+                                <input type="text" class="form-control" id="type" name="type"  placeholder="请输入角色类型  [字母 + 数字] 6位">
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        <button type="button" onclick="addRole();" class="btn btn-primary">Save</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    <#--/添加弹框-->
+    </@shiro.hasPermission>
     </div>
 </div>
 <!-- jQuery -->
@@ -139,5 +156,34 @@
 <!-- Datatables -->
 <script type="text/javascript" charset="utf8" src="${basePath}/static/assets/js/jquery.dataTables.min.js"></script>
 <script type="text/javascript" charset="utf8" src="${basePath}/static/build/js/loadDate_role_list.js"></script>
+
+<script>
+    <@shiro.hasPermission name="/role/addRole.shtml">
+    <#--添加角色-->
+    function addRole(){
+        var name = $('#name').val(),
+                type = $('#type').val();
+        if($.trim(name) == ''){
+            return layer.msg('角色名称不能为空。',so.default),!1;
+        }
+        if(!/^[a-z0-9A-Z]{6}$/.test(type)){
+            return layer.msg('角色类型为6数字字母。',so.default),!1;
+        }
+    <#--loding-->
+        var load = layer.load();
+        $.post('${basePath}/role/addRole.shtml',{name:name,type:type},function(result){
+            layer.close(load);
+            if(result && result.status != 200){
+                return layer.msg(result.message,so.default),!1;
+            }
+            layer.msg('添加成功。');
+            setTimeout(function(){
+                $('#formId').submit();
+                location.reload();
+            },1000);
+        },'json');
+    }
+    </@shiro.hasPermission>
+</script>
 </body>
 </html>

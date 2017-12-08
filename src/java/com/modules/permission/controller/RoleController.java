@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -30,6 +31,14 @@ public class RoleController extends BaseController {
 	 * 角色列表
 	 * @return
 	 */
+
+//	@RequestMapping(value="index")
+//	public ModelAndView index(String findContent,ModelMap modelMap){
+//		modelMap.put("findContent", findContent);
+//		Pagination<URole> role = roleService.findPage(modelMap,pageNo,pageSize);
+//		return new ModelAndView("role/index","page",role);
+//	}
+
 	@RequestMapping(value="index")
 	public ModelAndView index(){
 		return new ModelAndView("role/index2");
@@ -72,7 +81,13 @@ public class RoleController extends BaseController {
 	@RequestMapping(value="deleteRoleById",method=RequestMethod.POST)
 	@ResponseBody
 	public Map<String,Object> deleteRoleById(String ids){
-		return roleService.deleteRoleById(ids);
+		Map<String,Object> resultMap = new HashMap<String,Object>();
+		resultMap.put("status", 200);
+		resultMap.put("count", 1);
+		resultMap.put("message","假装删除成功了");
+		return resultMap;
+
+//		return roleService.deleteRoleById(ids);
 	}
 	/**
 	 * 我的权限页面

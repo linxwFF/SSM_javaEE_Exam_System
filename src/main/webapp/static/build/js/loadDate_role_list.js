@@ -1,5 +1,4 @@
-
-var QuestionManage = (function() {
+(function() {
     'use strict';
 
     $(document).ready(function() {
@@ -31,18 +30,10 @@ var QuestionManage = (function() {
                 // }
             },
             // 显示字段
-            "aoColumns": [{ "mData": null,
+            "aoColumns": [{ "mData": "id",
                 "orderable": false,
                 "sDefaultContent" : "",
                 "sWidth" : "5%",
-                // 返回自定义内容
-                "render": function(data, type, full) {
-                    return '<input name="selectItem" type="checkbox" value="' + full.id + '" />';
-                },
-            },{ "mData": "id",
-                "orderable": false,
-                "sDefaultContent" : "",
-                "sWidth" : "10%",
             },{ "mData": "name",
                 "orderable": true,
                 "sDefaultContent" : "",
@@ -57,8 +48,7 @@ var QuestionManage = (function() {
                 "sWidth" : "10%",
                 // 返回自定义内容
                 "render": function(data, type, full) {
-                    return "<a type='button' class='btn btn-warning btn-sm' href='/admin/userManage/" + full.id + "/edit'>修改</a>&nbsp; "
-                        + "<a type='button' class='delete btn btn-danger btn-sm' href='javascript:void(0);' >删除</a>";
+                    return "<a type='button' class='delete btn btn-danger btn-sm' href='javascript:void(0);' >删除</a>";
                 }
             },
             ],
@@ -79,7 +69,7 @@ var QuestionManage = (function() {
                     "sLast": "尾页"
                 },
                 "sZeroRecords": "没有检索到数据",
-                "sProcessing": "<img src='static/assets/img/loading.gif' />",
+                "sProcessing": "<img src='/static/assets/img/loading.gif' />",
                 "sSearch": "搜索"
             },
             // 初始化回调函数
@@ -90,97 +80,30 @@ var QuestionManage = (function() {
         });
 
 //----------------------------自定义操作------------------------
+    //单个选中删除按钮事件
+    $('#table tbody').on('click', 'a.delete', function(e) {
+        e.preventDefault();
 
+        var table = $('#table').DataTable(); //获取DataTable对象
+        var row = table.row($(this).parents('tr'))
+        var id = row.data().id; //获取选中行数据.id
 
-        //单击行，改变行的样式
-        $('#table tbody').on('click', 'tr', function () {
-            //联动checkbox 选中状态
-            $($(this).children()[0]).children().each(function(){
-                if(!this.checked){
-                    this.checked = true;
+        var index =  layer.confirm("确定这个用户？",function(){
+            var load = layer.load();
+            $.post('/role/deleteRoleById.shtml',{ids:id},function(result){
+                layer.close(load);
+                if(result && result.status != 200){
+                    layer.msg(result.message);
+                    return ;
                 }else{
-                    this.checked = false;
+                    row.remove().draw( true ); //删除选择行
+                    layer.msg(result.message);
                 }
-            });
-            $(this).toggleClass('selected');
-        } );
-
-
-        //删除选中行
-        $('#delete').click( function () {
-            var Tdata = new Array();
-            var ids = new Array();
-            var table = $('#table').DataTable(); //获取DataTable对象
-            Tdata = table.rows('.selected').data(); //获取选择行对象
-            for (var i = 0; i < Tdata.length; i++) {
-                ids[i] = Tdata[i]['id'];
-            }
-            if(ids.length<1){
-                layer.alert('请至少选择一个');
-            }else{
-                layer.msg('确定删除这些项目？', {
-                    time: 0
-                    ,btn: ['确定', '取消']
-                    ,yes: function(index){
-                        layer.close(index);
-                        var url = '/admin/userManage/destroy_many';
-                        var csrfToken = $("meta[name='csrf-token']").attr("content");
-                        var data = {
-                            _token : csrfToken,
-                            ids : ids,
-                        };
-
-                        var result = Util.ajaxHelper(url, 'POST', data);
-                        if(result.is_true){
-                            table.rows('.selected').remove().draw( true ); //删除选中行
-                            Util.notify(result.data.message, 1);
-                        }
-                    }
-                });
-
-            }
-        } );
-
-        // 全选按钮被点击事件
-        $('input[name=selectAll]').click(function(){
-            if(this.checked){
-                $('#table tbody tr').each(function(){
-                    if(!$(this).hasClass('selected')){
-                        $(this).click();
-                    }
-                });
-            }else{
-                $('#table tbody tr').click();
-            }
+            },'json');
+            layer.close(index);
         });
 
-
-        $('#table tbody').on('click', 'a.delete', function(e) {
-            e.preventDefault();
-
-            var table = $('#table').DataTable(); //获取DataTable对象
-            var row = table.row($(this).parents('tr'))
-            var id = row.data().id; //获取选中行数据.id
-
-            layer.msg('确定删除？', {
-                time: 0
-                ,btn: ['确定', '取消']
-                ,yes: function(index){
-                    layer.close(index);
-                    var url = '/admin/userManage/' + id;
-                    var csrfToken = $("meta[name='csrf-token']").attr("content");
-                    var data = {
-                        _token: csrfToken
-                    };
-
-                    var result = Util.ajaxHelper(url, 'DELETE', data);
-                    if(result.is_true){
-                        row.remove().draw( true ); //删除选择行
-                        Util.notify(result.data.message, 1);
-                    }
-                }
-            });
-        });
+    });
 
     }
 })();
