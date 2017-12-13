@@ -1,0 +1,250 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.common.dao.QQuestionMapper" >
+  <resultMap id="BaseResultMap" type="com.common.model.QQuestion" >
+    <constructor >
+      <idArg column="id" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="subject" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="choose_A" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="choose_B" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="choose_C" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="choose_D" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="choose_E" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="choose_F" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="choose_G" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="choose_right" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="analysis" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="type" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="course_type_id" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="chapter_id" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="update_time" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+      <arg column="create_time" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+      <arg column="delete_time" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+      <arg column="img_url" jdbcType="VARCHAR" javaType="java.lang.String" />
+    </constructor>
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, subject, choose_A, choose_B, choose_C, choose_D, choose_E, choose_F, choose_G, 
+    choose_right, analysis, type, course_type_id, chapter_id, update_time, create_time, 
+    delete_time, img_url
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from q_questions
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from q_questions
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.common.model.QQuestion" >
+    insert into q_questions (id, subject, choose_A, 
+      choose_B, choose_C, choose_D, 
+      choose_E, choose_F, choose_G, 
+      choose_right, analysis, type, 
+      course_type_id, chapter_id, update_time, 
+      create_time, delete_time, img_url
+      )
+    values (#{id,jdbcType=INTEGER}, #{subject,jdbcType=VARCHAR}, #{chooseA,jdbcType=VARCHAR}, 
+      #{chooseB,jdbcType=VARCHAR}, #{chooseC,jdbcType=VARCHAR}, #{chooseD,jdbcType=VARCHAR}, 
+      #{chooseE,jdbcType=VARCHAR}, #{chooseF,jdbcType=VARCHAR}, #{chooseG,jdbcType=VARCHAR}, 
+      #{chooseRight,jdbcType=VARCHAR}, #{analysis,jdbcType=VARCHAR}, #{type,jdbcType=VARCHAR}, 
+      #{courseTypeId,jdbcType=INTEGER}, #{chapterId,jdbcType=INTEGER}, #{updateTime,jdbcType=TIMESTAMP}, 
+      #{createTime,jdbcType=TIMESTAMP}, #{deleteTime,jdbcType=TIMESTAMP}, #{imgUrl,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.common.model.QQuestion" >
+    insert into q_questions
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="subject != null" >
+        subject,
+      </if>
+      <if test="chooseA != null" >
+        choose_A,
+      </if>
+      <if test="chooseB != null" >
+        choose_B,
+      </if>
+      <if test="chooseC != null" >
+        choose_C,
+      </if>
+      <if test="chooseD != null" >
+        choose_D,
+      </if>
+      <if test="chooseE != null" >
+        choose_E,
+      </if>
+      <if test="chooseF != null" >
+        choose_F,
+      </if>
+      <if test="chooseG != null" >
+        choose_G,
+      </if>
+      <if test="chooseRight != null" >
+        choose_right,
+      </if>
+      <if test="analysis != null" >
+        analysis,
+      </if>
+      <if test="type != null" >
+        type,
+      </if>
+      <if test="courseTypeId != null" >
+        course_type_id,
+      </if>
+      <if test="chapterId != null" >
+        chapter_id,
+      </if>
+      <if test="updateTime != null" >
+        update_time,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="deleteTime != null" >
+        delete_time,
+      </if>
+      <if test="imgUrl != null" >
+        img_url,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="subject != null" >
+        #{subject,jdbcType=VARCHAR},
+      </if>
+      <if test="chooseA != null" >
+        #{chooseA,jdbcType=VARCHAR},
+      </if>
+      <if test="chooseB != null" >
+        #{chooseB,jdbcType=VARCHAR},
+      </if>
+      <if test="chooseC != null" >
+        #{chooseC,jdbcType=VARCHAR},
+      </if>
+      <if test="chooseD != null" >
+        #{chooseD,jdbcType=VARCHAR},
+      </if>
+      <if test="chooseE != null" >
+        #{chooseE,jdbcType=VARCHAR},
+      </if>
+      <if test="chooseF != null" >
+        #{chooseF,jdbcType=VARCHAR},
+      </if>
+      <if test="chooseG != null" >
+        #{chooseG,jdbcType=VARCHAR},
+      </if>
+      <if test="chooseRight != null" >
+        #{chooseRight,jdbcType=VARCHAR},
+      </if>
+      <if test="analysis != null" >
+        #{analysis,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null" >
+        #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="courseTypeId != null" >
+        #{courseTypeId,jdbcType=INTEGER},
+      </if>
+      <if test="chapterId != null" >
+        #{chapterId,jdbcType=INTEGER},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="deleteTime != null" >
+        #{deleteTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="imgUrl != null" >
+        #{imgUrl,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.common.model.QQuestion" >
+    update q_questions
+    <set >
+      <if test="subject != null" >
+        subject = #{subject,jdbcType=VARCHAR},
+      </if>
+      <if test="chooseA != null" >
+        choose_A = #{chooseA,jdbcType=VARCHAR},
+      </if>
+      <if test="chooseB != null" >
+        choose_B = #{chooseB,jdbcType=VARCHAR},
+      </if>
+      <if test="chooseC != null" >
+        choose_C = #{chooseC,jdbcType=VARCHAR},
+      </if>
+      <if test="chooseD != null" >
+        choose_D = #{chooseD,jdbcType=VARCHAR},
+      </if>
+      <if test="chooseE != null" >
+        choose_E = #{chooseE,jdbcType=VARCHAR},
+      </if>
+      <if test="chooseF != null" >
+        choose_F = #{chooseF,jdbcType=VARCHAR},
+      </if>
+      <if test="chooseG != null" >
+        choose_G = #{chooseG,jdbcType=VARCHAR},
+      </if>
+      <if test="chooseRight != null" >
+        choose_right = #{chooseRight,jdbcType=VARCHAR},
+      </if>
+      <if test="analysis != null" >
+        analysis = #{analysis,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null" >
+        type = #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="courseTypeId != null" >
+        course_type_id = #{courseTypeId,jdbcType=INTEGER},
+      </if>
+      <if test="chapterId != null" >
+        chapter_id = #{chapterId,jdbcType=INTEGER},
+      </if>
+      <if test="updateTime != null" >
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="deleteTime != null" >
+        delete_time = #{deleteTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="imgUrl != null" >
+        img_url = #{imgUrl,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.common.model.QQuestion" >
+    update q_questions
+    set subject = #{subject,jdbcType=VARCHAR},
+      choose_A = #{chooseA,jdbcType=VARCHAR},
+      choose_B = #{chooseB,jdbcType=VARCHAR},
+      choose_C = #{chooseC,jdbcType=VARCHAR},
+      choose_D = #{chooseD,jdbcType=VARCHAR},
+      choose_E = #{chooseE,jdbcType=VARCHAR},
+      choose_F = #{chooseF,jdbcType=VARCHAR},
+      choose_G = #{chooseG,jdbcType=VARCHAR},
+      choose_right = #{chooseRight,jdbcType=VARCHAR},
+      analysis = #{analysis,jdbcType=VARCHAR},
+      type = #{type,jdbcType=VARCHAR},
+      course_type_id = #{courseTypeId,jdbcType=INTEGER},
+      chapter_id = #{chapterId,jdbcType=INTEGER},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      delete_time = #{deleteTime,jdbcType=TIMESTAMP},
+      img_url = #{imgUrl,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>
