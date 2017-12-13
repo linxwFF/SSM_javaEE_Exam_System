@@ -9,7 +9,6 @@ import com.modules.user.service.UUserService;
 import net.sf.json.JSONObject;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 

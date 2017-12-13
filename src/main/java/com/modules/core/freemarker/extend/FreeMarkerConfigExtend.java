@@ -23,6 +23,6 @@ public class FreeMarkerConfigExtend extends FreeMarkerConfigurer {
 	}
 	public static void putInitShared(Configuration cfg) throws TemplateModelException{
 		//shiro tag 
-        put(cfg,"shiro", new ShiroTags()); 
+        put(cfg, "shiro", new ShiroTags());
 	}
 }

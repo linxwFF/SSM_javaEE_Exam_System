@@ -2,7 +2,6 @@ package com.modules.permission.controller;
 
 import com.alibaba.fastjson.JSON;
 import com.common.controller.BaseController;
-import com.modules.core.mybatis.page.Pagination;
 import com.modules.permission.bo.URoleBo;
 import com.modules.permission.bo.UserRoleAllocationBo;
 import com.modules.permission.service.PermissionService;
