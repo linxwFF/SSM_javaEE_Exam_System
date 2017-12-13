@@ -30,7 +30,7 @@
                 <div class="text-center text-center">
                     <h1 class="error-number">500</h1>
                     <h2>Internal Server Error</h2>
-                    <p>We track these errors automatically, but if the problem persists feel free to contact us. In the meantime, try refreshing.<a href="${basePath}/user/index.shtml"><span style="color:red;">主页</span></a>
+                    <p>We track these errors automatically, but if the problem persists feel free to contact us. In the meantime, try refreshing.<a href="${basePath}/exam/index.shtml"><span style="color:red;">主页</span></a>
                     </p>
                     <div class="mid_center">
                         <h3>Search</h3>
