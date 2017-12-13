@@ -88,6 +88,10 @@
                             <div class="alert alert-warning hidden">
                                 状态
                             </div>
+                            <!-- 判读是否拥有查看用户信息的权限 -->
+                            <@shiro.hasPermission name="/member/get_user_info/**">
+                                <input type="hidden" name="hasGetDetail" value="1">
+                            </@shiro.hasPermission>
                             <!-- 判读是否拥有删除用户的权限 -->
                             <@shiro.hasPermission name="/member/deleteUserById.shtml">
                                 <input type="hidden" name="hasDel" value="1">
