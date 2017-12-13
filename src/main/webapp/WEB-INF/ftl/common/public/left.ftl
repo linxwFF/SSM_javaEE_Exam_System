@@ -1,7 +1,7 @@
 <#macro left index>
 <div class="left_col scroll-view">
     <div class="navbar nav_title" style="border: 0;">
-        <a href="${basePath}/user/index2.shtml" class="site_title"><i class="fa fa-paw"></i> <span></span></a>
+        <a href="${basePath}/exam/index.shtml" class="site_title"><i class="fa fa-paw"></i> <span></span></a>
     </div>
 
     <div class="clearfix"></div>
@@ -31,6 +31,20 @@
                 <ul class="nav child_menu"  >
                     <li><a href="${basePath}/user/index.shtml">个人资料</a></li>
                     <li><a href="${basePath}/user/updatePswd2.shtml">密码修改</a></li>
+                </ul>
+            </li>
+
+            <li ><a><i class="fa fa-edit"></i> 考试中心 <span class="fa fa-chevron-down"></span></a>
+                <ul class="nav child_menu"  >
+                    <li><a href="#">模拟考试</a>
+                        <ul class="nav child_menu">
+                            <li class="sub_menu"><a href="${basePath}/exam/index.shtml">随机组卷模式</a></li>
+                            <li class="sub_menu"><a href="${basePath}/exam/index.shtml">往年真题模式</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="${basePath}/exam/index.shtml">章节练习</a></li>
+                    <li><a href="${basePath}/exam/index.shtml">大题练习</a></li>
+                    <li><a href="${basePath}/exam/index.shtml">错题练习</a></li>
                 </ul>
             </li>
 

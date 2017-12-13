@@ -122,7 +122,7 @@ public class UserLoginController extends BaseController {
 			if(StringUtils.isBlank(url)){
 				//request.getContextPath() 返回站点的根目录
 //				url = request.getContextPath() + "/user/index.shtml";
-				url = request.getContextPath() + "/user/index2.shtml";
+				url = request.getContextPath() + "/exam/index.shtml";
 			}
 			//跳转地址  给JS前端跳转
 			resultMap.put("back_url", url);
