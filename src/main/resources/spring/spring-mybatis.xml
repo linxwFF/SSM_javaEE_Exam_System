@@ -36,7 +36,6 @@
 	    <property name="testOnReturn" value="${jdbc.testOnReturn}" /> 
 	    <property name="removeAbandoned" value="${jdbc.removeAbandoned}" /> 
 	    <property name="removeAbandonedTimeout" value="${jdbc.removeAbandonedTimeout}" /> 
-<!--	    <property name="logAbandoned" value="${jdbc.logAbandoned}" /> -->
 	    <property name="filters" value="${jdbc.filters}" />
 		<!-- 关闭abanded连接时输出错误日志 -->
 		<property name="logAbandoned" value="true" />
@@ -76,6 +75,12 @@
 	 <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
 	     <property name="dataSource" ref="dataSource" />
 	 </bean>
+
+	<!--事务控制层在ServiceImpl 层。public * com.modules.*.service.impl.*.*(..)  的意思是， com.modules.*.service.impl 下所有类的所有方法，而且方法参数不限。符合这些条件的加入事务。-->
+
+	<!--事务的规则是通过方法名前缀来定义的。上面定义了常用的publish 、save 、add ....诸如此类，是走默认事务级别。匹配不中的走readOnly。-->
+
+	<!--所以此处事务配置要注意，如果你修改包路径，这里也要修改，并且要符合规则，要不然会出现找不到数据库的Connection而报错。并且会造成事务无效。-->
 	<tx:advice id="txAdvice" transaction-manager="transactionManager">
 		<tx:attributes>
 			<tx:method name="publish*" />
@@ -93,8 +98,8 @@
 
  	<!-- AOP配置--> 
 	<aop:config>
-		<aop:pointcut id="myPointcut"
-			expression="execution(public * com.*.service.impl.*.*(..))" />
+		<!--此处的路径表达式一定要正确，不正确匹配会造成connection holder is null 错误-->
+		<aop:pointcut id="myPointcut" expression="execution(public * com.modules.*.service.impl.*.*(..))" />
 		<aop:advisor advice-ref="txAdvice" pointcut-ref="myPointcut" />
 	</aop:config>
 </beans>

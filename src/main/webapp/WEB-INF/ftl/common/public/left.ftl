@@ -38,13 +38,13 @@
                 <ul class="nav child_menu"  >
                     <li><a href="#">模拟考试</a>
                         <ul class="nav child_menu">
-                            <li class="sub_menu"><a href="${basePath}/exam/index.shtml">随机组卷模式</a></li>
-                            <li class="sub_menu"><a href="${basePath}/exam/index.shtml">往年真题模式</a></li>
+                            <li class="sub_menu"><a href="${basePath}/exam/chooseCourse.shtml">随机组卷模式</a></li>
+                            <li class="sub_menu"><a href="${basePath}/exam/chooseCourse.shtml">往年真题模式</a></li>
                         </ul>
                     </li>
-                    <li><a href="${basePath}/exam/index.shtml">章节练习</a></li>
-                    <li><a href="${basePath}/exam/index.shtml">大题练习</a></li>
-                    <li><a href="${basePath}/exam/index.shtml">错题练习</a></li>
+                    <li><a href="${basePath}/exam/chooseCourse.shtml">章节练习</a></li>
+                    <li><a href="${basePath}/exam/chooseCourse.shtml">大题练习</a></li>
+                    <li><a href="${basePath}/exam/chooseCourse.shtml">错题练习</a></li>
                 </ul>
             </li>
 

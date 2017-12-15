@@ -9,6 +9,8 @@ import org.apache.commons.logging.LogFactory;
 import org.apache.ibatis.mapping.BoundSql;
 import org.apache.ibatis.mapping.ParameterMapping;
 import org.apache.ibatis.session.Configuration;
+import org.mybatis.spring.SqlSessionTemplate;
+import org.mybatis.spring.SqlSessionUtils;
 import org.mybatis.spring.support.SqlSessionDaoSupport;
 
 import java.lang.reflect.ParameterizedType;
@@ -187,6 +189,12 @@ public class BaseMybatisDao<T> extends SqlSessionDaoSupport {
 			countCode = countSql.getSql();
 		}
 		try {
+//			//修正分页总数 connection holder is null
+//			SqlSessionTemplate st = (SqlSessionTemplate) getSqlSession();
+//			Connection conn = SqlSessionUtils.getSqlSession(
+//					st.getSqlSessionFactory(), st.getExecutorType(),
+//					st.getPersistenceExceptionTranslator()).getConnection();
+
 			Connection conn = this.getSqlSession().getConnection();
 
 			List resultList = this.getSqlSession().selectList(sqlId, params); 
