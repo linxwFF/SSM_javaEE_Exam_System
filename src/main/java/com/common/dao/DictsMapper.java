@@ -1,6 +1,9 @@
 package com.common.dao;
 
 import com.common.model.Dicts;
+import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 public interface DictsMapper {
     int deleteByPrimaryKey(Integer id);
@@ -14,4 +17,6 @@ public interface DictsMapper {
     int updateByPrimaryKeySelective(Dicts record);
 
     int updateByPrimaryKey(Dicts record);
+
+    List<Dicts> findAllByCourse(@Param(value = "findContent") String findContent, @Param(value = "remarks") Integer remarks);
 }

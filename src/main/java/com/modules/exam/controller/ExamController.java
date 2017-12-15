@@ -3,6 +3,8 @@ package com.modules.exam.controller;
 import com.common.controller.BaseController;
 import com.common.model.QCourse;
 import com.modules.core.mybatis.page.Pagination;
+import com.modules.exam.bo.QKCourse;
+import com.modules.exam.service.DictsService;
 import com.modules.exam.service.ExamService;
 import com.modules.exam.service.impl.ExamServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,6 +29,8 @@ public class ExamController extends BaseController {
     @Autowired
     //自动注入的是接口类
     private ExamService examService;
+    @Autowired
+    private DictsService dictsService;
 
     /**
      * 考试主页
@@ -48,7 +52,22 @@ public class ExamController extends BaseController {
         return new ModelAndView("exam/choose_course");
     }
 
-    //根据专业项目查出科目
+
+    //根据考试专业项目的type查询出所有的考试科目列表
+    //q_course -> dicts course_type 会计科目 remarks的值
+    @RequestMapping(value="get_course_list")
+    public ModelAndView getCourseList(ModelMap map,String findContent, Integer remarks){
+
+        //分页，专业项目列表
+        if(remarks == null){
+            remarks = 0;
+        }
+        List<QKCourse> qkCourseList = dictsService.findAllByCourse(findContent,remarks);
+        map.put("list", qkCourseList);
+
+        return new ModelAndView("exam/choose_course");
+    }
+
 
     //2.通用的考试模式方法
     @RequestMapping(value="{page}",method=RequestMethod.GET)

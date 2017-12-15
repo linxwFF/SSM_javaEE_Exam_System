@@ -106,12 +106,12 @@
 
                                                 <a href="http://www.baidu.com">
                                                     <div class="mask" style="height:100%;">
-                                                    <p>${it.courseName?default('未设置')}</p>
+                                                    <p>${it.courseName}</p>
                                                 </a>
                                                 </div>
                                             </div>
                                             <div class="caption">
-                                                <p>${it.courseName?default('未设置')}</p>
+                                                <p>${it.courseName}</p>
                                             </div>
                                         </div>
                                     </div>

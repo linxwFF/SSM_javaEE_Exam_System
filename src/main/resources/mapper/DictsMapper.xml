@@ -140,4 +140,21 @@
       updated_at = #{updatedAt,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=INTEGER}
   </update>
+
+  <select id="findAllByCourse" resultMap="BaseResultMap" parameterType="map">
+    select
+    <include refid="Base_Column_List" />
+    from dicts
+
+    <where>
+      <if test="findContent != null and findContent !='' " >
+        and (
+        LOWER(text) like  LOWER(CONCAT("%",#{findContent,jdbcType=VARCHAR},"%")) or
+        value = #{findContent}
+        )
+      </if>
+      and deleted_at is null
+      and code = "course_type" and remarks = #{remarks}
+    </where>
+  </select>
 </mapper>
