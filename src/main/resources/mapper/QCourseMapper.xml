@@ -129,6 +129,7 @@
         type = #{findContent}
         )
       </if>
+      and delete_time is null
     </where>
   </sql>
 
@@ -137,7 +138,6 @@
     <include refid="Base_Column_List" />
     from q_course
     <include refid="where_all"/>
-    where delete_time is null
     <include refid="limit_sql" />
   </select>
 

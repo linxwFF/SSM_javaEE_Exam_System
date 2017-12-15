@@ -61,16 +61,17 @@
             <div class="">
                 <div class="page-title">
                     <div class="title_left">
-                        <h3> Media Gallery <small> gallery design</small> </h3>
+                        <h3></h3>
                     </div>
 
+                    <form method="post" action="" id="formId" class="form-inline">
                     <div class="title_right">
                         <div class="col-md-5 col-sm-5 col-xs-12 form-group pull-right top_search">
                             <div class="input-group">
-                                <input type="text" class="form-control" placeholder="Search for...">
-                    <span class="input-group-btn">
-                        <button class="btn btn-default" type="button">Go!</button>
-                    </span>
+                                <input type="text" name="findContent" class="form-control" placeholder="查询考试项目">
+                                <span class="input-group-btn">
+                                    <button class="btn btn-default" type="submit">查询</button>
+                                </span>
                             </div>
                         </div>
                     </div>
@@ -82,7 +83,7 @@
                     <div class="col-md-12">
                         <div class="x_panel">
                             <div class="x_title">
-                                <h2>Media Gallery <small> gallery design </small></h2>
+                                <h2> 选择考试项目 </h2>
                                 <ul class="nav navbar-right panel_toolbox">
                                     <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
                                     </li>
@@ -95,28 +96,40 @@
 
                                 <div class="row">
 
-                                    <p>Media gallery design emelents</p>
 
+                                    <#if page?exists && page.list?size gt 0 >
+                                        <#list page.list as it>
                                     <div class="col-md-55">
-                                        <div class="thumbnail">
+                                        <div class="thumbnail" style="height: 161px;">
                                             <div class="image view view-first">
                                                 <img style="width: 100%; display: block;" src="${basePath}/static/src/images/media.jpg" alt="image">
-                                                <div class="mask">
-                                                    <p>Your Text</p>
-                                                    <div class="tools tools-bottom">
-                                                        <a href="#"><i class="fa fa-link"></i></a>
-                                                        <a href="#"><i class="fa fa-pencil"></i></a>
-                                                        <a href="#"><i class="fa fa-times"></i></a>
-                                                    </div>
+
+                                                <a href="http://www.baidu.com">
+                                                    <div class="mask" style="height:100%;">
+                                                    <p>${it.courseName?default('未设置')}</p>
+                                                </a>
                                                 </div>
                                             </div>
                                             <div class="caption">
-                                                <p>Snow and Ice Incoming for the South</p>
+                                                <p>${it.courseName?default('未设置')}</p>
                                             </div>
                                         </div>
                                     </div>
+                                        </#list>
+                                    <#else>
+                                        <div class="alert alert-warning alert-dismissible fade in" role="alert">
+                                            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span>
+                                            </button>
+                                            <strong>没有考试项目 ！</strong>
+                                        </div>
+                                    </#if>
 
-
+                                    <#if page?exists>
+                                        <div class="col-md-12 col-sm-12 col-xs-12 text-center">
+                                             ${page.pageHtml}
+                                        </div>
+                                    </#if>
+                                    </form>
 
 
                                 </div>

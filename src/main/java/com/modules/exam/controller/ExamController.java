@@ -38,7 +38,7 @@ public class ExamController extends BaseController {
     }
 
     //1.选择考试专业项目  列表
-    @RequestMapping(value="chooseCourse",method= RequestMethod.GET)
+    @RequestMapping(value="chooseCourse")
     public ModelAndView chooseCourse(ModelMap map, Integer pageNo, String findContent){
         //分页，专业项目列表
         map.put("findContent", findContent);
