@@ -95,7 +95,7 @@
                                                                 <th scope="row">${key_index+1}</th>
                                                                 <td class="text-center">${modelList[key]}<br></td>
                                                                 <td class="text-center">
-                                                                    <a href="${basePath}/exam/get_model_list.shtml">
+                                                                    <a href="${basePath}/exam/start_exam.shtml?type=${type}&courseType=${courseType}&mode=${key}">
                                                                     <button type="button" class="btn btn-primary">
                                                                         进入练习
                                                                     </button>

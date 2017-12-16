@@ -5,9 +5,15 @@ import java.util.Date;
 public class QCourse {
     private Integer id;
 
-    private String courseName;
+    private Integer parentId;
+
+    private String name;
 
     private Integer type;
+
+    private Boolean status;
+
+    private Integer sortOrder;
 
     private Date updateTime;
 
@@ -15,10 +21,13 @@ public class QCourse {
 
     private Date deleteTime;
 
-    public QCourse(Integer id, String courseName, Integer type, Date updateTime, Date createTime, Date deleteTime) {
+    public QCourse(Integer id, Integer parentId, String name, Integer type, Boolean status, Integer sortOrder, Date updateTime, Date createTime, Date deleteTime) {
         this.id = id;
-        this.courseName = courseName;
+        this.parentId = parentId;
+        this.name = name;
         this.type = type;
+        this.status = status;
+        this.sortOrder = sortOrder;
         this.updateTime = updateTime;
         this.createTime = createTime;
         this.deleteTime = deleteTime;
@@ -36,12 +45,20 @@ public class QCourse {
         this.id = id;
     }
 
-    public String getCourseName() {
-        return courseName;
+    public Integer getParentId() {
+        return parentId;
     }
 
-    public void setCourseName(String courseName) {
-        this.courseName = courseName == null ? null : courseName.trim();
+    public void setParentId(Integer parentId) {
+        this.parentId = parentId;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name == null ? null : name.trim();
     }
 
     public Integer getType() {
@@ -50,6 +67,22 @@ public class QCourse {
 
     public void setType(Integer type) {
         this.type = type;
+    }
+
+    public Boolean getStatus() {
+        return status;
+    }
+
+    public void setStatus(Boolean status) {
+        this.status = status;
+    }
+
+    public Integer getSortOrder() {
+        return sortOrder;
+    }
+
+    public void setSortOrder(Integer sortOrder) {
+        this.sortOrder = sortOrder;
     }
 
     public Date getUpdateTime() {

@@ -95,8 +95,6 @@
                             <div class="x_content">
 
                                 <div class="row">
-
-
                                     <#if page?exists && page.list?size gt 0 >
                                         <#list page.list as it>
                                     <div class="col-md-55">
@@ -104,15 +102,15 @@
                                             <div class="image view view-first">
                                                 <img style="width: 100%; display: block;" src="${basePath}/static/src/images/media.jpg" alt="image">
 
-                                                <a href="${basePath}/exam/get_course_list.shtml?remarks=${it.type?default(0)}">
+                                                <a href="${basePath}/exam/get_course_list.shtml?course_id=${it.id}">
                                                     <div class="mask" style="height:100%;">
-                                                    <p>${it.courseName}</p>
+                                                    <p>${it.name}</p>
                                                     </div>
                                                 </a>
 
                                             </div>
                                             <div class="caption">
-                                                <p>${it.courseName}</p>
+                                                <p>${it.name}</p>
                                             </div>
                                         </div>
                                     </div>
@@ -125,13 +123,12 @@
                                         </div>
                                     </#if>
 
-                                    <#if page?exists>
+                                    <#if page?exists && page.list?size gt 0>
                                         <div class="col-md-12 col-sm-12 col-xs-12 text-center">
                                              ${page.pageHtml}
                                         </div>
                                     </#if>
                                     </form>
-
 
                                 </div>
                             </div>

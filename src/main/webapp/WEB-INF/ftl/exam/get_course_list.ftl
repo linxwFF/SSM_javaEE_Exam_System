@@ -96,34 +96,34 @@
 
                                 <div class="row">
 
-                                <#if remarks?exists >
-                                    <#if list?exists && list?size gt 0 >
-                                            <#list list as it>
+                                <#if course_id?exists >
+                                    <#if page?exists && page.list?size gt 0 >
+                                        <#list page.list as it>
                                         <div class="col-md-55">
                                             <div class="thumbnail" style="height: 161px;">
                                                 <div class="image view view-first">
                                                     <img style="width: 100%; display: block;" src="${basePath}/static/src/images/media.jpg" alt="image">
 
-                                                    <a href="${basePath}/exam/get_model_list.shtml?type=${remarks}&courseType=${it.value}">
+                                                    <a href="${basePath}/exam/get_model_list.shtml?type=${type}&courseType=${it.type}">
                                                         <div class="mask" style="height:100%;">
-                                                        <p>${it.QKCourseName}</p>
+                                                        <p>${it.name}</p>
                                                         </div>
                                                     </a>
 
                                                 </div>
                                                 <div class="caption">
-                                                    <p>${it.QKCourseName}</p>
+                                                    <p>${it.name}</p>
                                                 </div>
                                             </div>
                                         </div>
-                                            </#list>
-                                        <#else>
-                                            <div class="alert alert-warning alert-dismissible fade in" role="alert">
-                                                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span>
-                                                </button>
-                                                <strong>没有考试科目 ！</strong>
-                                            </div>
-                                        </#if>
+                                        </#list>
+                                    <#else>
+                                        <div class="alert alert-warning alert-dismissible fade in" role="alert">
+                                            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span>
+                                            </button>
+                                            <strong>没有考试科目 ！</strong>
+                                        </div>
+                                    </#if>
                                 <#else>
                                     <div class="alert alert-warning alert-dismissible fade in" role="alert">
                                         <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span>
