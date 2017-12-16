@@ -28,7 +28,7 @@ public class DictsServiceImpl implements DictsService {
         for (Dicts item:listDicts) {
 
             QKCourse qkcourse = new QKCourse();
-            qkcourse.setQKCourseName(item.getCodeName());
+            qkcourse.setQKCourseName(item.getText());
             qkcourse.setValue(item.getValue());
 
             result.add(qkcourse);

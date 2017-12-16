@@ -16,7 +16,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by LINxwFF on 2017/12/13.
@@ -52,20 +55,37 @@ public class ExamController extends BaseController {
         return new ModelAndView("exam/choose_course");
     }
 
-
-    //根据考试专业项目的type查询出所有的考试科目列表
+    //2.根据考试专业项目的type查询出所有的考试科目列表
     //q_course -> dicts course_type 会计科目 remarks的值
     @RequestMapping(value="get_course_list")
     public ModelAndView getCourseList(ModelMap map,String findContent, Integer remarks){
 
-        //分页，专业项目列表
-        if(remarks == null){
-            remarks = 0;
-        }
         List<QKCourse> qkCourseList = dictsService.findAllByCourse(findContent,remarks);
-        map.put("list", qkCourseList);
 
-        return new ModelAndView("exam/choose_course");
+        map.put("list", qkCourseList);
+        map.put("remarks",remarks);     //考试项目
+
+        return new ModelAndView("exam/get_course_list");
+    }
+
+    //3.考试的模式选择     type=${remarks}考试项目  &courseType=${it.value}考试科目
+    @RequestMapping(value="get_model_list")
+    public ModelAndView getModelList(ModelMap map,Integer type,Integer courseType){
+
+        Map<String,String> modelList = new LinkedHashMap<>();
+
+        modelList.put("model1","随机组卷模式");
+        modelList.put("model2","往年真题模式");
+        modelList.put("model3","章节练习");
+        modelList.put("model4","大题练习");
+        modelList.put("model5","错题练习");
+
+        map.put("modelList",modelList);
+
+        map.put("type",type);
+        map.put("courseType",courseType);
+
+        return new ModelAndView("exam/get_model_list");
     }
 
 

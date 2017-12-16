@@ -36,15 +36,9 @@
 
             <li ><a><i class="fa fa-edit"></i> 考试中心 <span class="fa fa-chevron-down"></span></a>
                 <ul class="nav child_menu"  >
-                    <li><a href="#">模拟考试</a>
-                        <ul class="nav child_menu">
-                            <li class="sub_menu"><a href="${basePath}/exam/chooseCourse.shtml">随机组卷模式</a></li>
-                            <li class="sub_menu"><a href="${basePath}/exam/chooseCourse.shtml">往年真题模式</a></li>
-                        </ul>
-                    </li>
-                    <li><a href="${basePath}/exam/chooseCourse.shtml">章节练习</a></li>
-                    <li><a href="${basePath}/exam/chooseCourse.shtml">大题练习</a></li>
-                    <li><a href="${basePath}/exam/chooseCourse.shtml">错题练习</a></li>
+                    <li><a href="${basePath}/exam/chooseCourse.shtml">1.选择考试项目</a></li>
+                    <li><a href="${basePath}/exam/get_course_list.shtml">2.选择考试科目</a></li>
+                    <li><a href="${basePath}/exam/get_model_list.shtml">3.考试的模式选择</a></li>
                 </ul>
             </li>
 

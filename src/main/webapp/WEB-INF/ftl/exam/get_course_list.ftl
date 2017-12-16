@@ -96,40 +96,41 @@
 
                                 <div class="row">
 
+                                <#if remarks?exists >
+                                    <#if list?exists && list?size gt 0 >
+                                            <#list list as it>
+                                        <div class="col-md-55">
+                                            <div class="thumbnail" style="height: 161px;">
+                                                <div class="image view view-first">
+                                                    <img style="width: 100%; display: block;" src="${basePath}/static/src/images/media.jpg" alt="image">
 
-                                    <#if page?exists && page.list?size gt 0 >
-                                        <#list page.list as it>
-                                    <div class="col-md-55">
-                                        <div class="thumbnail" style="height: 161px;">
-                                            <div class="image view view-first">
-                                                <img style="width: 100%; display: block;" src="${basePath}/static/src/images/media.jpg" alt="image">
+                                                    <a href="${basePath}/exam/get_model_list.shtml?type=${remarks}&courseType=${it.value}">
+                                                        <div class="mask" style="height:100%;">
+                                                        <p>${it.QKCourseName}</p>
+                                                        </div>
+                                                    </a>
 
-                                                <a href="${basePath}/exam/get_course_list.shtml?remarks=${it.type?default(0)}">
-                                                    <div class="mask" style="height:100%;">
-                                                    <p>${it.courseName}</p>
-                                                    </div>
-                                                </a>
-
-                                            </div>
-                                            <div class="caption">
-                                                <p>${it.courseName}</p>
+                                                </div>
+                                                <div class="caption">
+                                                    <p>${it.QKCourseName}</p>
+                                                </div>
                                             </div>
                                         </div>
+                                            </#list>
+                                        <#else>
+                                            <div class="alert alert-warning alert-dismissible fade in" role="alert">
+                                                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span>
+                                                </button>
+                                                <strong>没有考试科目 ！</strong>
+                                            </div>
+                                        </#if>
+                                <#else>
+                                    <div class="alert alert-warning alert-dismissible fade in" role="alert">
+                                        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span>
+                                        </button>
+                                        <strong>请先选择你要考试的考试项目 ！</strong>
                                     </div>
-                                        </#list>
-                                    <#else>
-                                        <div class="alert alert-warning alert-dismissible fade in" role="alert">
-                                            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span>
-                                            </button>
-                                            <strong>没有考试项目 ！</strong>
-                                        </div>
-                                    </#if>
-
-                                    <#if page?exists>
-                                        <div class="col-md-12 col-sm-12 col-xs-12 text-center">
-                                             ${page.pageHtml}
-                                        </div>
-                                    </#if>
+                                </#if>
                                     </form>
 
 
