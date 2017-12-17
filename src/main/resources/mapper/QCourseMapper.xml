@@ -141,6 +141,14 @@
     where id = #{id,jdbcType=INTEGER}
   </update>
 
+  <select id="findCourseTypeById" resultMap="BaseResultMap">
+    SELECT
+    <include refid="Base_Column_List"/>
+    FROM q_course
+    WHERE parent_id = #{parent_id}
+    and type = #{type}
+  </select>
+
   <!--分页-->
   <sql id="limit_sql">
     <if test="page_sql != null and page_sql != ''">

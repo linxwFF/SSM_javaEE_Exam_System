@@ -3,8 +3,12 @@ package com.modules.exam.controller;
 import com.common.controller.BaseController;
 import com.common.dao.QCourseMapper;
 import com.common.model.QCourse;
+import com.common.model.QQuestion;
+import com.common.utils.Const;
+import com.common.utils.EnumUtil;
 import com.modules.core.mybatis.page.Pagination;
 import com.modules.exam.service.CourseService;
+import com.modules.exam.service.ExamService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
@@ -14,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -27,6 +32,9 @@ public class ExamController extends BaseController {
     @Autowired
     //自动注入的是接口类
     private CourseService courseService;
+
+    @Autowired
+    private ExamService examService;
 
     /**
      * 考试主页
@@ -52,6 +60,9 @@ public class ExamController extends BaseController {
     @RequestMapping(value="get_course_list")
     public ModelAndView getCourseList(ModelMap map,String findContent, Integer course_id){
 
+        if(course_id == null){
+            return new ModelAndView("exam/get_course_list");
+        }
         //考试项目type
         QCourse course = courseService.findById(course_id);
         map.put("type",course.getType());
@@ -70,11 +81,11 @@ public class ExamController extends BaseController {
 
         Map<String,String> modelList = new LinkedHashMap<>();
 
-        modelList.put("1","随机组卷模式");
-        modelList.put("2","往年真题模式");
-        modelList.put("3","章节练习");
-        modelList.put("4","大题练习");
-        modelList.put("5","错题练习");
+        modelList.put(String.valueOf(Const.ExamModelEnum.MODEL_1.getCode()),Const.ExamModelEnum.MODEL_1.getValue());
+        modelList.put(String.valueOf(Const.ExamModelEnum.MODEL_2.getCode()),Const.ExamModelEnum.MODEL_2.getValue());
+        modelList.put(String.valueOf(Const.ExamModelEnum.MODEL_3.getCode()),Const.ExamModelEnum.MODEL_3.getValue());
+        modelList.put(String.valueOf(Const.ExamModelEnum.MODEL_4.getCode()),Const.ExamModelEnum.MODEL_4.getValue());
+        modelList.put(String.valueOf(Const.ExamModelEnum.MODEL_5.getCode()),Const.ExamModelEnum.MODEL_5.getValue());
 
         map.put("modelList",modelList);
 
@@ -89,12 +100,25 @@ public class ExamController extends BaseController {
     public ModelAndView StartExam(ModelMap map,Integer type,Integer courseType,Integer mode){
 
         //考试项目
+        QCourse CourseProject = courseService.findById(type);
+        String CourseProjectName = CourseProject.getName();
+        map.put("CourseProjectName",CourseProjectName);
 
         //考试科目
+        QCourse Course = courseService.findCourseTypeById(CourseProject.getId(),courseType);
+        String CourseName = Course.getName();
+        map.put("CourseName",CourseName);
 
         //考试模式
+        Class<Const.ExamModelEnum> clasz = Const.ExamModelEnum.class;
+        String modeName =(String) EnumUtil.getEnumValueByCode(1, clasz);
+        map.put("modeName",modeName);
 
-        return new ModelAndView("exam/exam");
+        Map<Integer,List<QQuestion>> questions = examService.QueryQuestionsByMode1(type,courseType);
+        map.put("questions",questions);
+
+        return null;
+//        return new ModelAndView("exam/exam");
     }
 
 }

@@ -28,4 +28,9 @@ public class CourseServiceImpl extends BaseMybatisDao<QCourseMapper> implements 
     public QCourse findById(Integer id) {
         return qCourseMapper.selectByPrimaryKey(id);
     }
+
+    @Override
+    public QCourse findCourseTypeById(Integer parent_id, Integer type) {
+        return qCourseMapper.findCourseTypeById(parent_id,type);
+    }
 }

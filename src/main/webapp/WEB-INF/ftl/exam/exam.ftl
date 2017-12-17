@@ -135,7 +135,7 @@
             collectanswer();
             $('form').submit();
         } else {
-            alert('没有答题，无法交卷！');
+//            alert('没有答题，无法交卷！');
         }
     }
     </script>
