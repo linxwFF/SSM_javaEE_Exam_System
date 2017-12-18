@@ -101,7 +101,6 @@
                                 <thead>
                                 <tr>
                                     <th></th>
-                                    <th></th>
                                     <th>ID</th>
                                     <th>姓名</th>
                                     <th>邮箱</th>

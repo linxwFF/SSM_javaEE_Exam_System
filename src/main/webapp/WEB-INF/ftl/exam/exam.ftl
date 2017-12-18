@@ -2,7 +2,7 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml" ng-app="app" xmlns:ng="http://angularjs.org">
 <head id="Head1" runat="server">
-    <title>2016会计无纸化考试题库系统</title>
+    <title>福建省${CourseProjectName?default('未设置')}无纸化考试系统</title>
     <link href="${basePath}/static/assets/extendCss/exam/exam.style.css" rel="stylesheet">
     <link href="${basePath}/static/assets/extendCss/exam/exam.css"rel="stylesheet">
     <script src="${basePath}/static/assets/extendJs/exam/jquery-1.7.1.min.js" ></script>
@@ -10,6 +10,7 @@
     <script src="${basePath}/static/assets/extendJs/exam/cookie.js" ></script>
     <script src="${basePath}/static/assets/extendJs/exam/kaoshi.js" ></script>
     <script src="${basePath}/static/assets/extendJs/exam/app.js"></script>
+
     <style type="text/css">
     .tab {
         padding-top: 5px;
@@ -34,35 +35,35 @@
     }
     </style>
     <script type="text/javascript">
-            $().ready(function () {
-                //闹钟时间
-                setInterval("ChangeTime()", 1000);
-
-                //初始化时，定义考试的科目名称和科目的题目数量
-                var title = $('.tab span[class=bs]').attr("title").split('|')[0];
-                var count = $('.tab span[class=bs]').attr("title").split('|')[1];
-                //考试科目名称
-                $('#kskm').text(title);
-                //总题数
-                $('#zts').text(count);
-                //重置时间
-                delCookie('sumsj-0636462431');
-            });
+    $().ready(function () {
+        //闹钟时间
+        setInterval("ChangeTime()", 1000);
+        //初始化时，定义考试的科目名称和科目的题目数量
+        var title = $('.tab span[class=bs]').attr("title").split('|')[0];
+        var count = $('.tab span[class=bs]').attr("title").split('|')[1];
+        //考试科目名称
+        $('#kskm').text(title);
+        //总题数
+        $('#zts').text(count);
+        //重置时间
+//        delCookie('sumsj-${srandom!}');
+    });
     //闹钟时间
     function ChangeTime() {
         var kemu_count = parseInt('1');
         var TimeNum;
         //获取考卷时间
-        if (!getCookie("sumsj-0636462431")) {
+        if (!getCookie("sumsj-${srandom!}")) {
             //没有时间就是一个小时
             TimeNum = kemu_count * 60 * 60;
         } else {
-            TimeNum = getCookie("sumsj-0636462431");
+            //获取cookie中的剩余时间
+            TimeNum = getCookie("sumsj-${srandom!}");
         }
         //每次减一秒
         TimeNum--;
         //剩余时间存放COOKIE
-        setCookie("sumsj-0636462431", TimeNum);
+        setCookie("sumsj-${srandom!}", TimeNum);
         //时间视图
         if (TimeNum > 0) {
             var fz = Math.floor(TimeNum / 60);
@@ -75,7 +76,7 @@
             $("#myclock").text(sj);
         }
         else {
-            submitpaper();
+//            submitpaper();
         }
     }
     //收集答案
@@ -127,6 +128,8 @@
             console.log(result);
             temp = new Array();
         });
+
+        //答案数据
         $('#daan').val(result.join('----').replace(/undefined/g, ''));
         // alert(result.join('----').replace(/undefined/g, ''));
     }
@@ -134,33 +137,30 @@
         if ($('.havebg').length > 0) {
             collectanswer();
             $('form').submit();
+            console.log("提交");
         } else {
-//            alert('没有答题，无法交卷！');
+            alert('没有答题，无法交卷！');
         }
     }
     </script>
 </head>
 <body oncopy="return false;" oncontextmenu="return false" onselectstart="return false" ondragstart="return false" onbeforecopy="return false" oncopy="document.selection.empty()" onselect="document.selection.empty()" >
 
-
-
-<form action="/handPaper" method="post">
-    {{ csrf_field() }}
+<form action="${basePath}/exam/handPaper.shtml" method="post">
     <input type="hidden" name="daan" id="daan" />
-    <input type="hidden" name="timestamp" value="0636462431" />
-    <input type="hidden" name="kemu_id" value="{{ $course_id }}" />
+    <input type="hidden" name="timestamp" value="${srandom}" />
+    <input type="hidden" name="type" value="${type}" />
+    <input type="hidden" name="courseType" value="${courseType}" />
     <input type="hidden" name="ys" id="ys" value="0" />
 </form>
-
-
-
 
 <div class="myexam_head">
     <div class="topbg">
         <div class="top" style="background:url('${basePath}/static/assets/img/exam/tlogo/fujian.jpg') no-repeat;">
-            <div class="topr">
-                <img alt="" src="${basePath}/static//assets/img/exam/jsq.jpg" width="78" height="30" onclick="window.open('/Content/jsq.htm','_blank')"/>
-            </div>
+            <#--<div class="topr">-->
+                <#--&lt;#&ndash;计算器 todo&ndash;&gt;-->
+                <#--<img alt="" src="${basePath}/static//assets/img/exam/jsq.jpg" width="78" height="30" onclick="window.open('/Content/jsq.htm','_blank')"/>-->
+            <#--</div>-->
         </div>
     </div>
     <table>
@@ -169,16 +169,16 @@
                 <img src="${basePath}/static//assets/img/exam/portrait.jpg" alt="" /></td>
             <td class="myexam_identity">
                 <ul>
-                    <li>姓名：{{ $username}}</li>
-                    <li>准考证号：123456789123xxxxxx</li>
-                    <li>身份证号：450205198008xxxxxx</li>
-                    <li>考试科目：<span id="kskm2">{{ $course_type }}</span></li>
+                    <li>姓名：${token.real_name?default('未设置')}</li>
+                    <li>准考证号：${token.identityNumber?default('未设置')}</li>
+                    <li>身份证号：${token.identityNumber?default('未设置')}</li>
+                    <li>考试科目：<span id="kskm2">${CourseName?default('未设置')}</span></li>
                 </ul>
             </td>
             <td class="myexam_tt ac">
-                <p>福建省会计从业资格无纸化考试系统</p>
+                <p>福建省${CourseProjectName?default('未设置')}无纸化考试系统</p>
                 <p><span id="kskm"></span></p>
-                <p>总题数：<span id="zts"></span></p>
+                <p>总题数：<span id="zts">32</span></p>
             </td>
             <td class="myexam_time">
                 <dl>
@@ -192,7 +192,7 @@
 </div>
 
 <div class="tab">
-    <span class='bs' title='财经法规与会计职业道德|62' ref="1">财经法规与会计职业道德</span>
+    <span class='bs' title='${CourseName?default('未设置')}|32' ref="1">${CourseName?default('未设置')}</span>
 </div>
 
 <div class="myexam_body">
@@ -201,32 +201,39 @@
             <td class="myexam_options">
                 <div class="myexam_wrap">
                     <div style="display:block" ref="1">
-                        <div class='type_1' onclick='showsubmenu($(this))'>单选题（{{ $takeNum }}）</div>
-                        <div class='numberlist'>
-                            <ul>
-                                @foreach ($type_1 as $key=>$value)
-                                <li class='nomakebg'>{{ $key+1 }}</li>
-                                @endforeach
-                            </ul>
-                        </div>
 
-                        <div class='type_1' onclick='showsubmenu($(this))'>多选题（{{ $takeNum }}）</div>
+                        <#if questions.type1?exists && questions.type1?size gt 0 >
+                        <div class='type_1' onclick='showsubmenu($(this))'>单选题（${questions.type1?size}）</div>
                         <div class='numberlist'>
                             <ul>
-                                @foreach ($type_2 as $key=>$value)
-                                <li class='nomakebg'>{{ ($key+1)+$takeNum }}</li>
-                                @endforeach
+                                <#list questions.type1 as it>
+                                <li class='nomakebg'>${it_index+1}</li>
+                                </#list>
                             </ul>
                         </div>
+                        </#if>
 
-                        <div class='type_1' onclick='showsubmenu($(this))'>判断题（{{ $takeNum }}）</div>
+                        <#if questions.type2?exists && questions.type2?size gt 0 >
+                        <div class='type_1' onclick='showsubmenu($(this))'>多选题（${questions.type2?size}）</div>
                         <div class='numberlist'>
                             <ul>
-                                @foreach ($type_3 as $key=>$value)
-                                <li class='nomakebg'>{{ ($key+1)+$takeNum*2 }}</li>
-                                @endforeach
+                                <#list questions.type2 as it>
+                                    <li class='nomakebg'>${it_index+questions.type1?size+1}</li>
+                                </#list>
                             </ul>
                         </div>
+                        </#if>
+
+                        <#if questions.type3?exists && questions.type3?size gt 0 >
+                        <div class='type_1' onclick='showsubmenu($(this))'>判断题（${questions.type3?size}）</div>
+                        <div class='numberlist'>
+                            <ul>
+                                <#list questions.type3 as it>
+                                    <li class='nomakebg'>${it_index+1+questions.type1?size+questions.type2?size}</li>
+                                </#list>
+                            </ul>
+                        </div>
+                        </#if>
 
                         <div class='type_1' onclick='showsubmenu($(this))'>大题（2）</div>
                         <div class='numberlist'>
@@ -237,6 +244,7 @@
                         </div>
                     </div>
 
+                    <#--提交考卷-->
                     <div id="submitpaper" onclick="submitpaper()"></div>
                 </div>
             </td>
@@ -244,26 +252,27 @@
             <td class="myexam_main">
                 <div style="display:block;" ref="1" class="temp">
 
-                    @foreach ($type_1 as $key=>$value)
-                    <div class= 'divr'  style="{{$key === 0?'display:block':'display:none'}}" ref="{{ $value->type }}|{{ $key+1 }}">
+                    <#if questions.type1?exists && questions.type1?size gt 0 >
+                        <#list questions.type1 as it>
+                    <div class= 'divr'  style="<#if it_index == 0>display:block<#else>display:none</#if>" ref="${it.type}|${it_index+1}">
                         <div class='divrcon'>
                             <div class='divrtit'>一、单项选择题(本类题共20小题，每小题1分，共20分。每小题备选答案中，只有一个符合题意的正确答案，多选、错选、不选均不得分。)</div>
-                            <br />{{ $key+1 }} 、{{ $value->subject }}<br />
+                            <br />${it_index+1} 、${it.subject}<br />
                             <br />
-                            A、{{ $value->choose_A }}
+                            A、${it.chooseA}
                             <br />
-                            B、{{ $value->choose_B }}
+                            B、${it.chooseB}
                             <br />
-                            C、{{ $value->choose_C }}
+                            C、${it.chooseC}
                             <br />
-                            D、{{ $value->choose_D }}
+                            D、${it.chooseD}
                             <br />
                             <div class='divrda'>
                                 <span class='xzda'>选择答案：</span>
-                                A<input name='danx<text>1</text>' value='A' type='radio' />
-                                B<input name='danx<text>1</text>' value='B' type='radio' />
-                                C<input name='danx<text>1</text>' value='C' type='radio' />
-                                D<input name='danx<text>1</text>' value='D' type='radio' />
+                                A<input onclick="javascript:void(0);" name='danx<text>${it_index+1}</text>' value='A' type='radio' />
+                                B<input onclick="javascript:void(0);" name='danx<text>${it_index+1}</text>' value='B' type='radio' />
+                                C<input onclick="javascript:void(0);" name='danx<text>${it_index+1}</text>' value='C' type='radio' />
+                                D<input onclick="javascript:void(0);" name='danx<text>${it_index+1}</text>' value='D' type='radio' />
                                 <br />
                                 <br />
                                 <img alt="" src="${basePath}/static/assets/img/exam/diyiti.jpg" width='92' height='29' />
@@ -273,28 +282,30 @@
                             </div>
                         </div>
                     </div>
-                    @endforeach
+                        </#list>
+                    </#if>
 
-                    @foreach ($type_2 as $key=>$value)
-                    <div class= 'divr' style="display:none" ref="{{ $value->type }}|{{ ($key+1)+$takeNum }}">
+                    <#if questions.type2?exists && questions.type2?size gt 0 >
+                        <#list questions.type2 as it>
+                    <div class= 'divr' style="display:none" ref="${it.type}|${it_index+1+questions.type2?size}">
                         <div class='divrcon'>
                             <div class='divrtit'>二、多项选择题(本类题共20小题，每小题2分，共40分。每小题备选答案中，有两个或两个以上符合题意的正确答案，多选、少选、错选、不选均不得分。)</div>
-                            <br />{{ ($key+1)+$takeNum }} 、{{ $value->subject }}<br />
+                            <br />${it_index+1+questions.type1?size} 、${it.subject}<br />
                             <br />
-                            A、{{ $value->choose_A }}
+                            A、${it.chooseA}
                             <br />
-                            B、{{ $value->choose_B }}
+                            B、${it.chooseB}
                             <br />
-                            C、{{ $value->choose_C }}
+                            C、${it.chooseC}
                             <br />
-                            D、{{ $value->choose_D }}
+                            D、${it.chooseD}
                             <br />
                             <div class='divrda'>
                                 <span class='xzda'>选择答案：</span>
-                                A<input name='duox<text>21</text>' value='A' type='checkbox' />
-                                B<input name='duox<text>21</text>' value='B' type='checkbox' />
-                                C<input name='duox<text>21</text>' value='C' type='checkbox' />
-                                D<input name='duox<text>21</text>' value='D' type='checkbox' />
+                                A<input name='duox<text>${it_index+1+questions.type1?size}</text>' value='A' type='checkbox' />
+                                B<input name='duox<text>${it_index+1+questions.type1?size}</text>' value='B' type='checkbox' />
+                                C<input name='duox<text>${it_index+1+questions.type1?size}</text>' value='C' type='checkbox' />
+                                D<input name='duox<text>${it_index+1+questions.type1?size}</text>' value='D' type='checkbox' />
                                 <br />
                                 <br />
                                 <img alt="" src="${basePath}/static/assets/img/exam/diyiti.jpg" width='92' height='29'/>
@@ -304,18 +315,20 @@
                             </div>
                         </div>
                     </div>
-                    @endforeach
+                        </#list>
+                    </#if>
 
-                    @foreach ($type_3 as $key=>$value)
-                    <div class= 'divr' style="display:none" ref="{{ $value->type }}|{{ ($key+1)+$takeNum*2 }}">
+                    <#if questions.type3?exists && questions.type3?size gt 0 >
+                        <#list questions.type3 as it>
+                    <div class= 'divr' style="display:none" ref="${it.type}|${it_index+questions.type3?size}">
                         <div class='divrcon'>
                             <div class='divrtit'>三、判断题(本类题共20小题，每小题1分，共20分。请判断每小题的表述是否正确，每小题答题正确的得一分，答题错误的或者不答题的均不得分。)</div>
-                            <br />{{ ($key+1)+$takeNum*2 }} 、{{ $value->subject }}<br />
+                            <br />${it_index+1+questions.type1?size+questions.type2?size} 、${it.subject}<br />
                             <br />
                             <div class='divrda'>
                                 <span class='xzda'>选择答案：</span>
-                                正确<input name='pand<text>51</text>' value='1' type='radio' />
-                                错误<input name='pand<text>51</text>' value='0' type='radio' />
+                                正确<input name='pand<text>${it_index+1+questions.type1?size+questions.type2?size}</text>' value='1' type='radio' />
+                                错误<input name='pand<text>${it_index+1+questions.type1?size+questions.type2?size}</text>' value='0' type='radio' />
                                 <br />
                                 <br />
                                 <img alt="" src="${basePath}/static/assets/img/exam/diyiti.jpg" width='92' height='29' />
@@ -325,7 +338,8 @@
                             </div>
                         </div>
                     </div>
-                    @endforeach
+                        </#list>
+                    </#if>
 
                     <div class= 'divr' style="display:none" ref="4|31">
                         <div class='divrcon'>

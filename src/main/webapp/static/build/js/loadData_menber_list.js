@@ -80,14 +80,6 @@ function initTable() {
                 "mData":           null,
                 "sDefaultContent": '',
                 "sWidth" : "5%",
-            },{ "mData": null,
-              "orderable": false,
-              "sDefaultContent" : "",
-              "sWidth" : "5%",
-                // 返回自定义内容
-                "render": function(data, type, full) {
-                    return '<input name="selectItem" type="checkbox" value="' + full.id + '" />';
-                },
             },{ "mData": "id",
               "orderable": false,
               "sDefaultContent" : "",

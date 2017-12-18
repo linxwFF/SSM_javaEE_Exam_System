@@ -14,7 +14,7 @@
     </div>
 
     <div class="col-md-4" style="margin-top: 15px;margin-bottom: 20px;">
-        <a href="start_exam"><button type="button" class="btn btn-info btn-lg btn-bg-color">&nbsp;&nbsp;&nbsp;&nbsp;开始考试&nbsp;&nbsp;&nbsp;&nbsp;</button><a/>
+        <a href="${basePath}/exam/chooseCourse.shtml"><button type="button" class="btn btn-info btn-lg btn-bg-color">&nbsp;&nbsp;&nbsp;&nbsp;开始考试&nbsp;&nbsp;&nbsp;&nbsp;</button><a/>
     </div>
 </div>
 

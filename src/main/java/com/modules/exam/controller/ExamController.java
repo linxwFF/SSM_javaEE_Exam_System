@@ -20,6 +20,7 @@ import org.springframework.web.servlet.ModelAndView;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 
 /**
  * Created by LINxwFF on 2017/12/13.
@@ -103,22 +104,29 @@ public class ExamController extends BaseController {
         QCourse CourseProject = courseService.findById(type);
         String CourseProjectName = CourseProject.getName();
         map.put("CourseProjectName",CourseProjectName);
+        map.put("type",type);
 
         //考试科目
         QCourse Course = courseService.findCourseTypeById(CourseProject.getId(),courseType);
         String CourseName = Course.getName();
         map.put("CourseName",CourseName);
+        map.put("courseType",courseType);
 
         //考试模式
         Class<Const.ExamModelEnum> clasz = Const.ExamModelEnum.class;
-        String modeName =(String) EnumUtil.getEnumValueByCode(1, clasz);
+        String modeName =(String) EnumUtil.getEnumValueByCode(mode, clasz);
         map.put("modeName",modeName);
+        map.put("mode",mode);
 
-        Map<Integer,List<QQuestion>> questions = examService.QueryQuestionsByMode1(type,courseType);
+        Map<String,List<QQuestion>> questions = examService.QueryQuestionsByMode1(type,courseType);
         map.put("questions",questions);
 
-        return null;
-//        return new ModelAndView("exam/exam");
+        //随机值 = 用来判断这个考卷的id
+        Random random = new Random();
+        int srandom = random.nextInt(1000000)%(9000000-1000000+1) + 1000000;
+        map.put("srandom",String.valueOf(srandom));
+
+        return new ModelAndView("exam/exam");
     }
 
 }

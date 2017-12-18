@@ -33,18 +33,3 @@ function delCookie(name)
     var cval = getCookie(name);
     window.document.cookie = name + "=" + cval + "; expires=" + exp.toGMTString()+";path=/";
 }
-
-function showpwd()
-{
-     var p=getCookie(document.getElementById("uid").value);
-     if(p!=null)
-    document.getElementById("pwd").value= p;
-}
-
-function TjUrl (name,urls)
-{
-    var cval = getCookie(name);
-	if(cval=="" || cval=='undefined' || cval==null){
-		document.location.href=urls;
-	}
-}

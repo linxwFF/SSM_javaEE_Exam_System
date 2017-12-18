@@ -10,5 +10,5 @@ import java.util.Map;
  */
 public interface ExamService {
 
-    Map<Integer,List<QQuestion>> QueryQuestionsByMode1(Integer type, Integer courseType);
+    Map<String,List<QQuestion>> QueryQuestionsByMode1(Integer type, Integer courseType);
 }

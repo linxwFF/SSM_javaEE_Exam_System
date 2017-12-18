@@ -14,27 +14,27 @@ import java.util.Map;
  * Created by LINxwFF on 2017/12/17.
  */
 @Service
-public class ExamServiceImpl implements ExamService {
+public class ExamServiceImpl implements ExamService{
 
     @Autowired
     private QQuestionMapper qQuestionMapper;
 
     @Override
-    public Map<Integer,List<QQuestion>> QueryQuestionsByMode1(Integer courseType, Integer courseTypeId) {
+    public Map<String,List<QQuestion>> QueryQuestionsByMode1(Integer courseType, Integer courseTypeId) {
 
-        Map<Integer,List<QQuestion>> result = new LinkedHashMap<>();
+        Map<String,List<QQuestion>> result = new LinkedHashMap<>();
 
         //10题随机的选择题
         List<QQuestion> listType1 = qQuestionMapper.queryQuestionByTypeRand(1,courseType,courseTypeId,10);
-        result.put(1,listType1);
+        result.put("type1",listType1);
 
         //10题随机的多选题
         List<QQuestion> listType2 = qQuestionMapper.queryQuestionByTypeRand(2,courseType,courseTypeId,10);
-        result.put(2,listType2);
+        result.put("type2",listType2);
 
         //10题随机的判断题
         List<QQuestion> listType3 = qQuestionMapper.queryQuestionByTypeRand(3,courseType,courseTypeId,10);
-        result.put(3,listType3);
+        result.put("type3",listType3);
 
         return result;
     }
