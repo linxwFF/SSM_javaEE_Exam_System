@@ -75,6 +75,11 @@
         <!--<table tableName="q_questions" domainObjectName="QQuestion" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"></table>-->
 
         <!--<table tableName="dicts" domainObjectName="Dicts" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"></table>-->
+
+        <!--考试表-->
+        <table tableName="e_paper" domainObjectName="EPaper" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"></table>
+
+
         <!-- mybatis插件的搭建 -->
     </context>
 </generatorConfiguration>

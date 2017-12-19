@@ -1,7 +1,10 @@
 package com.modules.exam.service.impl;
 
+import com.common.dao.EPaperMapper;
 import com.common.dao.QQuestionMapper;
+import com.common.model.EPaper;
 import com.common.model.QQuestion;
+import com.modules.exam.bo.EPapersCondition;
 import com.modules.exam.service.ExamService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -18,6 +21,9 @@ public class ExamServiceImpl implements ExamService{
 
     @Autowired
     private QQuestionMapper qQuestionMapper;
+
+    @Autowired
+    private EPaperMapper ePaperMapper;
 
     @Override
     public Map<String,List<QQuestion>> QueryQuestionsByMode1(Integer courseType, Integer courseTypeId) {
@@ -38,4 +44,16 @@ public class ExamServiceImpl implements ExamService{
 
         return result;
     }
+
+    @Override
+    public int insert(EPaper ePaper) {
+
+        return ePaperMapper.insertSelective(ePaper);
+    }
+
+    @Override
+    public List<EPaper> findAllEPaperState0(EPapersCondition condition) {
+        return ePaperMapper.findAllEPaperState0(condition);
+    }
+
 }

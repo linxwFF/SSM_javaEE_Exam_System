@@ -69,7 +69,7 @@
             var fz = Math.floor(TimeNum / 60);
             var ms = TimeNum % 60;
             var ys = kemu_count * 60 * 60 - TimeNum;
-            $('#ys').val(ys);
+            $('#ys').val(ys);   //剩余时间（s）
             fz = (fz < 10) ? "0" + fz : fz;
             ms = (ms < 10) ? "0" + ms : ms;
             var sj = fz + "分" + ms + "秒";
@@ -147,11 +147,11 @@
 <body oncopy="return false;" oncontextmenu="return false" onselectstart="return false" ondragstart="return false" onbeforecopy="return false" oncopy="document.selection.empty()" onselect="document.selection.empty()" >
 
 <form action="${basePath}/exam/handPaper.shtml" method="post">
-    <input type="hidden" name="daan" id="daan" />
-    <input type="hidden" name="timestamp" value="${srandom}" />
-    <input type="hidden" name="type" value="${type}" />
-    <input type="hidden" name="courseType" value="${courseType}" />
-    <input type="hidden" name="ys" id="ys" value="0" />
+    <input type="hidden" name="daan" id="daan" />       <#--考试答题卷-->
+    <input type="hidden" name="type" value="${type}" />  <#--考试项目-->
+    <input type="hidden" name="courseType" value="${courseType}" /> <#--考试科目-->
+    <input type="hidden" name="ys" id="ys" value="0" />         <#--剩余时间-->
+    <input type="hidden" name="srandom" value="${srandom}" /> <#--考卷随机码-->
 </form>
 
 <div class="myexam_head">
