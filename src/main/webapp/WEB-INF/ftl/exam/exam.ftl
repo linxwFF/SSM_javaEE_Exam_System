@@ -124,7 +124,8 @@
 
                 }
             });
-            result.push(temp.join(',') + '++++' + kemu_name);
+//            result.push(temp.join(',') + '++++' + kemu_name);
+            result.push(temp.join(','));
             console.log(result);
             temp = new Array();
         });

@@ -246,7 +246,7 @@ public class ExamController extends BaseController {
         map.put("answerList",answerList);
 
 
-        return new ModelAndView("exam/get_model_list");
+        return new ModelAndView("exam/handPaper");
     }
 
     //生成考卷
