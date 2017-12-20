@@ -1,8 +1,12 @@
 package com.common.model;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public class QQuestion {
+public class QQuestion implements Serializable {
+
+    private static final long serialVersionUID = -2060550357305407661L;
+
     private Integer id;
 
     private String subject;

@@ -22,5 +22,6 @@ public interface ExamService {
     //查询用户未完成的考卷  类型
     List<EPaper> findAllEPaperState0(EPapersCondition condition);
 
-
+    //根据试卷的随机码获取试卷
+    EPaper findEpaperBySrandom(String srandom);
 }

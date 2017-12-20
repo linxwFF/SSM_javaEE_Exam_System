@@ -9,10 +9,14 @@ import com.common.utils.Const;
 import com.common.utils.EnumUtil;
 import com.modules.core.mybatis.page.Pagination;
 import com.modules.core.shiro.token.manager.TokenManager;
+import com.modules.exam.bo.Answer;
 import com.modules.exam.bo.EPapersCondition;
 import com.modules.exam.service.CourseService;
 import com.modules.exam.service.ExamService;
 import com.modules.user.service.UUserService;
+import com.sun.org.apache.commons.collections.CollectionUtils;
+import com.sun.org.apache.commons.collections.ListUtils;
+import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -125,10 +129,6 @@ public class ExamController extends BaseController {
         map.put("modeName",modeName);
         map.put("mode",mode);
 
-        //随机值 = 用来判断这个考卷的id
-        Random random = new Random();
-        int srandom = random.nextInt(1000000)%(9000000-1000000+1) + 1000000;
-        map.put("srandom",String.valueOf(srandom));
 
         //查询用户是否有未完成的试卷
         EPapersCondition condition = new EPapersCondition();
@@ -143,17 +143,13 @@ public class ExamController extends BaseController {
         if(ePapers.size() > 0){
             //如果有则把未完成的试卷返回 到考试界面
             String jsonQuestions = ePapers.get(0).getQuestions();
-            ObjectMapper mapper = new ObjectMapper();
-            Map<String,Object> mapQuestions = new HashMap<>();
+            Map<String, List<QQuestion>> mapQuestions = jsonToMap(jsonQuestions);
 
-            try {
-                mapQuestions = mapper.readValue(jsonQuestions, Map.class);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
             map.put("questions",mapQuestions);
-            return new ModelAndView("exam/exam");
+            //随机值 = 用来判断这个考卷的id
+            map.put("srandom",String.valueOf(ePapers.get(0).getSrandom()));
 
+            return new ModelAndView("exam/exam");
         }else{
             Map<String,List<QQuestion>> questions = CreateExamPaper(type,courseType,mode);
             map.put("questions",questions);
@@ -164,7 +160,91 @@ public class ExamController extends BaseController {
 
     //处理考卷
     @RequestMapping(value="handPaper")
-    public ModelAndView handPaper(ModelMap map, Integer type, Integer courseType, Integer ys,String daan,String srandom){
+    public ModelAndView handPaper(ModelMap map,String daan,Integer type,Integer courseType,Integer ys,Integer srandom){
+
+        List<QQuestion> qQuestionList = jsontoListQquestion(srandom);
+
+        List<Answer> answerList = new ArrayList<>();
+
+        //答题信息 匹配答案
+        String[] daanList = daan.split(",");
+
+        for (String item : daanList) {
+
+            String[] temp = item.split("/");
+
+            //题目
+            int subject_id = Integer.parseInt(temp[0])-1;
+            //题型
+            int subjectType = Integer.parseInt(temp[1]);
+
+            //答题
+            String answer;
+            if(temp.length == 2){
+                answer = "";
+            }else{
+                answer = temp[2];
+            }
+
+            Answer answerObj = new Answer();
+
+            QQuestion qQuestion = qQuestionList.get(subject_id);
+            if(subjectType == 1){
+                answerObj.setSubject(qQuestion.getSubject());
+                answerObj.setChooseA(qQuestion.getChooseA());
+                answerObj.setChooseB(qQuestion.getChooseB());
+                answerObj.setChooseC(qQuestion.getChooseC());
+                answerObj.setChooseD(qQuestion.getChooseD());
+                answerObj.setChooseRight(qQuestion.getChooseRight());
+                answerObj.setAnalysis(qQuestion.getAnalysis());
+                answerObj.setType(1);
+                answerObj.setChoose(answer);
+
+                if(answer.equals(qQuestion.getChooseRight())){
+                    answerObj.setScore(2);
+                }else{
+                    answerObj.setScore(0);
+                }
+            }else if(subjectType == 2){
+                answerObj.setSubject(qQuestion.getSubject());
+                answerObj.setChooseA(qQuestion.getChooseA());
+                answerObj.setChooseB(qQuestion.getChooseB());
+                answerObj.setChooseC(qQuestion.getChooseC());
+                answerObj.setChooseD(qQuestion.getChooseD());
+                answerObj.setChooseE(qQuestion.getChooseE());
+                answerObj.setChooseF(qQuestion.getChooseF());
+                answerObj.setChooseG(qQuestion.getChooseG());
+                answerObj.setChooseRight(qQuestion.getChooseRight());
+                answerObj.setAnalysis(qQuestion.getAnalysis());
+                answerObj.setType(2);
+                answerObj.setChoose(answer);
+
+                if(answer.equals(qQuestion.getChooseRight())){
+                    answerObj.setScore(2);
+                }else{
+                    answerObj.setScore(0);
+                }
+            }else if(subjectType == 3){
+                answerObj.setSubject(qQuestion.getSubject());
+                answerObj.setChooseA(qQuestion.getChooseA());
+                answerObj.setChooseB(qQuestion.getChooseB());
+                answerObj.setChooseRight(qQuestion.getChooseRight());
+                answerObj.setAnalysis(qQuestion.getAnalysis());
+                answerObj.setType(3);
+                answerObj.setChoose(answer);
+
+                if(answer.equals(qQuestion.getChooseRight())){
+                    answerObj.setScore(2);
+                }else{
+                    answerObj.setScore(0);
+                }
+            }
+
+            answerList.add(answerObj);
+        }
+
+        map.put("answerList",answerList);
+
 
         return new ModelAndView("exam/get_model_list");
     }
@@ -206,6 +286,71 @@ public class ExamController extends BaseController {
 
         return questions;
     }
+
+    private Map<String,List<QQuestion>> jsonToMap(String json)
+    {
+        ObjectMapper mapper = new ObjectMapper();
+
+        Map<String, List<QQuestion>> mapQuestions = new HashMap<String, List<QQuestion>>();
+        try {
+            mapQuestions = mapper.readValue(json, Map.class);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return mapQuestions;
+    }
+
+
+    //json to list 试卷转换成对象list  匹配答案
+    private List<QQuestion> jsontoListQquestion(Integer srandom)
+    {
+        //获取试卷信息
+        EPaper ePaper = examService.findEpaperBySrandom(String.valueOf(srandom));
+
+        //题目信息
+        String jsonQuestions = ePaper.getQuestions();
+
+        //题目信息转换
+        JSONObject jsonobject = JSONObject.fromObject(jsonQuestions);
+        List<QQuestion> result = new ArrayList<QQuestion>();
+        //获取一个json数组 type1;
+        JSONArray type1 = jsonobject.getJSONArray("type1");
+        //将json数组 转换成 List<QQuestion>泛型
+        for (int i = 0; i < type1.size(); i++) {
+            JSONObject object = (JSONObject)type1.get(i);
+            QQuestion question = (QQuestion)JSONObject.toBean(object,QQuestion.class);
+            if(question != null){
+                result.add(question);
+            }
+        }
+
+        //获取一个json数组 type2;
+        JSONArray type2 = jsonobject.getJSONArray("type2");
+        //将json数组 转换成 List<QQuestion>泛型
+        for (int i = 0; i < type2.size(); i++) {
+            JSONObject object = (JSONObject)type2.get(i);
+            QQuestion question = (QQuestion)JSONObject.toBean(object,
+                    QQuestion.class);
+            if(question != null){
+                result.add(question);
+            }
+        }
+
+        //获取一个json数组 type3;
+        JSONArray type3 = jsonobject.getJSONArray("type3");
+        //将json数组 转换成 List<QQuestion>泛型
+        for (int i = 0; i < type3.size(); i++) {
+            JSONObject object = (JSONObject)type3.get(i);
+            QQuestion question = (QQuestion)JSONObject.toBean(object,
+                    QQuestion.class);
+            if(question != null){
+                result.add(question);
+            }
+        }
+
+        return result;
+    }
+
 
 
 }

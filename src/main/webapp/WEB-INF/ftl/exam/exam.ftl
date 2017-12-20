@@ -90,8 +90,8 @@
             var bid = $(this).attr("ref");
             $(this).children('.divr').each(function () {
                 var dataArray = $(this).attr("ref").split('|');
-                var tid = parseInt(dataArray[0]);
-                var sid = parseInt(dataArray[1]);
+                var tid = parseInt(dataArray[0]);       //题型type
+                var sid = parseInt(dataArray[1]);       //题目id
                 switch (tid) {
                     case 1:
                         temp.push(sid + '/' + tid + '/' + $(this).find('.divrda').find('input:checked').val());
@@ -104,27 +104,27 @@
                     case 3:
                         temp.push(sid + '/' + tid + '/' + $(this).find('.divrda').find('input:checked').val());
                         break;
-                    case 4:
-                        if (bid == 1)
-                            temp.push(sid + '/' + tid + '/' + $(this).find('.divrdaa').map(function () {
-                                        return $(this).find('input:checked').map(function () {
-                                            return $(this).val();
-                                        }).get().join('');
-                                    }).get().join('$#$#'));
-                        else
-                            temp.push(sid + '/' + tid + '/' + $(this).find('.answerboxs').map(function () {
-                                        return $(this).find('div').map(function () {
-                                            return $(this).children().eq(0).val() + ',' + $(this).children().eq(1).val() + ',' + $(this).children().eq(2).val();
-                                        }).get().join(';');
-                                    }).get().join('$#$#'));
-                        break;
+//                    case 4:
+//                        if (bid == 1)
+//                            temp.push(sid + '/' + tid + '/' + $(this).find('.divrdaa').map(function () {
+//                                        return $(this).find('input:checked').map(function () {
+//                                            return $(this).val();
+//                                        }).get().join('');
+//                                    }).get().join('$#$#'));
+//                        else
+//                            temp.push(sid + '/' + tid + '/' + $(this).find('.answerboxs').map(function () {
+//                                        return $(this).find('div').map(function () {
+//                                            return $(this).children().eq(0).val() + ',' + $(this).children().eq(1).val() + ',' + $(this).children().eq(2).val();
+//                                        }).get().join(';');
+//                                    }).get().join('$#$#'));
+//                        break;
                     case 5:
                         temp.push(sid + '/' + tid + '/' + $(this).find('input[type=hidden]').val());
                         break;
 
                 }
             });
-            result.push(temp.join('****') + '++++' + kemu_name);
+            result.push(temp.join(',') + '++++' + kemu_name);
             console.log(result);
             temp = new Array();
         });
@@ -320,7 +320,7 @@
 
                     <#if questions.type3?exists && questions.type3?size gt 0 >
                         <#list questions.type3 as it>
-                    <div class= 'divr' style="display:none" ref="${it.type}|${it_index+questions.type3?size}">
+                    <div class= 'divr' style="display:none" ref="${it.type}|${it_index+questions.type1?size+questions.type2?size}">
                         <div class='divrcon'>
                             <div class='divrtit'>三、判断题(本类题共20小题，每小题1分，共20分。请判断每小题的表述是否正确，每小题答题正确的得一分，答题错误的或者不答题的均不得分。)</div>
                             <br />${it_index+1+questions.type1?size+questions.type2?size} 、${it.subject}<br />

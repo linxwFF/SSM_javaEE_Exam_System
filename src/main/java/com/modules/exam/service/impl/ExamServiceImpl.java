@@ -56,4 +56,9 @@ public class ExamServiceImpl implements ExamService{
         return ePaperMapper.findAllEPaperState0(condition);
     }
 
+    @Override
+    public EPaper findEpaperBySrandom(String srandom) {
+        return ePaperMapper.findEpaperBySrandom(srandom);
+    }
+
 }
