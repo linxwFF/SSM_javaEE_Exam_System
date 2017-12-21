@@ -152,7 +152,7 @@
     <input type="hidden" name="type" value="${type}" />  <#--考试项目-->
     <input type="hidden" name="courseType" value="${courseType}" /> <#--考试科目-->
     <input type="hidden" name="ys" id="ys" value="0" />         <#--剩余时间-->
-    <input type="hidden" name="srandom" value="${srandom}" /> <#--考卷随机码-->
+    <input type="hidden" name="srandom" value="${srandom!}" /> <#--考卷随机码-->
 </form>
 
 <div class="myexam_head">
@@ -321,7 +321,7 @@
 
                     <#if questions.type3?exists && questions.type3?size gt 0 >
                         <#list questions.type3 as it>
-                    <div class= 'divr' style="display:none" ref="${it.type}|${it_index+questions.type1?size+questions.type2?size}">
+                    <div class= 'divr' style="display:none" ref="${it.type}|${it_index+1+questions.type1?size+questions.type2?size}">
                         <div class='divrcon'>
                             <div class='divrtit'>三、判断题(本类题共20小题，每小题1分，共20分。请判断每小题的表述是否正确，每小题答题正确的得一分，答题错误的或者不答题的均不得分。)</div>
                             <br />${it_index+1+questions.type1?size+questions.type2?size} 、${it.subject}<br />

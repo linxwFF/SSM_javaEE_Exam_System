@@ -24,4 +24,11 @@ public interface ExamService {
 
     //根据试卷的随机码获取试卷
     EPaper findEpaperBySrandom(String srandom);
+
+    //题目序列化集合存入数据库
+    Map<String,List<QQuestion>> jsonToMap(String json);
+
+    //试卷题目反序列化
+    //json to list 试卷转换成对象list
+    List<QQuestion> jsontoListQquestion(Integer srandom);
 }

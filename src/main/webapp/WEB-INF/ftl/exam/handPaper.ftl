@@ -82,7 +82,15 @@
                         <div class="col-md-12 col-sm-12 col-xs-12">
                             <div class="x_panel" style="height: auto;">
                                 <div class="x_title">
-                                    <h2>${it_index+1}、<small>${it.subject}</small></h2>
+                                    <h2>${it_index+1}、
+                                        <small>
+                                        <#if (it.score)?? && it.score gt 0 >
+                                        ${it.subject} --- 正确 <i class="fa fa-thumbs-o-up"></i>
+                                        <#else>
+                                        <span style="color:red">${it.subject} --- 错误 <i class="fa fa-exclamation"></i></span>
+                                        </#if>
+                                        </small>
+                                    </h2>
                                     <ul class="nav navbar-right panel_toolbox">
                                         <li><a class="collapse-link">
                                             <#if (it.score)?? && it.score gt 0 >
@@ -168,11 +176,16 @@
                                         <#else>
                                         </#if>
                                         <tr>
-                                            <td style="color: red;">您的答案：</td>
+                                            <#if (it.score)?? && it.score gt 0 >
+                                                <td style="color: blue;">您的答案：</td>
+                                            <#else>
+                                                <td style="color: red;">您的答案：</td>
+                                            </#if>
+
                                             <td>${it.choose}</td>
                                         </tr>
                                         <tr>
-                                            <td style="color: red;">正确答案：</td>
+                                            <td style="color: blue;">正确答案：</td>
                                             <td>${it.chooseRight}</td>
                                         </tr>
                                         <tr>

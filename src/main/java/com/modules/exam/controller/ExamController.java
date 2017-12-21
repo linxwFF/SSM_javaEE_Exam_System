@@ -143,7 +143,7 @@ public class ExamController extends BaseController {
         if(ePapers.size() > 0){
             //如果有则把未完成的试卷返回 到考试界面
             String jsonQuestions = ePapers.get(0).getQuestions();
-            Map<String, List<QQuestion>> mapQuestions = jsonToMap(jsonQuestions);
+            Map<String, List<QQuestion>> mapQuestions = examService.jsonToMap(jsonQuestions);
 
             map.put("questions",mapQuestions);
             //随机值 = 用来判断这个考卷的id
@@ -151,8 +151,14 @@ public class ExamController extends BaseController {
 
             return new ModelAndView("exam/exam");
         }else{
-            Map<String,List<QQuestion>> questions = CreateExamPaper(type,courseType,mode);
+            //随机值 = 用来索引这个考卷的id
+            Random random = new Random();
+            int srandom = random.nextInt(1000000)%(9000000-1000000+1) + 1000000;
+
+            //创建新的考卷
+            Map<String,List<QQuestion>> questions = CreateExamPaper(srandom,type,courseType,mode);
             map.put("questions",questions);
+
             return new ModelAndView("exam/exam");
         }
 
@@ -162,7 +168,7 @@ public class ExamController extends BaseController {
     @RequestMapping(value="handPaper")
     public ModelAndView handPaper(ModelMap map,String daan,Integer type,Integer courseType,Integer ys,Integer srandom){
 
-        List<QQuestion> qQuestionList = jsontoListQquestion(srandom);
+        List<QQuestion> qQuestionList = examService.jsontoListQquestion(srandom);
 
         List<Answer> answerList = new ArrayList<>();
 
@@ -250,7 +256,7 @@ public class ExamController extends BaseController {
     }
 
     //生成考卷
-    private Map<String,List<QQuestion>> CreateExamPaper(Integer type,Integer courseType,Integer mode)
+    public Map<String,List<QQuestion>> CreateExamPaper(Integer srandom,Integer type,Integer courseType,Integer mode)
     {
         //user_id
         long user_id = TokenManager.getUserId();
@@ -261,11 +267,6 @@ public class ExamController extends BaseController {
         //考题
         Map<String,List<QQuestion>> questions = examService.QueryQuestionsByMode1(type,courseType);
         JSONObject jsonQuestions = JSONObject.fromObject(questions);
-
-
-        //随机值 = 用来索引这个考卷的id
-        Random random = new Random();
-        int srandom = random.nextInt(1000000)%(9000000-1000000+1) + 1000000;
 
         String examtitle = srandom+"sumj";
 
@@ -286,71 +287,5 @@ public class ExamController extends BaseController {
 
         return questions;
     }
-
-    private Map<String,List<QQuestion>> jsonToMap(String json)
-    {
-        ObjectMapper mapper = new ObjectMapper();
-
-        Map<String, List<QQuestion>> mapQuestions = new HashMap<String, List<QQuestion>>();
-        try {
-            mapQuestions = mapper.readValue(json, Map.class);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return mapQuestions;
-    }
-
-
-    //json to list 试卷转换成对象list  匹配答案
-    private List<QQuestion> jsontoListQquestion(Integer srandom)
-    {
-        //获取试卷信息
-        EPaper ePaper = examService.findEpaperBySrandom(String.valueOf(srandom));
-
-        //题目信息
-        String jsonQuestions = ePaper.getQuestions();
-
-        //题目信息转换
-        JSONObject jsonobject = JSONObject.fromObject(jsonQuestions);
-        List<QQuestion> result = new ArrayList<QQuestion>();
-        //获取一个json数组 type1;
-        JSONArray type1 = jsonobject.getJSONArray("type1");
-        //将json数组 转换成 List<QQuestion>泛型
-        for (int i = 0; i < type1.size(); i++) {
-            JSONObject object = (JSONObject)type1.get(i);
-            QQuestion question = (QQuestion)JSONObject.toBean(object,QQuestion.class);
-            if(question != null){
-                result.add(question);
-            }
-        }
-
-        //获取一个json数组 type2;
-        JSONArray type2 = jsonobject.getJSONArray("type2");
-        //将json数组 转换成 List<QQuestion>泛型
-        for (int i = 0; i < type2.size(); i++) {
-            JSONObject object = (JSONObject)type2.get(i);
-            QQuestion question = (QQuestion)JSONObject.toBean(object,
-                    QQuestion.class);
-            if(question != null){
-                result.add(question);
-            }
-        }
-
-        //获取一个json数组 type3;
-        JSONArray type3 = jsonobject.getJSONArray("type3");
-        //将json数组 转换成 List<QQuestion>泛型
-        for (int i = 0; i < type3.size(); i++) {
-            JSONObject object = (JSONObject)type3.get(i);
-            QQuestion question = (QQuestion)JSONObject.toBean(object,
-                    QQuestion.class);
-            if(question != null){
-                result.add(question);
-            }
-        }
-
-        return result;
-    }
-
-
 
 }

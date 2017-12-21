@@ -4,14 +4,17 @@ import com.common.dao.EPaperMapper;
 import com.common.dao.QQuestionMapper;
 import com.common.model.EPaper;
 import com.common.model.QQuestion;
+import com.modules.core.shiro.token.manager.TokenManager;
 import com.modules.exam.bo.EPapersCondition;
 import com.modules.exam.service.ExamService;
+import net.sf.json.JSONArray;
+import net.sf.json.JSONObject;
+import org.codehaus.jackson.map.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
+import java.io.IOException;
+import java.util.*;
 
 /**
  * Created by LINxwFF on 2017/12/17.
@@ -61,4 +64,70 @@ public class ExamServiceImpl implements ExamService{
         return ePaperMapper.findEpaperBySrandom(srandom);
     }
 
+    //题目序列化集合存入数据库
+    @Override
+    public Map<String,List<QQuestion>> jsonToMap(String json)
+    {
+        ObjectMapper mapper = new ObjectMapper();
+
+        Map<String, List<QQuestion>> mapQuestions = new HashMap<String, List<QQuestion>>();
+        try {
+            mapQuestions = mapper.readValue(json, Map.class);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return mapQuestions;
+    }
+
+    //试卷题目反序列化
+    //json to list 试卷转换成对象list
+    @Override
+    public List<QQuestion> jsontoListQquestion(Integer srandom)
+    {
+        //获取试卷信息
+        EPaper ePaper = this.findEpaperBySrandom(String.valueOf(srandom));
+
+        //题目信息
+        String jsonQuestions = ePaper.getQuestions();
+
+        //题目信息转换
+        JSONObject jsonobject = JSONObject.fromObject(jsonQuestions);
+        List<QQuestion> result = new ArrayList<>();
+        //获取一个json数组 type1;
+        JSONArray type1 = jsonobject.getJSONArray("type1");
+        //将json数组 转换成 List<QQuestion>泛型
+        for (int i = 0; i < type1.size(); i++) {
+            JSONObject object = (JSONObject)type1.get(i);
+            QQuestion question = (QQuestion)JSONObject.toBean(object,QQuestion.class);
+            if(question != null){
+                result.add(question);
+            }
+        }
+
+        //获取一个json数组 type2;
+        JSONArray type2 = jsonobject.getJSONArray("type2");
+        //将json数组 转换成 List<QQuestion>泛型
+        for (int i = 0; i < type2.size(); i++) {
+            JSONObject object = (JSONObject)type2.get(i);
+            QQuestion question = (QQuestion)JSONObject.toBean(object,
+                    QQuestion.class);
+            if(question != null){
+                result.add(question);
+            }
+        }
+
+        //获取一个json数组 type3;
+        JSONArray type3 = jsonobject.getJSONArray("type3");
+        //将json数组 转换成 List<QQuestion>泛型
+        for (int i = 0; i < type3.size(); i++) {
+            JSONObject object = (JSONObject)type3.get(i);
+            QQuestion question = (QQuestion)JSONObject.toBean(object,
+                    QQuestion.class);
+            if(question != null){
+                result.add(question);
+            }
+        }
+
+        return result;
+    }
 }
