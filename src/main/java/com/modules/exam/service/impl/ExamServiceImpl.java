@@ -4,6 +4,8 @@ import com.common.dao.EPaperMapper;
 import com.common.dao.QQuestionMapper;
 import com.common.model.EPaper;
 import com.common.model.QQuestion;
+import com.modules.core.shiro.token.manager.TokenManager;
+import com.modules.exam.bo.Answer;
 import com.modules.exam.bo.EPapersCondition;
 import com.modules.exam.service.ExamService;
 import net.sf.json.JSONArray;
@@ -62,6 +64,43 @@ public class ExamServiceImpl implements ExamService{
     public EPaper findEpaperBySrandom(String srandom) {
         return ePaperMapper.findEpaperBySrandom(srandom);
     }
+
+
+    //生成考卷
+    @Override
+    public Map<String,List<QQuestion>> CreateExamPaper(Integer srandom,Integer type,Integer courseType,Integer mode,int exam_time)
+    {
+        //user_id
+        long user_id = TokenManager.getUserId();
+
+        //章节
+        Integer chapter_id = 0;
+
+        //考题
+        Map<String,List<QQuestion>> questions = this.QueryQuestionsByMode1(type,courseType);
+        JSONObject jsonQuestions = JSONObject.fromObject(questions);
+
+        String examtitle = srandom+"sumj";
+
+        int state = 0;  //未开始
+
+        EPaper ePaper = new EPaper();
+        ePaper.setUserId(user_id);
+        ePaper.setTypeId(type);
+        ePaper.setCourseId(courseType);
+        ePaper.setChapterId(chapter_id);
+        ePaper.setMode(mode);
+        ePaper.setExamTitle(examtitle);
+        ePaper.setState(state);
+        ePaper.setSrandom(String.valueOf(srandom));
+        ePaper.setQuestions(jsonQuestions.toString());
+        ePaper.setExamTime(exam_time);
+
+        this.insert(ePaper);
+
+        return questions;
+    }
+
 
     //题目序列化集合存入数据库
     @Override
@@ -129,5 +168,15 @@ public class ExamServiceImpl implements ExamService{
 
         return result;
     }
+
+    //答题序列化集合存入数据库
+    @Override
+    public String AnswerListToJson(List<Answer> answers) {
+
+        JSONArray jsonarray = JSONArray.fromObject(answers);
+
+        return jsonarray.toString();
+    }
+
 
 }

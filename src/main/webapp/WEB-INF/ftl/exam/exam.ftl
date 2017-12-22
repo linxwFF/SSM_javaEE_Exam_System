@@ -56,7 +56,7 @@
         //获取考卷时间
         if (!getCookie("sumsj-${srandom!}")) {
             //没有时间就是一个小时
-            TimeNum = kemu_count * 60 * 60;
+            TimeNum = ${exam_time!};
         } else {
             //获取cookie中的剩余时间
             TimeNum = getCookie("sumsj-${srandom!}");

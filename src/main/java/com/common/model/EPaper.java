@@ -19,13 +19,19 @@ public class EPaper {
 
     private Integer state;
 
-    private Date examTime;
+    private Integer examTime;
 
     private String srandom;
 
+    private Date updateTime;
+
+    private Date createTime;
+
+    private Date deleteTime;
+
     private String questions;
 
-    public EPaper(Integer id, Long userId, Integer typeId, Integer courseId, Integer chapterId, Integer mode, String examTitle, Integer state, Date examTime, String srandom, String questions) {
+    public EPaper(Integer id, Long userId, Integer typeId, Integer courseId, Integer chapterId, Integer mode, String examTitle, Integer state, Integer examTime, String srandom, Date updateTime, Date createTime, Date deleteTime, String questions) {
         this.id = id;
         this.userId = userId;
         this.typeId = typeId;
@@ -36,6 +42,9 @@ public class EPaper {
         this.state = state;
         this.examTime = examTime;
         this.srandom = srandom;
+        this.updateTime = updateTime;
+        this.createTime = createTime;
+        this.deleteTime = deleteTime;
         this.questions = questions;
     }
 
@@ -107,11 +116,11 @@ public class EPaper {
         this.state = state;
     }
 
-    public Date getExamTime() {
+    public Integer getExamTime() {
         return examTime;
     }
 
-    public void setExamTime(Date examTime) {
+    public void setExamTime(Integer examTime) {
         this.examTime = examTime;
     }
 
@@ -121,6 +130,30 @@ public class EPaper {
 
     public void setSrandom(String srandom) {
         this.srandom = srandom == null ? null : srandom.trim();
+    }
+
+    public Date getUpdateTime() {
+        return updateTime;
+    }
+
+    public void setUpdateTime(Date updateTime) {
+        this.updateTime = updateTime;
+    }
+
+    public Date getCreateTime() {
+        return createTime;
+    }
+
+    public void setCreateTime(Date createTime) {
+        this.createTime = createTime;
+    }
+
+    public Date getDeleteTime() {
+        return deleteTime;
+    }
+
+    public void setDeleteTime(Date deleteTime) {
+        this.deleteTime = deleteTime;
     }
 
     public String getQuestions() {

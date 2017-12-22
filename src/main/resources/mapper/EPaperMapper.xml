@@ -11,8 +11,11 @@
       <arg column="mode" jdbcType="INTEGER" javaType="java.lang.Integer" />
       <arg column="exam_title" jdbcType="VARCHAR" javaType="java.lang.String" />
       <arg column="state" jdbcType="INTEGER" javaType="java.lang.Integer" />
-      <arg column="exam_time" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+      <arg column="exam_time" jdbcType="INTEGER" javaType="java.lang.Integer" />
       <arg column="srandom" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="update_time" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+      <arg column="create_time" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+      <arg column="delete_time" jdbcType="TIMESTAMP" javaType="java.util.Date" />
     </constructor>
   </resultMap>
   <resultMap id="ResultMapWithBLOBs" type="com.common.model.EPaper" >
@@ -25,14 +28,17 @@
       <arg column="mode" jdbcType="INTEGER" javaType="java.lang.Integer" />
       <arg column="exam_title" jdbcType="VARCHAR" javaType="java.lang.String" />
       <arg column="state" jdbcType="INTEGER" javaType="java.lang.Integer" />
-      <arg column="exam_time" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+      <arg column="exam_time" jdbcType="INTEGER" javaType="java.lang.Integer" />
       <arg column="srandom" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="update_time" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+      <arg column="create_time" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+      <arg column="delete_time" jdbcType="TIMESTAMP" javaType="java.util.Date" />
       <arg column="questions" jdbcType="LONGVARCHAR" javaType="java.lang.String" />
     </constructor>
   </resultMap>
   <sql id="Base_Column_List" >
     id, user_id, type_id, course_id, chapter_id, mode, exam_title, state, exam_time, 
-    srandom
+    srandom, update_time, create_time, delete_time
   </sql>
   <sql id="Blob_Column_List" >
     questions
@@ -45,20 +51,27 @@
     from e_paper
     where id = #{id,jdbcType=INTEGER}
   </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
-    delete from e_paper
+
+  <update id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    update e_paper
+    set
+    delete_time = now()
     where id = #{id,jdbcType=INTEGER}
-  </delete>
+  </update>
+
   <insert id="insert" parameterType="com.common.model.EPaper" >
     insert into e_paper (id, user_id, type_id, 
       course_id, chapter_id, mode, 
       exam_title, state, exam_time, 
-      srandom, questions)
+      srandom, update_time, create_time, 
+      questions)
     values (#{id,jdbcType=INTEGER}, #{userId,jdbcType=BIGINT}, #{typeId,jdbcType=INTEGER}, 
       #{courseId,jdbcType=INTEGER}, #{chapterId,jdbcType=INTEGER}, #{mode,jdbcType=INTEGER}, 
-      #{examTitle,jdbcType=VARCHAR}, #{state,jdbcType=INTEGER}, #{examTime,jdbcType=TIMESTAMP}, 
-      #{srandom,jdbcType=VARCHAR}, #{questions,jdbcType=LONGVARCHAR})
+      #{examTitle,jdbcType=VARCHAR}, #{state,jdbcType=INTEGER}, #{examTime,jdbcType=INTEGER}, 
+      #{srandom,jdbcType=VARCHAR}, now(), now(),
+       #{questions,jdbcType=LONGVARCHAR})
   </insert>
+
   <insert id="insertSelective" parameterType="com.common.model.EPaper" >
     insert into e_paper
     <trim prefix="(" suffix=")" suffixOverrides="," >
@@ -92,6 +105,12 @@
       <if test="srandom != null" >
         srandom,
       </if>
+      <if test="updateTime != null" >
+        update_time,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
       <if test="questions != null" >
         questions,
       </if>
@@ -122,10 +141,16 @@
         #{state,jdbcType=INTEGER},
       </if>
       <if test="examTime != null" >
-        #{examTime,jdbcType=TIMESTAMP},
+        #{examTime,jdbcType=INTEGER},
       </if>
       <if test="srandom != null" >
         #{srandom,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null" >
+        now(),
+      </if>
+      <if test="createTime != null" >
+        now(),
       </if>
       <if test="questions != null" >
         #{questions,jdbcType=LONGVARCHAR},
@@ -157,11 +182,18 @@
         state = #{state,jdbcType=INTEGER},
       </if>
       <if test="examTime != null" >
-        exam_time = #{examTime,jdbcType=TIMESTAMP},
+        exam_time = #{examTime,jdbcType=INTEGER},
       </if>
       <if test="srandom != null" >
         srandom = #{srandom,jdbcType=VARCHAR},
       </if>
+      <if test="updateTime != null" >
+        update_time = now(),
+      </if>
+      <if test="createTime != null" >
+        create_time = now(),
+      </if>
+
       <if test="questions != null" >
         questions = #{questions,jdbcType=LONGVARCHAR},
       </if>
@@ -177,11 +209,13 @@
       mode = #{mode,jdbcType=INTEGER},
       exam_title = #{examTitle,jdbcType=VARCHAR},
       state = #{state,jdbcType=INTEGER},
-      exam_time = #{examTime,jdbcType=TIMESTAMP},
+      exam_time = #{examTime,jdbcType=INTEGER},
       srandom = #{srandom,jdbcType=VARCHAR},
+      update_time = now(),
       questions = #{questions,jdbcType=LONGVARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
+
   <update id="updateByPrimaryKey" parameterType="com.common.model.EPaper" >
     update e_paper
     set user_id = #{userId,jdbcType=BIGINT},
@@ -191,8 +225,9 @@
       mode = #{mode,jdbcType=INTEGER},
       exam_title = #{examTitle,jdbcType=VARCHAR},
       state = #{state,jdbcType=INTEGER},
-      exam_time = #{examTime,jdbcType=TIMESTAMP},
-      srandom = #{srandom,jdbcType=VARCHAR}
+      exam_time = #{examTime,jdbcType=INTEGER},
+      srandom = #{srandom,jdbcType=VARCHAR},
+      update_time = now()
     where id = #{id,jdbcType=INTEGER}
   </update>
 
@@ -230,5 +265,4 @@
     from e_paper
     where srandom = #{srandom}
   </select>
-
 </mapper>

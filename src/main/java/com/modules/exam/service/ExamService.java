@@ -2,6 +2,7 @@ package com.modules.exam.service;
 
 import com.common.model.EPaper;
 import com.common.model.QQuestion;
+import com.modules.exam.bo.Answer;
 import com.modules.exam.bo.EPapersCondition;
 
 import java.util.List;
@@ -25,10 +26,16 @@ public interface ExamService {
     //根据试卷的随机码获取试卷
     EPaper findEpaperBySrandom(String srandom);
 
+    //生成考卷
+    Map<String,List<QQuestion>> CreateExamPaper(Integer srandom,Integer type,Integer courseType,Integer mode,int exam_time);
+
     //题目序列化集合存入数据库
     Map<String,List<QQuestion>> jsonToMap(String json);
 
     //试卷题目反序列化
     List<QQuestion> jsontoListQquestion(Integer srandom);
+
+    //答题序列化集合存入数据库
+    String AnswerListToJson(List<Answer> answers);
 
 }

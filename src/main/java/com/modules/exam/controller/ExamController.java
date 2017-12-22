@@ -14,8 +14,6 @@ import com.modules.exam.bo.EPapersCondition;
 import com.modules.exam.service.CourseService;
 import com.modules.exam.service.ExamService;
 import com.modules.user.service.UUserService;
-import net.sf.json.JSONArray;
-import net.sf.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
@@ -140,6 +138,8 @@ public class ExamController extends BaseController {
             //如果有则把未完成的试卷返回 到考试界面
             String jsonQuestions = ePapers.get(0).getQuestions();
             Map<String, List<QQuestion>> mapQuestions = examService.jsonToMap(jsonQuestions);
+            //考试时间
+            map.put("exam_time",ePapers.get(0).getExamTime());
 
             map.put("questions",mapQuestions);
             //随机值 = 用来判断这个考卷的id
@@ -152,8 +152,12 @@ public class ExamController extends BaseController {
             int srandom = random.nextInt(1000000)%(9000000-1000000+1) + 1000000;
             map.put("srandom",srandom);
 
+            //考试时间
+            int exam_time = 3600;
+            map.put("exam_time",exam_time);
+
             //创建新的考卷
-            Map<String,List<QQuestion>> questions = CreateExamPaper(srandom,type,courseType,mode);
+            Map<String,List<QQuestion>> questions = examService.CreateExamPaper(srandom,type,courseType,mode,exam_time);
             map.put("questions",questions);
 
             return new ModelAndView("exam/exam");
@@ -250,6 +254,7 @@ public class ExamController extends BaseController {
 
         //生成答题记录  todo
 
+
         //剩余时间
 
 
@@ -257,36 +262,5 @@ public class ExamController extends BaseController {
     }
 
 
-    //生成考卷
-    public Map<String,List<QQuestion>> CreateExamPaper(Integer srandom,Integer type,Integer courseType,Integer mode)
-    {
-        //user_id
-        long user_id = TokenManager.getUserId();
 
-        //章节
-        Integer chapter_id = 0;
-
-        //考题
-        Map<String,List<QQuestion>> questions = examService.QueryQuestionsByMode1(type,courseType);
-        JSONObject jsonQuestions = JSONObject.fromObject(questions);
-
-        String examtitle = srandom+"sumj";
-
-        int state = 0;  //未开始
-
-        EPaper ePaper = new EPaper();
-        ePaper.setUserId(user_id);
-        ePaper.setTypeId(type);
-        ePaper.setCourseId(courseType);
-        ePaper.setChapterId(chapter_id);
-        ePaper.setMode(mode);
-        ePaper.setExamTitle(examtitle);
-        ePaper.setState(state);
-        ePaper.setSrandom(String.valueOf(srandom));
-        ePaper.setQuestions(jsonQuestions.toString());
-
-        examService.insert(ePaper);
-
-        return questions;
-    }
 }
