@@ -2,7 +2,9 @@ package com.modules.exam.service;
 
 import com.common.model.EAnswerRecords;
 import com.common.model.EPaper;
+import com.common.model.EScoresWithBLOBs;
 import com.common.model.QQuestion;
+import com.modules.exam.bo.AnswerRecordsListVo;
 import com.modules.exam.bo.EPapersCondition;
 
 import java.util.List;
@@ -36,5 +38,11 @@ public interface ExamService {
 
     //插入答题记录表一条记录
     int insertAnswerRecords(EAnswerRecords eAnswerRecords);
+
+    //插入成绩表
+    int insertAnswerScore(EScoresWithBLOBs eScoresWithBLOBs);
+
+    //考试记录列表
+    List<AnswerRecordsListVo> getAnswerRecords(Integer type,Integer courseType,Integer mode);
 
 }

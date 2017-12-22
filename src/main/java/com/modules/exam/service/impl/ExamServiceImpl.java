@@ -1,12 +1,11 @@
 package com.modules.exam.service.impl;
 
-import com.common.dao.EAnswerRecordsMapper;
-import com.common.dao.EPaperMapper;
-import com.common.dao.QQuestionMapper;
-import com.common.model.EAnswerRecords;
-import com.common.model.EPaper;
-import com.common.model.QQuestion;
+import com.common.dao.*;
+import com.common.model.*;
+import com.common.utils.Const;
+import com.common.utils.EnumUtil;
 import com.modules.core.shiro.token.manager.TokenManager;
+import com.modules.exam.bo.AnswerRecordsListVo;
 import com.modules.exam.bo.EPapersCondition;
 import com.modules.exam.service.ExamService;
 import net.sf.json.JSONArray;
@@ -32,6 +31,12 @@ public class ExamServiceImpl implements ExamService{
 
     @Autowired
     private EAnswerRecordsMapper eAnswerRecordsMapper;
+
+    @Autowired
+    private EScoresMapper eScoresMapper;
+
+    @Autowired
+    private QCourseMapper qCourseMapper;
 
     @Override
     public Map<String,List<QQuestion>> QueryQuestionsByMode1(Integer courseType, Integer courseTypeId) {
@@ -83,7 +88,13 @@ public class ExamServiceImpl implements ExamService{
         Map<String,List<QQuestion>> questions = this.QueryQuestionsByMode1(type,courseType);
         JSONObject jsonQuestions = JSONObject.fromObject(questions);
 
-        String examtitle = srandom+"sumj";
+        //考卷名
+        QCourse qCourse = qCourseMapper.findCourseTypeById(0,type);
+        QCourse qCourseType = qCourseMapper.findCourseTypeById(type,courseType);
+        Class<Const.ExamModelEnum> clasz = Const.ExamModelEnum.class;
+        String modeName =(String) EnumUtil.getEnumValueByCode(mode, clasz);
+
+        String examtitle = qCourse.getName()+"-"+qCourseType.getName()+"-"+modeName+"sumsj-"+srandom;
 
         int state = 0;  //未开始
 
@@ -175,6 +186,17 @@ public class ExamServiceImpl implements ExamService{
     @Override
     public int insertAnswerRecords(EAnswerRecords eAnswerRecords) {
         return eAnswerRecordsMapper.insert(eAnswerRecords);
+    }
+
+    @Override
+    public int insertAnswerScore(EScoresWithBLOBs eScoresWithBLOBs) {
+        return eScoresMapper.insert(eScoresWithBLOBs);
+    }
+
+    @Override
+    public List<AnswerRecordsListVo> getAnswerRecords(Integer type,Integer courseType,Integer mode) {
+
+        return eAnswerRecordsMapper.selectAnswerRecordsListVo(type,courseType,mode);
     }
 
 

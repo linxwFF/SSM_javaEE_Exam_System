@@ -131,4 +131,14 @@
       update_time = now()
     where id = #{id,jdbcType=INTEGER}
   </update>
+
+  <select id="selectAnswerRecordsListVo" resultType="com.modules.exam.bo.AnswerRecordsListVo">
+    select a.id,p.exam_title,p.exam_time,s.total_num,s.take_time,s.score,s.right_num,s.error_num,a.create_time
+    from e_answer_records as a
+    left join e_paper as p on a.exam_srandom_id = p.srandom
+    left join e_scores as s on a.exam_srandom_id = s.exam_srandom_id
+    where p.type_id = #{type}
+    and p.course_id = #{courseType}
+    and p.mode = #{mode}
+  </select>
 </mapper>

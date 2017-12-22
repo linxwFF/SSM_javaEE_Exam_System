@@ -63,7 +63,7 @@
                     <div class="col-md-12">
                         <div class="x_panel">
                             <div class="x_title">
-                                <h2> 选择考试项目 </h2>
+                                <h2> 选择考试模式 </h2>
                                 <ul class="nav navbar-right panel_toolbox">
                                     <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
                                     </li>
@@ -83,8 +83,8 @@
                                         <thead>
                                         <tr>
                                             <th>#</th>
-                                            <th class="text-center">科目名称</th>
-                                            <th class="text-center">操作</th>
+                                            <th class="text-center" width="25%">科目名称</th>
+                                            <th class="text-center" width="25%">操作</th>
                                         </tr>
                                         </thead>
                                     <tbody>
@@ -92,13 +92,18 @@
                                                 <#list modelList?keys as key>
 
                                                             <tr>
-                                                                <th scope="row">${key_index+1}</th>
+                                                                <th scope="row" width="50%" class="text-center">${key_index+1}</th>
                                                                 <td class="text-center">${modelList[key]}<br></td>
                                                                 <td class="text-center">
                                                                     <a href="${basePath}/exam/start_exam.shtml?type=${type}&courseType=${courseType}&mode=${key}">
                                                                     <button type="button" class="btn btn-primary">
                                                                         进入练习
                                                                     </button>
+                                                                    </a>
+                                                                    <a href="${basePath}/exam/get_answer_records.shtml?type=${type}&courseType=${courseType}&mode=${key}">
+                                                                        <button type="button" class="btn btn-warning">
+                                                                            考试记录
+                                                                        </button>
                                                                     </a>
                                                                 </td>
                                                             </tr>

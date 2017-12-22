@@ -2,15 +2,13 @@ package com.modules.exam.controller;
 
 import com.common.controller.BaseController;
 import com.common.dao.QCourseMapper;
-import com.common.model.EAnswerRecords;
-import com.common.model.EPaper;
-import com.common.model.QCourse;
-import com.common.model.QQuestion;
+import com.common.model.*;
 import com.common.utils.Const;
 import com.common.utils.EnumUtil;
 import com.modules.core.mybatis.page.Pagination;
 import com.modules.core.shiro.token.manager.TokenManager;
 import com.modules.exam.bo.Answer;
+import com.modules.exam.bo.AnswerRecordsListVo;
 import com.modules.exam.bo.EPapersCondition;
 import com.modules.exam.service.CourseService;
 import com.modules.exam.service.ExamService;
@@ -169,14 +167,22 @@ public class ExamController extends BaseController {
 
     //处理考卷
     @RequestMapping(value="handPaper")
-    public ModelAndView handPaper(ModelMap map,String daan,Integer type,Integer courseType,Integer time_left,Integer srandom){
+    public ModelAndView handPaper(ModelMap map,String daan,Integer type,Integer courseType,Integer take_time,Integer srandom){
 
         List<QQuestion> qQuestionList = examService.jsontoListQquestion(srandom);
 
         List<Answer> answerList = new ArrayList<>();
+        List<Answer> rightAnswerList = new ArrayList<>();
+        List<Answer> errorAnswerList = new ArrayList<>();
 
         //答题信息 匹配答案
         String[] daanList = daan.split(",");
+
+        //总题目
+        int total_num = daanList.length;
+        int right_num = 0;
+        int error_num = 0;
+        int score = 0;
 
         for (String item : daanList) {
 
@@ -211,8 +217,13 @@ public class ExamController extends BaseController {
 
                 if(answer.equals(qQuestion.getChooseRight())){
                     answerObj.setScore(2);
+                    right_num++;
+                    score += 2;
+                    rightAnswerList.add(answerObj);
                 }else{
                     answerObj.setScore(0);
+                    error_num++;
+                    errorAnswerList.add(answerObj);
                 }
             }else if(subjectType == 2){
                 answerObj.setSubject(qQuestion.getSubject());
@@ -230,8 +241,13 @@ public class ExamController extends BaseController {
 
                 if(answer.equals(qQuestion.getChooseRight())){
                     answerObj.setScore(2);
+                    right_num++;
+                    score += 2;
+                    rightAnswerList.add(answerObj);
                 }else{
                     answerObj.setScore(0);
+                    error_num++;
+                    errorAnswerList.add(answerObj);
                 }
             }else if(subjectType == 3){
                 answerObj.setSubject(qQuestion.getSubject());
@@ -244,8 +260,13 @@ public class ExamController extends BaseController {
 
                 if(answer.equals(qQuestion.getChooseRight())){
                     answerObj.setScore(2);
+                    right_num++;
+                    score += 2;
+                    rightAnswerList.add(answerObj);
                 }else{
                     answerObj.setScore(0);
+                    error_num++;
+                    errorAnswerList.add(answerObj);
                 }
             }
 
@@ -254,7 +275,7 @@ public class ExamController extends BaseController {
 
         map.put("answerList",answerList);
 
-        //生成答题记录  todo
+        //生成答题记录
         //答题序列化集合存入数据库
         EAnswerRecords eAnswerRecords = new EAnswerRecords();
 
@@ -265,10 +286,34 @@ public class ExamController extends BaseController {
         eAnswerRecords.setAnswer(answerListJson.toString());
         examService.insertAnswerRecords(eAnswerRecords);
 
-        //剩余时间
-
+        //成绩表
+        EScoresWithBLOBs eScores = new EScoresWithBLOBs();
+        eScores.setUserId(TokenManager.getUserId());
+        eScores.setExamSrandomId(srandom);
+        eScores.setTotalNum(total_num);
+        eScores.setRightNum(right_num);
+        eScores.setErrorNum(error_num);
+        eScores.setScore(new Double(score));
+        JSONArray rightAnswerListJson = JSONArray.fromObject(rightAnswerList);
+        eScores.setAnswerSucRecords(rightAnswerListJson.toString());
+        JSONArray errorAnswerListJson = JSONArray.fromObject(errorAnswerList);
+        eScores.setAnswerErrRecords(errorAnswerListJson.toString());
+        eScores.setTakeTime(take_time);
+        examService.insertAnswerScore(eScores);
 
         return new ModelAndView("exam/handPaper");
+    }
+
+
+    //查询考试记录
+    @RequestMapping(value = "get_answer_records")
+    public ModelAndView getAnswerRecords(ModelMap map,Integer type,Integer courseType,Integer mode)
+    {
+        List<AnswerRecordsListVo> answerRecordsListVoList = examService.getAnswerRecords(type,courseType,mode);
+
+        map.put("list",answerRecordsListVoList);
+
+        return new ModelAndView("exam/get_answer_records");
     }
 
 

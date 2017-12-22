@@ -38,7 +38,7 @@
                 <ul class="nav child_menu"  >
                     <li><a href="${basePath}/exam/chooseCourse.shtml">1.选择考试项目</a></li>
                     <li><a href="${basePath}/exam/get_course_list.shtml">2.选择考试科目</a></li>
-                    <li><a href="${basePath}/exam/get_model_list.shtml">3.考试的模式选择</a></li>
+                    <li><a href="${basePath}/exam/get_model_list.shtml">3.选择考试模式</a></li>
                 </ul>
             </li>
 

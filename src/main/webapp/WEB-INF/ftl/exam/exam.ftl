@@ -152,7 +152,7 @@
     <input type="hidden" name="daan" id="daan" />                    <#--考试答题卷-->
     <input type="hidden" name="type" value="${type}" />              <#--考试项目-->
     <input type="hidden" name="courseType" value="${courseType}" />  <#--考试科目-->
-    <input type="hidden" name="time_left" id="ys" value="0" />       <#--剩余时间-->
+    <input type="hidden" name="take_time" id="ys" value="0" />       <#--剩余时间-->
     <input type="hidden" name="srandom" value="${srandom!}" />       <#--考卷随机码-->
 </form>
 
