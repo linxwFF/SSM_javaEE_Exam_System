@@ -1,5 +1,7 @@
 package com.common.model;
 
+import java.util.Date;
+
 public class EPaper {
     private Integer id;
 
@@ -17,11 +19,13 @@ public class EPaper {
 
     private Integer state;
 
+    private Date examTime;
+
     private String srandom;
 
     private String questions;
 
-    public EPaper(Integer id, Long userId, Integer typeId, Integer courseId, Integer chapterId, Integer mode, String examTitle, Integer state, String srandom, String questions) {
+    public EPaper(Integer id, Long userId, Integer typeId, Integer courseId, Integer chapterId, Integer mode, String examTitle, Integer state, Date examTime, String srandom, String questions) {
         this.id = id;
         this.userId = userId;
         this.typeId = typeId;
@@ -30,6 +34,7 @@ public class EPaper {
         this.mode = mode;
         this.examTitle = examTitle;
         this.state = state;
+        this.examTime = examTime;
         this.srandom = srandom;
         this.questions = questions;
     }
@@ -100,6 +105,14 @@ public class EPaper {
 
     public void setState(Integer state) {
         this.state = state;
+    }
+
+    public Date getExamTime() {
+        return examTime;
+    }
+
+    public void setExamTime(Date examTime) {
+        this.examTime = examTime;
     }
 
     public String getSrandom() {

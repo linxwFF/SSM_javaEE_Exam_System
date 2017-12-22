@@ -4,7 +4,6 @@ import com.common.dao.EPaperMapper;
 import com.common.dao.QQuestionMapper;
 import com.common.model.EPaper;
 import com.common.model.QQuestion;
-import com.modules.core.shiro.token.manager.TokenManager;
 import com.modules.exam.bo.EPapersCondition;
 import com.modules.exam.service.ExamService;
 import net.sf.json.JSONArray;
@@ -130,4 +129,5 @@ public class ExamServiceImpl implements ExamService{
 
         return result;
     }
+
 }

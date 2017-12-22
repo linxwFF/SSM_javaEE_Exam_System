@@ -46,6 +46,7 @@
         //总题数
         $('#zts').text(count);
         //重置时间
+
 //        delCookie('sumsj-${srandom!}');
     });
     //闹钟时间
@@ -148,11 +149,11 @@
 <body oncopy="return false;" oncontextmenu="return false" onselectstart="return false" ondragstart="return false" onbeforecopy="return false" oncopy="document.selection.empty()" onselect="document.selection.empty()" >
 
 <form action="${basePath}/exam/handPaper.shtml" method="post">
-    <input type="hidden" name="daan" id="daan" />       <#--考试答题卷-->
-    <input type="hidden" name="type" value="${type}" />  <#--考试项目-->
-    <input type="hidden" name="courseType" value="${courseType}" /> <#--考试科目-->
-    <input type="hidden" name="ys" id="ys" value="0" />         <#--剩余时间-->
-    <input type="hidden" name="srandom" value="${srandom!}" /> <#--考卷随机码-->
+    <input type="hidden" name="daan" id="daan" />                    <#--考试答题卷-->
+    <input type="hidden" name="type" value="${type}" />              <#--考试项目-->
+    <input type="hidden" name="courseType" value="${courseType}" />  <#--考试科目-->
+    <input type="hidden" name="time_left" id="ys" value="0" />       <#--剩余时间-->
+    <input type="hidden" name="srandom" value="${srandom!}" />       <#--考卷随机码-->
 </form>
 
 <div class="myexam_head">

@@ -29,6 +29,6 @@ public interface ExamService {
     Map<String,List<QQuestion>> jsonToMap(String json);
 
     //试卷题目反序列化
-    //json to list 试卷转换成对象list
     List<QQuestion> jsontoListQquestion(Integer srandom);
+
 }

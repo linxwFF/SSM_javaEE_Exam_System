@@ -14,11 +14,8 @@ import com.modules.exam.bo.EPapersCondition;
 import com.modules.exam.service.CourseService;
 import com.modules.exam.service.ExamService;
 import com.modules.user.service.UUserService;
-import com.sun.org.apache.commons.collections.CollectionUtils;
-import com.sun.org.apache.commons.collections.ListUtils;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
-import org.codehaus.jackson.map.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
@@ -27,7 +24,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
-import java.io.IOException;
 import java.util.*;
 
 /**
@@ -154,6 +150,7 @@ public class ExamController extends BaseController {
             //随机值 = 用来索引这个考卷的id
             Random random = new Random();
             int srandom = random.nextInt(1000000)%(9000000-1000000+1) + 1000000;
+            map.put("srandom",srandom);
 
             //创建新的考卷
             Map<String,List<QQuestion>> questions = CreateExamPaper(srandom,type,courseType,mode);
@@ -166,7 +163,7 @@ public class ExamController extends BaseController {
 
     //处理考卷
     @RequestMapping(value="handPaper")
-    public ModelAndView handPaper(ModelMap map,String daan,Integer type,Integer courseType,Integer ys,Integer srandom){
+    public ModelAndView handPaper(ModelMap map,String daan,Integer type,Integer courseType,Integer time_left,Integer srandom){
 
         List<QQuestion> qQuestionList = examService.jsontoListQquestion(srandom);
 
@@ -251,9 +248,14 @@ public class ExamController extends BaseController {
 
         map.put("answerList",answerList);
 
+        //生成答题记录  todo
+
+        //剩余时间
+
 
         return new ModelAndView("exam/handPaper");
     }
+
 
     //生成考卷
     public Map<String,List<QQuestion>> CreateExamPaper(Integer srandom,Integer type,Integer courseType,Integer mode)
@@ -287,5 +289,4 @@ public class ExamController extends BaseController {
 
         return questions;
     }
-
 }
