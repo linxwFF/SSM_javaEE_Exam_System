@@ -1,8 +1,8 @@
 package com.modules.exam.service;
 
+import com.common.model.EAnswerRecords;
 import com.common.model.EPaper;
 import com.common.model.QQuestion;
-import com.modules.exam.bo.Answer;
 import com.modules.exam.bo.EPapersCondition;
 
 import java.util.List;
@@ -15,7 +15,6 @@ public interface ExamService {
 
     //随机考题
     Map<String,List<QQuestion>> QueryQuestionsByMode1(Integer type, Integer courseType);
-
 
     //插入考卷表中一份考题
     int insert(EPaper ePaper);
@@ -35,7 +34,7 @@ public interface ExamService {
     //试卷题目反序列化
     List<QQuestion> jsontoListQquestion(Integer srandom);
 
-    //答题序列化集合存入数据库
-    String AnswerListToJson(List<Answer> answers);
+    //插入答题记录表一条记录
+    int insertAnswerRecords(EAnswerRecords eAnswerRecords);
 
 }

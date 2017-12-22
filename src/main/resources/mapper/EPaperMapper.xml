@@ -105,12 +105,8 @@
       <if test="srandom != null" >
         srandom,
       </if>
-      <if test="updateTime != null" >
         update_time,
-      </if>
-      <if test="createTime != null" >
         create_time,
-      </if>
       <if test="questions != null" >
         questions,
       </if>
@@ -146,12 +142,8 @@
       <if test="srandom != null" >
         #{srandom,jdbcType=VARCHAR},
       </if>
-      <if test="updateTime != null" >
         now(),
-      </if>
-      <if test="createTime != null" >
         now(),
-      </if>
       <if test="questions != null" >
         #{questions,jdbcType=LONGVARCHAR},
       </if>
@@ -187,13 +179,8 @@
       <if test="srandom != null" >
         srandom = #{srandom,jdbcType=VARCHAR},
       </if>
-      <if test="updateTime != null" >
         update_time = now(),
-      </if>
-      <if test="createTime != null" >
         create_time = now(),
-      </if>
-
       <if test="questions != null" >
         questions = #{questions,jdbcType=LONGVARCHAR},
       </if>

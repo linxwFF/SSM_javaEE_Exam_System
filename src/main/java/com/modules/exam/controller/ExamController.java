@@ -2,6 +2,7 @@ package com.modules.exam.controller;
 
 import com.common.controller.BaseController;
 import com.common.dao.QCourseMapper;
+import com.common.model.EAnswerRecords;
 import com.common.model.EPaper;
 import com.common.model.QCourse;
 import com.common.model.QQuestion;
@@ -14,6 +15,7 @@ import com.modules.exam.bo.EPapersCondition;
 import com.modules.exam.service.CourseService;
 import com.modules.exam.service.ExamService;
 import com.modules.user.service.UUserService;
+import net.sf.json.JSONArray;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
@@ -253,7 +255,15 @@ public class ExamController extends BaseController {
         map.put("answerList",answerList);
 
         //生成答题记录  todo
+        //答题序列化集合存入数据库
+        EAnswerRecords eAnswerRecords = new EAnswerRecords();
 
+        eAnswerRecords.setUserId(TokenManager.getUserId());
+        eAnswerRecords.setExamSrandomId(srandom);
+        eAnswerRecords.setScoresId(1);
+        JSONArray answerListJson = JSONArray.fromObject(answerList);
+        eAnswerRecords.setAnswer(answerListJson.toString());
+        examService.insertAnswerRecords(eAnswerRecords);
 
         //剩余时间
 

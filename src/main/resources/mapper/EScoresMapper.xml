@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.common.dao.EScoresMapper" >
+  <resultMap id="BaseResultMap" type="com.common.model.EScores" >
+    <constructor >
+      <idArg column="id" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="user_id" jdbcType="BIGINT" javaType="java.lang.Long" />
+      <arg column="exam_srandom_id" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="total_num" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="right_num" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="error_num" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="score" jdbcType="DOUBLE" javaType="java.lang.Double" />
+      <arg column="take_time" jdbcType="INTEGER" javaType="java.lang.Integer" />
+    </constructor>
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.common.model.EScoresWithBLOBs" >
+    <constructor >
+      <idArg column="id" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="user_id" jdbcType="BIGINT" javaType="java.lang.Long" />
+      <arg column="exam_srandom_id" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="total_num" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="right_num" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="error_num" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="score" jdbcType="DOUBLE" javaType="java.lang.Double" />
+      <arg column="take_time" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="answer_suc_records" jdbcType="LONGVARCHAR" javaType="java.lang.String" />
+      <arg column="answer_err_records" jdbcType="LONGVARCHAR" javaType="java.lang.String" />
+    </constructor>
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, user_id, exam_srandom_id, total_num, right_num, error_num, score, take_time
+  </sql>
+  <sql id="Blob_Column_List" >
+    answer_suc_records, answer_err_records
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from e_scores
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from e_scores
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.common.model.EScoresWithBLOBs" >
+    insert into e_scores (id, user_id, exam_srandom_id, 
+      total_num, right_num, error_num, 
+      score, take_time, answer_suc_records, 
+      answer_err_records)
+    values (#{id,jdbcType=INTEGER}, #{userId,jdbcType=BIGINT}, #{examSrandomId,jdbcType=INTEGER}, 
+      #{totalNum,jdbcType=INTEGER}, #{rightNum,jdbcType=INTEGER}, #{errorNum,jdbcType=INTEGER}, 
+      #{score,jdbcType=DOUBLE}, #{takeTime,jdbcType=INTEGER}, #{answerSucRecords,jdbcType=LONGVARCHAR}, 
+      #{answerErrRecords,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.common.model.EScoresWithBLOBs" >
+    insert into e_scores
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="userId != null" >
+        user_id,
+      </if>
+      <if test="examSrandomId != null" >
+        exam_srandom_id,
+      </if>
+      <if test="totalNum != null" >
+        total_num,
+      </if>
+      <if test="rightNum != null" >
+        right_num,
+      </if>
+      <if test="errorNum != null" >
+        error_num,
+      </if>
+      <if test="score != null" >
+        score,
+      </if>
+      <if test="takeTime != null" >
+        take_time,
+      </if>
+      <if test="answerSucRecords != null" >
+        answer_suc_records,
+      </if>
+      <if test="answerErrRecords != null" >
+        answer_err_records,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="userId != null" >
+        #{userId,jdbcType=BIGINT},
+      </if>
+      <if test="examSrandomId != null" >
+        #{examSrandomId,jdbcType=INTEGER},
+      </if>
+      <if test="totalNum != null" >
+        #{totalNum,jdbcType=INTEGER},
+      </if>
+      <if test="rightNum != null" >
+        #{rightNum,jdbcType=INTEGER},
+      </if>
+      <if test="errorNum != null" >
+        #{errorNum,jdbcType=INTEGER},
+      </if>
+      <if test="score != null" >
+        #{score,jdbcType=DOUBLE},
+      </if>
+      <if test="takeTime != null" >
+        #{takeTime,jdbcType=INTEGER},
+      </if>
+      <if test="answerSucRecords != null" >
+        #{answerSucRecords,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="answerErrRecords != null" >
+        #{answerErrRecords,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.common.model.EScoresWithBLOBs" >
+    update e_scores
+    <set >
+      <if test="userId != null" >
+        user_id = #{userId,jdbcType=BIGINT},
+      </if>
+      <if test="examSrandomId != null" >
+        exam_srandom_id = #{examSrandomId,jdbcType=INTEGER},
+      </if>
+      <if test="totalNum != null" >
+        total_num = #{totalNum,jdbcType=INTEGER},
+      </if>
+      <if test="rightNum != null" >
+        right_num = #{rightNum,jdbcType=INTEGER},
+      </if>
+      <if test="errorNum != null" >
+        error_num = #{errorNum,jdbcType=INTEGER},
+      </if>
+      <if test="score != null" >
+        score = #{score,jdbcType=DOUBLE},
+      </if>
+      <if test="takeTime != null" >
+        take_time = #{takeTime,jdbcType=INTEGER},
+      </if>
+      <if test="answerSucRecords != null" >
+        answer_suc_records = #{answerSucRecords,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="answerErrRecords != null" >
+        answer_err_records = #{answerErrRecords,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.common.model.EScoresWithBLOBs" >
+    update e_scores
+    set user_id = #{userId,jdbcType=BIGINT},
+      exam_srandom_id = #{examSrandomId,jdbcType=INTEGER},
+      total_num = #{totalNum,jdbcType=INTEGER},
+      right_num = #{rightNum,jdbcType=INTEGER},
+      error_num = #{errorNum,jdbcType=INTEGER},
+      score = #{score,jdbcType=DOUBLE},
+      take_time = #{takeTime,jdbcType=INTEGER},
+      answer_suc_records = #{answerSucRecords,jdbcType=LONGVARCHAR},
+      answer_err_records = #{answerErrRecords,jdbcType=LONGVARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.common.model.EScores" >
+    update e_scores
+    set user_id = #{userId,jdbcType=BIGINT},
+      exam_srandom_id = #{examSrandomId,jdbcType=INTEGER},
+      total_num = #{totalNum,jdbcType=INTEGER},
+      right_num = #{rightNum,jdbcType=INTEGER},
+      error_num = #{errorNum,jdbcType=INTEGER},
+      score = #{score,jdbcType=DOUBLE},
+      take_time = #{takeTime,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

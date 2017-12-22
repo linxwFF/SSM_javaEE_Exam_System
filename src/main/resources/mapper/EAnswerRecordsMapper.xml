@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.common.dao.EAnswerRecordsMapper" >
+  <resultMap id="BaseResultMap" type="com.common.model.EAnswerRecords" >
+    <constructor >
+      <idArg column="id" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="user_id" jdbcType="BIGINT" javaType="java.lang.Long" />
+      <arg column="exam_srandom_id" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="scores_id" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="update_time" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+      <arg column="create_time" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+      <arg column="delete_time" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+    </constructor>
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.common.model.EAnswerRecords" >
+    <constructor >
+      <idArg column="id" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="user_id" jdbcType="BIGINT" javaType="java.lang.Long" />
+      <arg column="exam_srandom_id" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="scores_id" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="update_time" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+      <arg column="create_time" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+      <arg column="delete_time" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+      <arg column="answer" jdbcType="LONGVARCHAR" javaType="java.lang.String" />
+    </constructor>
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, user_id, exam_srandom_id, scores_id, update_time, create_time, delete_time
+  </sql>
+  <sql id="Blob_Column_List" >
+    answer
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from e_answer_records
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+
+  <update id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    update e_answer_records
+    set
+    delete_time = now()
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+
+  <insert id="insert" parameterType="com.common.model.EAnswerRecords" >
+    insert into e_answer_records (id, user_id, exam_srandom_id, 
+      scores_id, update_time, create_time, 
+       answer)
+    values (#{id,jdbcType=INTEGER}, #{userId,jdbcType=BIGINT}, #{examSrandomId,jdbcType=INTEGER}, 
+      #{scoresId,jdbcType=INTEGER}, now(), now(),
+       #{answer,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.common.model.EAnswerRecords" >
+    insert into e_answer_records
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="userId != null" >
+        user_id,
+      </if>
+      <if test="examSrandomId != null" >
+        exam_srandom_id,
+      </if>
+      <if test="scoresId != null" >
+        scores_id,
+      </if>
+        update_time,
+        create_time,
+      <if test="answer != null" >
+        answer,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="userId != null" >
+        #{userId,jdbcType=BIGINT},
+      </if>
+      <if test="examSrandomId != null" >
+        #{examSrandomId,jdbcType=INTEGER},
+      </if>
+      <if test="scoresId != null" >
+        #{scoresId,jdbcType=INTEGER},
+      </if>
+        now(),
+        now(),
+      <if test="answer != null" >
+        #{answer,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.common.model.EAnswerRecords" >
+    update e_answer_records
+    <set >
+      <if test="userId != null" >
+        user_id = #{userId,jdbcType=BIGINT},
+      </if>
+      <if test="examSrandomId != null" >
+        exam_srandom_id = #{examSrandomId,jdbcType=INTEGER},
+      </if>
+      <if test="scoresId != null" >
+        scores_id = #{scoresId,jdbcType=INTEGER},
+      </if>
+        update_time = now(),
+      <if test="answer != null" >
+        answer = #{answer,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.common.model.EAnswerRecords" >
+    update e_answer_records
+    set user_id = #{userId,jdbcType=BIGINT},
+      exam_srandom_id = #{examSrandomId,jdbcType=INTEGER},
+      scores_id = #{scoresId,jdbcType=INTEGER},
+      update_time = now(),
+      answer = #{answer,jdbcType=LONGVARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.common.model.EAnswerRecords" >
+    update e_answer_records
+    set user_id = #{userId,jdbcType=BIGINT},
+      exam_srandom_id = #{examSrandomId,jdbcType=INTEGER},
+      scores_id = #{scoresId,jdbcType=INTEGER},
+      update_time = now()
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

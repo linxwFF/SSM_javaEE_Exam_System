@@ -1,11 +1,12 @@
 package com.modules.exam.service.impl;
 
+import com.common.dao.EAnswerRecordsMapper;
 import com.common.dao.EPaperMapper;
 import com.common.dao.QQuestionMapper;
+import com.common.model.EAnswerRecords;
 import com.common.model.EPaper;
 import com.common.model.QQuestion;
 import com.modules.core.shiro.token.manager.TokenManager;
-import com.modules.exam.bo.Answer;
 import com.modules.exam.bo.EPapersCondition;
 import com.modules.exam.service.ExamService;
 import net.sf.json.JSONArray;
@@ -29,6 +30,9 @@ public class ExamServiceImpl implements ExamService{
     @Autowired
     private EPaperMapper ePaperMapper;
 
+    @Autowired
+    private EAnswerRecordsMapper eAnswerRecordsMapper;
+
     @Override
     public Map<String,List<QQuestion>> QueryQuestionsByMode1(Integer courseType, Integer courseTypeId) {
 
@@ -51,8 +55,7 @@ public class ExamServiceImpl implements ExamService{
 
     @Override
     public int insert(EPaper ePaper) {
-
-        return ePaperMapper.insertSelective(ePaper);
+        return ePaperMapper.insert(ePaper);
     }
 
     @Override
@@ -169,13 +172,9 @@ public class ExamServiceImpl implements ExamService{
         return result;
     }
 
-    //答题序列化集合存入数据库
     @Override
-    public String AnswerListToJson(List<Answer> answers) {
-
-        JSONArray jsonarray = JSONArray.fromObject(answers);
-
-        return jsonarray.toString();
+    public int insertAnswerRecords(EAnswerRecords eAnswerRecords) {
+        return eAnswerRecordsMapper.insert(eAnswerRecords);
     }
 
 
