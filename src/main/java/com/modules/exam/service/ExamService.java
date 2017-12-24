@@ -4,6 +4,7 @@ import com.common.model.EAnswerRecords;
 import com.common.model.EPaper;
 import com.common.model.EScoresWithBLOBs;
 import com.common.model.QQuestion;
+import com.modules.exam.bo.AnswerRecordsDetailVo;
 import com.modules.exam.bo.AnswerRecordsListVo;
 import com.modules.exam.bo.EPapersCondition;
 
@@ -44,5 +45,8 @@ public interface ExamService {
 
     //考试记录列表
     List<AnswerRecordsListVo> getAnswerRecords(Integer type,Integer courseType,Integer mode);
+
+    //根据srandom查询出答题的详细信息
+    AnswerRecordsDetailVo getAnswerRecordsDetailVoBySrandom(Integer srandom);
 
 }

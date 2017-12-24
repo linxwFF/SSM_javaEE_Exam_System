@@ -26,9 +26,13 @@ public class AnswerRecordsListVo {
     //考试创建时间
     private Date create_time;
 
-    public AnswerRecordsListVo(Date create_time, int error_num, int exam_time, String exam_title, int id, int right_num, int score, int take_time, int total_num) {
+    //答卷随机标识码
+    private Integer exam_srandom_id;
+
+    public AnswerRecordsListVo(Date create_time, int error_num, Integer exam_srandom_id, int exam_time, String exam_title, int id, int right_num, int score, int take_time, int total_num) {
         this.create_time = create_time;
         this.error_num = error_num;
+        this.exam_srandom_id = exam_srandom_id;
         this.exam_time = exam_time;
         this.exam_title = exam_title;
         this.id = id;
@@ -55,6 +59,14 @@ public class AnswerRecordsListVo {
 
     public void setError_num(int error_num) {
         this.error_num = error_num;
+    }
+
+    public Integer getExam_srandom_id() {
+        return exam_srandom_id;
+    }
+
+    public void setExam_srandom_id(Integer exam_srandom_id) {
+        this.exam_srandom_id = exam_srandom_id;
     }
 
     public int getExam_time() {

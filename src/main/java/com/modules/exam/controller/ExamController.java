@@ -1,5 +1,6 @@
 package com.modules.exam.controller;
 
+import com.alibaba.fastjson.JSON;
 import com.common.controller.BaseController;
 import com.common.dao.QCourseMapper;
 import com.common.model.*;
@@ -8,6 +9,7 @@ import com.common.utils.EnumUtil;
 import com.modules.core.mybatis.page.Pagination;
 import com.modules.core.shiro.token.manager.TokenManager;
 import com.modules.exam.bo.Answer;
+import com.modules.exam.bo.AnswerRecordsDetailVo;
 import com.modules.exam.bo.AnswerRecordsListVo;
 import com.modules.exam.bo.EPapersCondition;
 import com.modules.exam.service.CourseService;
@@ -20,6 +22,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.util.*;
@@ -306,14 +309,41 @@ public class ExamController extends BaseController {
 
 
     //查询考试记录
-    @RequestMapping(value = "get_answer_records")
+    @RequestMapping(value = "get_answer_records",method = RequestMethod.GET)
+    @ResponseBody
     public ModelAndView getAnswerRecords(ModelMap map,Integer type,Integer courseType,Integer mode)
+    {
+
+        map.put("type",type);
+        map.put("courseType",courseType);
+        map.put("mode",mode);
+
+        return new ModelAndView("exam/get_answer_records");
+    }
+
+    //查询考试记录data
+    @RequestMapping(value = "get_answer_records_data",method = RequestMethod.POST)
+    @ResponseBody
+    public String getAnswerRecordsData(ModelMap map,Integer type,Integer courseType,Integer mode)
     {
         List<AnswerRecordsListVo> answerRecordsListVoList = examService.getAnswerRecords(type,courseType,mode);
 
-        map.put("list",answerRecordsListVoList);
+        map.put("data", answerRecordsListVoList);
+        String jsonString = JSON.toJSONString(map);
 
-        return new ModelAndView("exam/get_answer_records");
+        return jsonString;
+    }
+
+
+    //答题记录的详情信息
+    @RequestMapping(value = "get_answer_records_detail")
+    public ModelAndView getAnswerRecordsDetail(ModelMap map,Integer srandom)
+    {
+        AnswerRecordsDetailVo item = examService.getAnswerRecordsDetailVoBySrandom(srandom);
+
+        map.put("item",item);
+
+        return new ModelAndView("exam/handPaper");
     }
 
 

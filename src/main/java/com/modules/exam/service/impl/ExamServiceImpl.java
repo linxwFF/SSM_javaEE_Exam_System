@@ -5,6 +5,7 @@ import com.common.model.*;
 import com.common.utils.Const;
 import com.common.utils.EnumUtil;
 import com.modules.core.shiro.token.manager.TokenManager;
+import com.modules.exam.bo.AnswerRecordsDetailVo;
 import com.modules.exam.bo.AnswerRecordsListVo;
 import com.modules.exam.bo.EPapersCondition;
 import com.modules.exam.service.ExamService;
@@ -195,8 +196,12 @@ public class ExamServiceImpl implements ExamService{
 
     @Override
     public List<AnswerRecordsListVo> getAnswerRecords(Integer type,Integer courseType,Integer mode) {
-
         return eAnswerRecordsMapper.selectAnswerRecordsListVo(type,courseType,mode);
+    }
+
+    @Override
+    public AnswerRecordsDetailVo getAnswerRecordsDetailVoBySrandom(Integer srandom) {
+        return eAnswerRecordsMapper.getAnswerRecordsDetailVoBySrandom(srandom);
     }
 
 
