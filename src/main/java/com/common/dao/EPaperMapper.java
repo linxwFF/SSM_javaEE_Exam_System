@@ -2,6 +2,7 @@ package com.common.dao;
 
 import com.common.model.EPaper;
 import com.modules.exam.bo.EPapersCondition;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -25,4 +26,7 @@ public interface EPaperMapper {
 
     //根据试卷的随机码获取试卷
     EPaper findEpaperBySrandom(String srandom);
+
+    //根据试卷的随机码更新考卷状态
+    int updateEPaperState(@Param(value = "srandom") Integer srandom,@Param(value = "state") Integer state);
 }

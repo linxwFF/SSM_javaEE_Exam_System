@@ -45,7 +45,7 @@
     delete from e_scores
     where id = #{id,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" parameterType="com.common.model.EScoresWithBLOBs" >
+  <insert id="insert" parameterType="com.common.model.EScoresWithBLOBs" useGeneratedKeys="true" keyProperty="id" >
     insert into e_scores (id, user_id, exam_srandom_id, 
       total_num, right_num, error_num, 
       score, take_time, answer_suc_records, 

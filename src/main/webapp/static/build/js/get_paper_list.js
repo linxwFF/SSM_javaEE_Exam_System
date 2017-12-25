@@ -23,14 +23,14 @@
 
             // ajax请求
             "ajax": {
-                'url' : '/exam/get_answer_records.shtml', //请求地址
+                'url' : '/exam/get_paper_list.shtml', //请求地址
                 type:"POST",
                 //传递额外参数 (条件搜索)
-                 'data' : function (d) {
-                     d.type = $("input[name=type]").val();
-                     d.courseType = $("input[name=courseType]").val();;
-                     d.mode = $("input[name=mode]").val();;
-                 }
+                'data' : function (d) {
+                    d.type = $("input[name=type]").val();
+                    d.courseType = $("input[name=courseType]").val();;
+                    d.mode = $("input[name=mode]").val();;
+                }
             },
             // 显示字段
             "aoColumns": [
@@ -38,35 +38,23 @@
                     "orderable": false,
                     "sDefaultContent" : "",
                     "sWidth" : "5%",
-                },{ "mData": "exam_title",
+                },{ "mData": "examTitle",
                     "orderable": true,
                     "sDefaultContent" : "",
                     "sWidth" : "25%",
-                },{ "mData": "exam_time",
+                },{ "mData": "examTime",
                     "orderable": true,
                     "sDefaultContent" : "",
-                    "sWidth" : "9%",
-                },{ "mData": "total_num",
-                    "orderable": true,
+                    "sWidth" : "10%",
+                },{ "mData": "state",
+                    "orderable": false,
                     "sDefaultContent" : "",
-                    "sWidth" : "9%",
-                },{ "mData": "right_num",
-                    "orderable": true,
-                    "sDefaultContent" : "",
-                    "sWidth" : "9%",
-                },{ "mData": "error_num",
-                    "orderable": true,
-                    "sDefaultContent" : "",
-                    "sWidth" : "9%",
-                },{ "mData": "score",
-                    "orderable": true,
-                    "sDefaultContent" : "",
-                    "sWidth" : "9%",
-                },{ "mData": "take_time",
-                    "orderable": true,
-                    "sDefaultContent" : "",
-                    "sWidth" : "9%",
-                },{ "mData": "create_time",
+                    "sWidth" : "10%",
+                    // 格式化状态
+                    "render": function(data, type, full) {
+                        return data?"考过":"未考过";
+                    }
+                },{ "mData": "createTime",
                     "orderable": true,
                     "sDefaultContent" : "",
                     "sWidth" : "10%",
@@ -83,7 +71,7 @@
                     "render": function(data, type, full) {
                         var html = "";
 
-                        html +="<a type='button' class='btn btn-warning btn-sm' href='/exam/get_answer_records_detail.shtml?id=" + full.id + "'>详情</a>";
+                        html +="<a type='button' class='btn btn-warning btn-sm' href='/exam/start_exam_by_srandom.shtml?srandom=" + full.srandom + "'>开始考试</a>";
 
                         return html;
                     }

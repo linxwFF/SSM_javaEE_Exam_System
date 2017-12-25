@@ -224,6 +224,10 @@ public class ExamServiceImpl implements ExamService{
         return result;
     }
 
+    @Override
+    public int updateEPaperState(Integer srandom,Integer state) {
+        return ePaperMapper.updateEPaperState(srandom,state);
+    }
 
 
 }

@@ -252,4 +252,12 @@
     from e_paper
     where srandom = #{srandom}
   </select>
+
+  <update id="updateEPaperState" >
+    update e_paper
+    set
+      state = #{state,jdbcType=INTEGER},
+      update_time = now()
+    where srandom = #{srandom,jdbcType=INTEGER}
+  </update>
 </mapper>

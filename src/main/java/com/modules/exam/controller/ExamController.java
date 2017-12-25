@@ -104,7 +104,7 @@ public class ExamController extends BaseController {
         return new ModelAndView("exam/get_model_list");
     }
 
-    //开始考试
+    //开始考试 随机生成新考卷
     @RequestMapping(value="start_exam")
     public ModelAndView StartExam(ModelMap map,Integer type,Integer courseType,Integer mode){
 
@@ -126,47 +126,104 @@ public class ExamController extends BaseController {
         map.put("modeName",modeName);
         map.put("mode",mode);
 
+        //随机值 = 用来索引这个考卷的id
+        Random random = new Random();
+        int srandom = random.nextInt(1000000)%(9000000-1000000+1) + 1000000;
+        map.put("srandom",srandom);
 
-        //查询用户是否有未完成的试卷
+        //考试时间
+        int exam_time = 3600;
+        map.put("exam_time",exam_time);
+
+        //创建新的考卷
+        Map<String,List<QQuestion>> questions = examService.CreateExamPaper(srandom,type,courseType,mode,exam_time);
+        map.put("questions",questions);
+
+        return new ModelAndView("exam/exam");
+    }
+
+    //考卷列表
+    @RequestMapping(value="get_paper_list",method = RequestMethod.GET)
+    public ModelAndView getPaperList(ModelMap map,Integer type,Integer courseType,Integer mode){
+
+        //考试项目
+        QCourse CourseProject = courseService.findById(type);
+        String CourseProjectName = CourseProject.getName();
+        map.put("CourseProjectName",CourseProjectName);
+        map.put("type",type);
+
+        //考试科目
+        QCourse Course = courseService.findCourseTypeById(CourseProject.getId(),courseType);
+        String CourseName = Course.getName();
+        map.put("CourseName",CourseName);
+        map.put("courseType",courseType);
+
+        //考试模式
+        Class<Const.ExamModelEnum> clasz = Const.ExamModelEnum.class;
+        String modeName =(String) EnumUtil.getEnumValueByCode(mode, clasz);
+        map.put("modeName",modeName);
+        map.put("mode",mode);
+
+        return new ModelAndView("exam/get_paper_list");
+    }
+
+    //考卷列表 data
+    @RequestMapping(value="get_paper_list",method = RequestMethod.POST)
+    @ResponseBody
+    public String getPaperListData(ModelMap map,Integer type,Integer courseType,Integer mode){
+
         EPapersCondition condition = new EPapersCondition();
         condition.setUser_id(TokenManager.getUserId());
         condition.setType(type);
         condition.setCourseType(courseType);
-        condition.setChapter_id(0);
         condition.setMode(mode);
-        condition.setState(0);  //未完成
 
         List<EPaper> ePapers = examService.findAllEPaperState0(condition);
-        if(ePapers.size() > 0){
-            //如果有则把未完成的试卷返回 到考试界面
-            String jsonQuestions = ePapers.get(0).getQuestions();
-            Map<String, List<QQuestion>> mapQuestions = examService.jsonToMap(jsonQuestions);
-            //考试时间
-            map.put("exam_time",ePapers.get(0).getExamTime());
 
-            map.put("questions",mapQuestions);
-            //随机值 = 用来判断这个考卷的id
-            map.put("srandom",String.valueOf(ePapers.get(0).getSrandom()));
+        map.put("data", ePapers);
 
-            return new ModelAndView("exam/exam");
-        }else{
-            //随机值 = 用来索引这个考卷的id
-            Random random = new Random();
-            int srandom = random.nextInt(1000000)%(9000000-1000000+1) + 1000000;
-            map.put("srandom",srandom);
+        String jsonString = JSON.toJSONString(map);
 
-            //考试时间
-            int exam_time = 3600;
-            map.put("exam_time",exam_time);
-
-            //创建新的考卷
-            Map<String,List<QQuestion>> questions = examService.CreateExamPaper(srandom,type,courseType,mode,exam_time);
-            map.put("questions",questions);
-
-            return new ModelAndView("exam/exam");
-        }
-
+        return jsonString;
     }
+
+    //开始考试
+    @RequestMapping(value="start_exam_by_srandom")
+    public ModelAndView StartExamBySrandom(ModelMap map,Integer srandom){
+
+        EPaper ePapers = examService.findEpaperBySrandom(String.valueOf(srandom));
+
+        //考试项目
+        QCourse CourseProject = courseService.findById(ePapers.getTypeId());
+        String CourseProjectName = CourseProject.getName();
+        map.put("CourseProjectName",CourseProjectName);
+        map.put("type",ePapers.getTypeId());
+
+        //考试科目
+        QCourse Course = courseService.findCourseTypeById(CourseProject.getId(),ePapers.getCourseId());
+        String CourseName = Course.getName();
+        map.put("CourseName",CourseName);
+        map.put("courseType",ePapers.getCourseId());
+
+        //考试模式
+        Class<Const.ExamModelEnum> clasz = Const.ExamModelEnum.class;
+        String modeName =(String) EnumUtil.getEnumValueByCode(ePapers.getMode(), clasz);
+        map.put("modeName",modeName);
+        map.put("mode",ePapers.getMode());
+
+        String jsonQuestions = ePapers.getQuestions();
+        Map<String, List<QQuestion>> mapQuestions = examService.jsonToMap(jsonQuestions);
+        //考试时间
+        map.put("exam_time",ePapers.getExamTime());
+        //考试题目
+        map.put("questions",mapQuestions);
+        //随机值 = 用来判断这个考卷的id
+        map.put("srandom",String.valueOf(ePapers.getSrandom()));
+
+        return new ModelAndView("exam/exam");
+    }
+
+
 
     //处理考卷
     @RequestMapping(value="handPaper")
@@ -278,17 +335,6 @@ public class ExamController extends BaseController {
 
         map.put("answerList",answerList);
 
-        //生成答题记录
-        //答题序列化集合存入数据库
-        EAnswerRecords eAnswerRecords = new EAnswerRecords();
-
-        eAnswerRecords.setUserId(TokenManager.getUserId());
-        eAnswerRecords.setExamSrandomId(srandom);
-        eAnswerRecords.setScoresId(1);
-        JSONArray answerListJson = JSONArray.fromObject(answerList);
-        eAnswerRecords.setAnswer(answerListJson.toString());
-        examService.insertAnswerRecords(eAnswerRecords);
-
         //成绩表
         EScoresWithBLOBs eScores = new EScoresWithBLOBs();
         eScores.setUserId(TokenManager.getUserId());
@@ -303,6 +349,20 @@ public class ExamController extends BaseController {
         eScores.setAnswerErrRecords(errorAnswerListJson.toString());
         eScores.setTakeTime(take_time);
         examService.insertAnswerScore(eScores);
+
+        //生成答题记录
+        //答题序列化集合存入数据库
+        EAnswerRecords eAnswerRecords = new EAnswerRecords();
+        eAnswerRecords.setUserId(TokenManager.getUserId());
+        eAnswerRecords.setExamSrandomId(srandom);
+        eAnswerRecords.setScoresId(eScores.getId());
+        JSONArray answerListJson = JSONArray.fromObject(answerList);
+        eAnswerRecords.setAnswer(answerListJson.toString());
+        examService.insertAnswerRecords(eAnswerRecords);
+
+
+        //修正考卷状态 0未考试过  1考试过
+        examService.updateEPaperState(srandom,1);
 
         return new ModelAndView("exam/handPaper");
     }
@@ -322,7 +382,7 @@ public class ExamController extends BaseController {
     }
 
     //查询考试记录data
-    @RequestMapping(value = "get_answer_records_data",method = RequestMethod.POST)
+    @RequestMapping(value = "get_answer_records",method = RequestMethod.POST)
     @ResponseBody
     public String getAnswerRecordsData(ModelMap map,Integer type,Integer courseType,Integer mode)
     {
@@ -350,7 +410,6 @@ public class ExamController extends BaseController {
 
         return new ModelAndView("exam/answer_records_detail");
     }
-
 
 
 }

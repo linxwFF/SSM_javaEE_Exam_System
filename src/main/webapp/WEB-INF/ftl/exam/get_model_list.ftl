@@ -76,15 +76,12 @@
                         <div class="row">
                                     <#if type?exists && courseType?exists >
                                     <div class="panel panel-primary">
-                                        <div class="panel-body">
-                                            <h4>请选择科目</h4>
-                                        </div>
                                     <table class="table table-bordered">
                                         <thead>
                                         <tr>
-                                            <th>#</th>
-                                            <th class="text-center" width="25%">科目名称</th>
-                                            <th class="text-center" width="25%">操作</th>
+                                            <th class="text-center" width="5%">#</th>
+                                            <th class="text-center" width="15%">科目名称</th>
+                                            <th class="text-center" width="30%">操作</th>
                                         </tr>
                                         </thead>
                                     <tbody>
@@ -92,12 +89,19 @@
                                                 <#list modelList?keys as key>
 
                                                             <tr>
-                                                                <th scope="row" width="50%" class="text-center">${key_index+1}</th>
+                                                                <th scope="row" width="5%" class="text-center">${key_index+1}</th>
                                                                 <td class="text-center">${modelList[key]}<br></td>
                                                                 <td class="text-center">
-                                                                    <a href="${basePath}/exam/start_exam.shtml?type=${type}&courseType=${courseType}&mode=${key}">
+                                                                    <#if key?number == 1>
+                                                                        <a href="${basePath}/exam/start_exam.shtml?type=${type}&courseType=${courseType}&mode=${key}">
+                                                                            <button type="button" class="btn btn-success">
+                                                                                生成随机考卷
+                                                                            </button>
+                                                                        </a>
+                                                                    </#if>
+                                                                    <a href="${basePath}/exam/get_paper_list.shtml?type=${type}&courseType=${courseType}&mode=${key}">
                                                                     <button type="button" class="btn btn-primary">
-                                                                        进入练习
+                                                                        考卷列表
                                                                     </button>
                                                                     </a>
                                                                     <a href="${basePath}/exam/get_answer_records.shtml?type=${type}&courseType=${courseType}&mode=${key}">

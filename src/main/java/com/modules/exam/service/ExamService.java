@@ -53,4 +53,7 @@ public interface ExamService {
     //错题和正确题目的反序列化
     List<Answer> jsontoListAnswerRecords(String json);
 
+    //改变考试状态
+    int updateEPaperState(Integer srandom,Integer state);
+
 }
