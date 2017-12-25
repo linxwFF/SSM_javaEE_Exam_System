@@ -19,8 +19,6 @@
     <link href="${basePath}/static//vendors/nprogress/nprogress.css" rel="stylesheet">
     <!-- 自定义样式 -->
     <link href="${basePath}/static/build/css/custom.css" rel="stylesheet">
-    <!-- Datatables -->
-    <link rel="stylesheet" type="text/css" href="${basePath}/static/assets/css/jquery.dataTables.min.css">
     <style>
         .title{
             display: block;
@@ -38,15 +36,6 @@
         .btn-bg-color{
             background-color:#00FFFF;
         }
-
-        td.details-control {
-            background: url('${basePath}/static/assets/img/details_open.png') no-repeat center center;
-            cursor: pointer;
-        }
-        tr.shown td.details-control {
-            background: url('${basePath}/static/assets/img/details_close.png') no-repeat center center;
-        }
-
     </style>
 </head>
 <!-- /header -->
@@ -227,8 +216,5 @@
 <script src="${basePath}/static/build/js/custom.js"></script>
 <!-- 退出url -->
 <script baseUrl="${basePath}" src="${basePath}/static/build/js/user.login.js"></script>
-<!-- Datatables -->
-<script type="text/javascript" charset="utf8" src="${basePath}/static/assets/js/jquery.dataTables.min.js"></script>
-<script type="text/javascript" charset="utf8" src="${basePath}/static/build/js/loadData_menber_list.js"></script>
 </body>
 </html>

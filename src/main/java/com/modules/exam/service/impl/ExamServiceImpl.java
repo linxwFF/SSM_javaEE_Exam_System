@@ -5,6 +5,7 @@ import com.common.model.*;
 import com.common.utils.Const;
 import com.common.utils.EnumUtil;
 import com.modules.core.shiro.token.manager.TokenManager;
+import com.modules.exam.bo.Answer;
 import com.modules.exam.bo.AnswerRecordsDetailVo;
 import com.modules.exam.bo.AnswerRecordsListVo;
 import com.modules.exam.bo.EPapersCondition;
@@ -196,13 +197,33 @@ public class ExamServiceImpl implements ExamService{
 
     @Override
     public List<AnswerRecordsListVo> getAnswerRecords(Integer type,Integer courseType,Integer mode) {
-        return eAnswerRecordsMapper.selectAnswerRecordsListVo(type,courseType,mode);
+
+        //user_id
+        long user_id = TokenManager.getUserId();
+
+        return eAnswerRecordsMapper.selectAnswerRecordsListVo(type,courseType,mode,user_id);
     }
 
     @Override
-    public AnswerRecordsDetailVo getAnswerRecordsDetailVoBySrandom(Integer srandom) {
-        return eAnswerRecordsMapper.getAnswerRecordsDetailVoBySrandom(srandom);
+    public AnswerRecordsDetailVo getAnswerRecordsDetailVoBySrandom(Integer id) {
+
+        //user_id
+        long user_id = TokenManager.getUserId();
+
+        return eAnswerRecordsMapper.getAnswerRecordsDetailVoBySrandom(id,user_id);
     }
+
+    //错题和正确题目的反序列化
+    @Override
+    public List<Answer> jsontoListAnswerRecords(String json)
+    {
+        JSONArray jsonarray = JSONArray.fromObject(json);
+
+        List<Answer> result = (List)JSONArray.toCollection(jsonarray, Answer.class);
+
+        return result;
+    }
+
 
 
 }

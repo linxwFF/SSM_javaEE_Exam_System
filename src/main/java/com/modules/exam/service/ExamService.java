@@ -4,6 +4,7 @@ import com.common.model.EAnswerRecords;
 import com.common.model.EPaper;
 import com.common.model.EScoresWithBLOBs;
 import com.common.model.QQuestion;
+import com.modules.exam.bo.Answer;
 import com.modules.exam.bo.AnswerRecordsDetailVo;
 import com.modules.exam.bo.AnswerRecordsListVo;
 import com.modules.exam.bo.EPapersCondition;
@@ -47,6 +48,9 @@ public interface ExamService {
     List<AnswerRecordsListVo> getAnswerRecords(Integer type,Integer courseType,Integer mode);
 
     //根据srandom查询出答题的详细信息
-    AnswerRecordsDetailVo getAnswerRecordsDetailVoBySrandom(Integer srandom);
+    AnswerRecordsDetailVo getAnswerRecordsDetailVoBySrandom(Integer id);
+
+    //错题和正确题目的反序列化
+    List<Answer> jsontoListAnswerRecords(String json);
 
 }

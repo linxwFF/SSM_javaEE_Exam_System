@@ -337,13 +337,18 @@ public class ExamController extends BaseController {
 
     //答题记录的详情信息
     @RequestMapping(value = "get_answer_records_detail")
-    public ModelAndView getAnswerRecordsDetail(ModelMap map,Integer srandom)
+    public ModelAndView getAnswerRecordsDetail(ModelMap map,Integer id)
     {
-        AnswerRecordsDetailVo item = examService.getAnswerRecordsDetailVoBySrandom(srandom);
+        AnswerRecordsDetailVo item = examService.getAnswerRecordsDetailVoBySrandom(id);
+
+        List<Answer> err_records = examService.jsontoListAnswerRecords(item.getAnswer_err_records());
+        List<Answer> suc_records = examService.jsontoListAnswerRecords(item.getAnswer_suc_records());
 
         map.put("item",item);
+        map.put("err_records",err_records);
+        map.put("suc_records",suc_records);
 
-        return new ModelAndView("exam/handPaper");
+        return new ModelAndView("exam/answer_records_detail");
     }
 
 

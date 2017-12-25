@@ -83,7 +83,7 @@
                     "render": function(data, type, full) {
                         var html = "";
 
-                        html +="<a type='button' class='btn btn-warning btn-sm' href='/exam/get_answer_records_detail.shtml?srandom=" + full.exam_srandom_id + "'>详情</a>";
+                        html +="<a type='button' class='btn btn-warning btn-sm' href='/exam/get_answer_records_detail.shtml?id=" + full.id + "'>详情</a>";
 
                         return html;
                     }
