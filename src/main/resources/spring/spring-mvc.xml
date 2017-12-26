@@ -21,7 +21,10 @@
 		<mvc:resources mapping="/demo/**" location="/demo/" />
 		<mvc:resources mapping="/css/**" location="/css/" />
 		<mvc:resources mapping="/js/**" location="/js/" />
-		<!-- 自动扫描 标签 -->
+		<mvc:resources mapping="/static/**" location="/static/" />
+		<mvc:resources location="/ueditor/" mapping="/ueditor/**"/>
+
+	<!-- 自动扫描 标签 -->
 		<context:component-scan base-package="com.*.*.tag;com.*.tag" />
 		<bean name="api" class="com.modules.core.tags.APITemplateModel"></bean>
 		<bean name="springContextUtil" class="com.common.utils.SpringContextUtil" scope="singleton"></bean>
