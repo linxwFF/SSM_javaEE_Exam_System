@@ -62,6 +62,12 @@
                 <div class="panel panel-primary">
                     <div class="panel-body">
                         <h4>考试结果</h4>
+                            <a href="/exam/start_exam.shtml?type=${type}&courseType=${courseType}&mode=${mode}">
+                            <button type="button" class="btn btn-success">再考一次</button>
+                            </a>
+                            <a href="/exam/get_model_list.shtml?type=${type}&courseType=${courseType}&mode=${mode}">
+                                <button type="button" class="btn btn-warning">返回考试模式</button>
+                            </a>
                     </div>
                     <div class="ln_solid"></div>
                     <form action="" method="post" id="_form">

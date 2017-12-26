@@ -154,6 +154,7 @@
     <input type="hidden" name="courseType" value="${courseType}" />  <#--考试科目-->
     <input type="hidden" name="take_time" id="ys" value="0" />       <#--剩余时间-->
     <input type="hidden" name="srandom" value="${srandom!}" />       <#--考卷随机码-->
+    <input type="hidden" name="mode" value="${mode!}" />
 </form>
 
 <div class="myexam_head">

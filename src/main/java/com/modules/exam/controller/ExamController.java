@@ -227,7 +227,11 @@ public class ExamController extends BaseController {
 
     //处理考卷
     @RequestMapping(value="handPaper")
-    public ModelAndView handPaper(ModelMap map,String daan,Integer type,Integer courseType,Integer take_time,Integer srandom){
+    public ModelAndView handPaper(ModelMap map,String daan,Integer type,Integer courseType,Integer mode,Integer take_time,Integer srandom){
+
+        map.put("type",type);
+        map.put("courseType",courseType);
+        map.put("mode",mode);
 
         List<QQuestion> qQuestionList = examService.jsontoListQquestion(srandom);
 

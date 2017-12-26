@@ -20,6 +20,7 @@
             // "bAutoWidth" : true, //自适应宽度
             // "ordering" : false, //全局禁用排序
             // "bStateSave" : false, //保持状态
+            'order' : [4,'desc'],   //默认排序
 
             // ajax请求
             "ajax": {
@@ -46,6 +47,14 @@
                     "orderable": true,
                     "sDefaultContent" : "",
                     "sWidth" : "10%",
+                    "render": function(data, type, full) {
+                            var fz = Math.floor(data / 60);
+                            var ms = data % 60;
+                            fz = (fz < 10) ? "0" + fz : fz;
+                            ms = (ms < 10) ? "0" + ms : ms;
+                            var sj = fz + "分" + ms + "秒";
+                        return sj;
+                    }
                 },{ "mData": "state",
                     "orderable": false,
                     "sDefaultContent" : "",

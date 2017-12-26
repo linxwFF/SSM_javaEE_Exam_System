@@ -20,6 +20,7 @@
             // "bAutoWidth" : true, //自适应宽度
             // "ordering" : false, //全局禁用排序
             // "bStateSave" : false, //保持状态
+            'order' : [8,'desc'],   //默认排序
 
             // ajax请求
             "ajax": {
@@ -46,6 +47,26 @@
                     "orderable": true,
                     "sDefaultContent" : "",
                     "sWidth" : "9%",
+                    "render": function(data, type, full) {
+                        var fz = Math.floor(data / 60);
+                        var ms = data % 60;
+                        fz = (fz < 10) ? "0" + fz : fz;
+                        ms = (ms < 10) ? "0" + ms : ms;
+                        var sj = fz + "分" + ms + "秒";
+                        return sj;
+                    }
+                },{ "mData": "take_time",
+                    "orderable": true,
+                    "sDefaultContent" : "",
+                    "sWidth" : "9%",
+                    "render": function(data, type, full) {
+                        var fz = Math.floor(data / 60);
+                        var ms = data % 60;
+                        fz = (fz < 10) ? "0" + fz : fz;
+                        ms = (ms < 10) ? "0" + ms : ms;
+                        var sj = fz + "分" + ms + "秒";
+                        return sj;
+                    }
                 },{ "mData": "total_num",
                     "orderable": true,
                     "sDefaultContent" : "",
@@ -61,11 +82,14 @@
                 },{ "mData": "score",
                     "orderable": true,
                     "sDefaultContent" : "",
-                    "sWidth" : "9%",
-                },{ "mData": "take_time",
-                    "orderable": true,
-                    "sDefaultContent" : "",
-                    "sWidth" : "9%",
+                    "sWidth" : "7%",
+                    "render": function(data, type, full) {
+                        if(data < 60){
+                            return "<span style='color: red'>"+ data +"分</span>";
+                        }else{
+                            return data+"分";
+                        }
+                    }
                 },{ "mData": "create_time",
                     "orderable": true,
                     "sDefaultContent" : "",
