@@ -60,7 +60,7 @@
         <!-- /右侧顶部导航 -->
 
         <!-- 页面内容 -->
-        <div class="right_col" role="main">
+        <div class="right_col black" role="main">
             <div class="row">
 
                 <div class="col-md-12 col-sm-12 col-xs-12">
@@ -121,7 +121,7 @@
                                 </span>
                                             </td>
                                             <td class="text-center">
-                                                <input readonly="readonly" name="identityNumber"  class="form-control col-md-3 col-xs-12 " value="${userInfo.identityNumber?default('未设置')}" placeholder="请输入昵称">
+                                                <input readonly="readonly" name="identityNumber"  class="form-control col-md-3 col-xs-12 " value="${userInfo.identityNumber?default('未设置')}" placeholder="请输入身份证号码">
                                             </td>
 
                                             <td class="text-center">
@@ -130,7 +130,7 @@
                                 </span>
                                             </td>
                                             <td class="text-center">
-                                                <input readonly="readonly" name="tel"  class="form-control col-md-3 col-xs-12 " value="${userInfo.tel?default('未设置')}" placeholder="请输入昵称">
+                                                <input readonly="readonly" name="tel"  class="form-control col-md-3 col-xs-12 " value="${userInfo.tel?default('未设置')}" placeholder="请输入电话号码">
                                             </td>
                                         </tr>
                                         <tr>
@@ -140,7 +140,7 @@
                                 </span>
                                             </td>
                                             <td class="text-center" colspan="3">
-                                                <input readonly="readonly" name="address"  class="form-control col-md-3 col-xs-12 " value="${userInfo.address?default('未设置')}" placeholder="请输入昵称">
+                                                <input readonly="readonly" name="address"  class="form-control col-md-3 col-xs-12 " value="${userInfo.address?default('未设置')}" placeholder="请输入地址">
                                             </td>
                                         </tr>
 
@@ -153,10 +153,10 @@
                                             </td>
 
                                             <td class="text-center">
-                                                修改密码请点击
+                                                修改密码-请点击
                                             </td>
                                             <td class="text-center">
-                                                <a href="${basePath}/user/updatePswd2.shtml" style="color: red;"><b>修改密码</b><a>
+                                                <a href="${basePath}/user/updatePswd2.shtml" style="color: red;"><i class="fa fa-bullseye"></i><b>修改密码</b><a>
                                             </td>
                                         </tr>
                                         <tr>

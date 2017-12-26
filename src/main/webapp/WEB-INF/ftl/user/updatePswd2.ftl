@@ -9,7 +9,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title> 模拟考试系统 </title>
+    <title> 模拟考试系统 - 修改密码</title>
 
     <!-- Bootstrap -->
     <link href="${basePath}/static/vendors/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -59,8 +59,8 @@
         <!-- /右侧顶部导航 -->
 
         <!-- 页面内容 -->
-        <div class="right_col" role="main">
-            <div class="row black">
+        <div class="right_col black" role="main">
+            <div class="row">
 
                 <div class="col-md-12 col-sm-12 col-xs-12">
                     <div class="x_panel">
@@ -70,14 +70,6 @@
                             <!-- 右侧工具栏 -->
                             <ul class="nav navbar-right panel_toolbox">
                                 <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a></li>
-                                <li class="dropdown">
-                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
-
-                                    <ul class="dropdown-menu" role="menu">
-                                        <li><a href="#">Settings 1</a></li>
-                                        <li><a href="#">Settings 2</a></li>
-                                    </ul>
-                                </li>
                                 <li><a class="close-link"><i class="fa fa-close"></i></a></li>
                             </ul>
 
@@ -85,65 +77,53 @@
                         </div>
                         <div class="x_content">
 
-                            <div class="x_content">
-                                <br>
-                                <!-- 验证 -->
-                                <div class="alert alert-warning hidden" id="alert-warning">
-                                    状态
-                                </div>
+                            <form id="formId" enctype="multipart/form-data" action="${basePath}/user/updatePswd.shtml" method="post">
+                            <table class="table table-bordered">
 
-                                <form class="form-horizontal form-label-left input_mask" id="form">
+                                <tbody>
+                                <tr>
+                                    <td class="text-center">
+                                        <span class="form-control col-md-6 col-xs-12 ">
+                                             原密码:
+                                        </span>
+                                    </td>
+                                    <td class="text-center">
+                                        <input type="password" id="pswd" maxlength="20" name="pswd"  placeholder="原密码" class="form-control col-md-6 col-xs-12 ">
+                                    </td>
+                                </tr>
 
-                                    <input type="hidden" value="${token.id}" id="id" name="id">
-                                    <div class="form-group">
-                                        <label class="control-label col-md-3 col-sm-3 col-xs-12">原密码: </label>
+                                <tr>
+                                    <td class="text-center">
+                                        <span class="form-control col-md-6 col-xs-12 ">
+                                             新密码:
+                                        </span>
+                                    </td>
+                                    <td class="text-center">
+                                        <input type="password" id="newPswd" maxlength="20" name="newPswd" placeholder="新密码" class="form-control col-md-6 col-xs-12 " >
+                                    </td>
+                                </tr>
 
-                                        <div class="col-md-2 col-sm-2 col-xs-12" id="nickname">
-                                            <input readonly="readonly"  class="form-control col-md-2 col-xs-12" value="${token.nickname?default('未设置')}" placeholder="请输入昵称">
-                                        </div>
+                                <tr>
+                                    <td class="text-center">
+                                        <span class="form-control col-md-6 col-xs-12 ">
+                                             新密码（再输入一次）:
+                                        </span>
+                                    </td>
+                                    <td class="text-center">
+                                        <input type="password" id="reNewPswd" maxlength="20" name="reNewPswd" placeholder="新密码（再输入一次）" class="form-control col-md-6 col-xs-12 " >
+                                    </td>
+                                </tr>
 
-                                        <div class="col-md-2 col-sm-2 col-xs-12 hidden" id="nickname_change">
-                                            <input type="password" required="required" class="form-control col-md-2 col-sm-2 col-xs-12" name="pswd" maxlength="8" autocomplete="off" value="">
-                                        </div>
-                                    </div>
-
-                                    <div class="form-group">
-                                        <label class="control-label col-md-3 col-sm-3 col-xs-12">新密码 :</label>
-                                        <div class="col-md-2 col-sm-2 col-xs-12" id="email">
-                                            <input readonly="readonly" class="form-control col-md-2 col-xs-12" value="${token.email?default('未设置')}" placeholder="请输入帐号" readonly="true">
-                                        </div>
-
-                                        <div class="col-md-2 col-sm-2 col-xs-12 hidden" id="email_change">
-                                            <input type="password" required="required" class="form-control col-md-2 col-sm-2 col-xs-12" name="newPswd" value="">
-                                        </div>
-                                    </div>
-
-                                    <div class="form-group">
-                                        <label class="control-label col-md-3 col-sm-3 col-xs-12">新密码（再输入一次 :</label>
-                                        <div class="col-md-2 col-sm-2 col-xs-12" id="email">
-                                            <input readonly="readonly" class="form-control col-md-2 col-xs-12" value="${token.email?default('未设置')}" placeholder="请输入帐号" readonly="true">
-                                        </div>
-
-                                        <div class="col-md-2 col-sm-2 col-xs-12 hidden" id="email_change">
-                                            <input type="password" required="required" class="form-control col-md-2 col-sm-2 col-xs-12" name="reNewPswd" value="">
-                                        </div>
-                                    </div>
-
-                                </form>
-
-
-                                <div class="ln_solid"></div>
-                                <div class="form-group">
-                                    <div class="col-md-9 col-sm-9 col-xs-12 col-md-offset-3">
-
-                                        <button type="button" class="btn btn-primary" id="go_back">返回列表</button>
-                                        <button type="button" class="btn btn-warning" id="edit">修改</button>
-                                        <button type="button" class="btn btn-success hidden" id="submit">提交</button>
-                                    </div>
-                                </div>
+                                <tr>
+                                    <th class="text-center" colspan="2">
+                                        <button type="submit" class="btn btn-success btn-lg">确定修改</button>
+                                    </th>
+                                </tr>
+                                </tbody>
+                            </table>
+                            </form>
 
 
-                            </div>
 
                         </div>
                     </div>
@@ -171,58 +151,55 @@
 <script src="${basePath}/static/build/js/custom.js"></script>
 <!-- 退出url -->
 <script baseUrl="${basePath}" src="${basePath}/static/build/js/user.login.js"></script>
-
-<!-- jquery.serializeJSON -->
-<script src="${basePath}/static/src/js/jquery.serializeJSON/jquery.serializejson.js"></script>
-
+<!-- jquery-form -->
+<script src="${basePath}/static/assets/js/jquery.form-2.82.js?${_v}"></script>
 <script>
-    $(document).ready(function() {
-        //编辑
-        $("#edit").click(function(){
-            $("input").removeAttr("readonly");
-            $("textarea").removeAttr("readonly");
-
-            $("#nickname").addClass("hidden");
-            $("#email").addClass("hidden");
-
-            $("#nickname_change").removeClass("hidden");
-            $("#email_change").removeClass("hidden");
-
-            $("#submit").removeClass("hidden");
+    $(function(){
+        var load;
+        $("#formId").ajaxForm({
+            success:function (result){
+                layer.close(load);
+                if(result && result.status != 200){
+                    return layer.msg(result.message,function(){}),!1;
+                }else{
+                    layer.msg('操作成功！');
+                    $("form :password").val('');
+                }
+            },
+            beforeSubmit:function(){
+                //判断参数
+                if($.trim($("#pswd").val()) == ''){
+                    layer.msg('请输入原密码',function(){});
+                    $("#pswd").parent().removeClass('has-success').addClass('has-error');
+                    return !1;
+                }else{
+                    $("#pswd").parent().removeClass('has-error').addClass('has-success');
+                }
+                if($.trim($("#newPswd").val()) == ''){
+                    layer.msg('请输入新密码',function(){});
+                    $("#newPswd").parent().removeClass('has-success').addClass('has-error');
+                    return !1;
+                }else{
+                    $("#newPswd").parent().removeClass('has-error').addClass('has-success');
+                }
+                if($.trim($("#reNewPswd").val()) == ''){
+                    layer.msg('请再次输入新密码',function(){});
+                    $("#reNewPswd").parent().removeClass('has-success').addClass('has-error');
+                    return !1;
+                }else{
+                    $("#reNewPswd").parent().removeClass('has-error').addClass('has-success');
+                }
+                if($("#reNewPswd").val() != $("#newPswd").val()){
+                    return layer.msg('2次新密码输入不一致。',function(){}),!1;
+                }
+                load = layer.load('正在提交！！！');
+            },
+            dataType:"json",
+            clearForm:false
         });
-        //返回列表
-        $("#go_back").click(function(){
-            history.go(-1);
-        });
 
-        //提交
-        $("#submit").click(function(){
-            var url = "${basePath}/user/updateSelf.shtml";
-            var form = $('#form').serializeJSON();
-
-            var data = {
-                form : form,
-            };
-
-            if($("input[name = 'nickname']").val() == ""){
-                layer.msg('昵称不能为空！',function(){});
-
-                //添加验证状态
-                $("#alert-warning").removeClass("hidden");
-                $("#alert-warning").html("昵称不能为空");
-                return;
-            }
-
-            var result = Util.ajaxHelper(url, 'POST', data);
-            if(result.is_true){
-                Util.notify(result.data.message, 1);
-
-                $("input").attr("readonly", "readonly");
-                $("textarea").attr("readonly", "readonly");
-            }
-        });
-    } );
-
+    });
 </script>
+
 </body>
 </html>
