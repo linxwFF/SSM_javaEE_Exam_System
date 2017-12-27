@@ -71,9 +71,9 @@
                             </ul>
                             <div class="clearfix"></div>
                         </div>
-                        <div class="x_content">
+                        <div class="x_content" >
                             <form action="${basePath}/articleManager/add_article_do.shtml" method="post">
-                                <TEXTAREA id=myEditor name="mycontent"></TEXTAREA>
+                                <TEXTAREA style="height: 800px;" id=myEditor name="mycontent"></TEXTAREA>
                                 <input name="submit" value="提交" type="submit">
                             </form>
                         </div>

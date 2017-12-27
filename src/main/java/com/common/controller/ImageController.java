@@ -39,7 +39,7 @@ public class ImageController {
         Map<String,Object> map = new HashMap<String, Object>();
 
         //上传路径
-        String path = "upload";
+        String path = "upload/";
         //文件原来的名称
         String fileName = file.getOriginalFilename();
         //扩展名
@@ -60,13 +60,14 @@ public class ImageController {
         try {
             file.transferTo(targetFile);    //复制文件到指定目录
             FTPUtil.uploadFile(Lists.newArrayList(targetFile));
+            targetFile.delete();            //删除上传成功的资源
             String targetFileName = targetFile.getName();
             String url = PropertiesUtil.getProperty("ftp.server.http.prefix") + targetFileName;
 
             map.put("state", "SUCCESS");               // UEDITOR的规则:不为SUCCESS则显示state的内容
-            map.put("url",url);          //能访问到你现在图片的路径 这里
-            map.put("title","");
-            map.put("original","realName" );
+            map.put("url",url);                        //能访问到你现在图片的路径 这里
+            map.put("title",fileName);
+            map.put("original",fileName);
 
         } catch (IOException e) {
             logger.error("上传文件异常",e);
