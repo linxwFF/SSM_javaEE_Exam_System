@@ -45,6 +45,7 @@
         <li ><a><i class="fa fa-edit"></i> 文章管理 <span class="fa fa-chevron-down"></span></a>
             <ul class="nav child_menu"  >
                 <li><a href="${basePath}/articleManager/add_article.shtml">添加文章</a></li>
+                <li><a href="${basePath}/articleManager/article_category_manager_index.shtml">文章分类管理</a></li>
             </ul>
         </li>
 

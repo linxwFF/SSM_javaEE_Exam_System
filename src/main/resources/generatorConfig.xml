@@ -69,11 +69,8 @@
 
         <!--题目相关的表-->
         <!--<table tableName="q_course" domainObjectName="QCourse" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"></table>-->
-
         <!--<table tableName="q_chapter" domainObjectName="QChapter" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"></table>-->
-
         <!--<table tableName="q_questions" domainObjectName="QQuestion" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"></table>-->
-
         <!--<table tableName="dicts" domainObjectName="Dicts" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"></table>-->
 
         <!--考试表-->
@@ -82,6 +79,11 @@
         <!--<table tableName="e_answer_records" domainObjectName="EAnswerRecords" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"></table>-->
         <!--成绩表-->
         <!--<table tableName="e_scores" domainObjectName="EScores" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"></table>-->
+
+        <!--文章表-->
+        <!--<table tableName="article" domainObjectName="Article" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"></table>-->
+        <!--<table tableName="article_category" domainObjectName="ArticleCategory" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"></table>-->
+
 
         <!-- mybatis插件的搭建 -->
     </context>
