@@ -1,11 +1,10 @@
-package com.modules.article.service.impl;
+package com.modules.exam.service.impl;
 
-import com.common.dao.ArticleCategoryMapper;
+import com.common.dao.QCourseMapper;
 import com.common.model.ArticleCategory;
-import com.common.model.URolePermission;
+import com.common.model.QCourse;
 import com.common.utils.LoggerUtils;
-import com.modules.article.service.ArticleManagerService;
-import org.apache.commons.lang.StringUtils;
+import com.modules.exam.service.CourseManagerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,22 +13,22 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Created by LINxwFF on 2017/12/26.
+ * Created by LINxwFF on 2017/12/29.
  */
 @Service
-public class ArticleManagerServiceImpl implements ArticleManagerService {
+public class CourseManagerServiceImpl implements CourseManagerService {
 
     @Autowired
-    private ArticleCategoryMapper articleCategoryMapper;
+    private QCourseMapper qCourseMapper;
 
     @Override
-    public List<ArticleCategory> findAll_Table() {
-        return articleCategoryMapper.findAll_Table();
+    public List<QCourse> findAll_Table() {
+        return qCourseMapper.findAll_Table();
     }
 
     @Override
-    public int insert(ArticleCategory articleCategory) {
-        return articleCategoryMapper.insertSelective(articleCategory);
+    public int insert(QCourse model) {
+        return qCourseMapper.insertSelective(model);
     }
 
     @Override
@@ -68,6 +67,6 @@ public class ArticleManagerServiceImpl implements ArticleManagerService {
 
     @Override
     public int deleteByPrimaryKey(int id) {
-        return articleCategoryMapper.deleteByPrimaryKey(id);
+        return qCourseMapper.deleteByPrimaryKey(id);
     }
 }

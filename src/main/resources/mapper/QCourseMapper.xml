@@ -185,4 +185,12 @@
     select count(id) from  q_course
     <include refid="where_all" />
   </select>
+
+  <select id="findAll_Table" resultMap="BaseResultMap">
+    SELECT
+    <include refid="Base_Column_List"/>
+    FROM
+    q_course
+  </select>
+
 </mapper>

@@ -49,6 +49,12 @@
             </ul>
         </li>
 
+        <li ><a><i class="fa fa-edit"></i> 考试相关管理中心 <span class="fa fa-chevron-down"></span></a>
+            <ul class="nav child_menu"  >
+                <li><a href="${basePath}/courseManager/courseManager_index.shtml">课程管理</a></li>
+            </ul>
+        </li>
+
         <@shiro.hasAnyRoles name='888888,100002'>
         <#--拥有 角色888888（管理员） ||  100002（用户中心）-->
             <li "><a><i class="fa fa-edit"></i> 用户中心 <span class="fa fa-chevron-down"></span></a>

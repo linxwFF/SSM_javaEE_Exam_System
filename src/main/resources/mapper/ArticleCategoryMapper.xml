@@ -93,7 +93,7 @@
     where id = #{id,jdbcType=INTEGER}
   </update>
 
-  <select id="findAllArticleCategory" resultMap="BaseResultMap">
+  <select id="findAll_Table" resultMap="BaseResultMap">
     SELECT
     <include refid="Base_Column_List"/>
     FROM

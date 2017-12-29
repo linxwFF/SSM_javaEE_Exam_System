@@ -41,6 +41,9 @@ public class ArticleManagerController extends BaseController {
         return new ModelAndView("articleManager/add_article");
     }
 
+
+
+
     //文章分类列表
     @RequestMapping(value="article_category_manager_index",method = RequestMethod.GET)
     public ModelAndView articleCategoryManagerIndex(){
@@ -52,7 +55,7 @@ public class ArticleManagerController extends BaseController {
     @ResponseBody
     public String articleCategoryManagerIndexData(ModelMap map){
 
-        List<ArticleCategory> allArticleCategory = articleManagerService.findAllArticleCategory();
+        List<ArticleCategory> allArticleCategory = articleManagerService.findAll_Table();
         map.put("data",allArticleCategory);
         String jsonString = JSON.toJSONString(map);
         return jsonString;
@@ -63,7 +66,7 @@ public class ArticleManagerController extends BaseController {
     @ResponseBody
     public Map<String,Object> addArticleCategory(ArticleCategory articleCategory){
         try {
-            int count = articleManagerService.insertArticleCategorySelective(articleCategory);
+            int count = articleManagerService.insert(articleCategory);
             resultMap.put("status", 200);
             resultMap.put("successCount", count);
         } catch (Exception e) {
@@ -85,7 +88,7 @@ public class ArticleManagerController extends BaseController {
         resultMap.put("message","删除成功了");
 //        return resultMap;
 
-		return articleManagerService.deleteArticleCategoryById(ids);
+		return articleManagerService.delete(ids);
     }
 
 }

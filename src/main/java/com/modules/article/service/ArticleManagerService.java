@@ -12,14 +12,14 @@ import java.util.Map;
 public interface ArticleManagerService {
 
     //获取所有的文章分类
-    List<ArticleCategory> findAllArticleCategory();
+    List<ArticleCategory> findAll_Table();
 
     //添加文章分类
-    int insertArticleCategorySelective(ArticleCategory articleCategory);
+    int insert(ArticleCategory articleCategory);
 
     //批量删除文章分类
-    Map<String, Object> deleteArticleCategoryById(String ids);
+    Map<String, Object> delete(String ids);
 
     //删除文章分类
-    int deleteArticleCategoryByPrimaryKey(int id);
+    int deleteByPrimaryKey(int id);
 }

@@ -19,6 +19,6 @@ public interface ArticleCategoryMapper {
     int updateByPrimaryKey(ArticleCategory record);
 
     //获取所有的文章分类列表
-    List<ArticleCategory> findAllArticleCategory();
+    List<ArticleCategory> findAll_Table();
 
 }
