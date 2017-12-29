@@ -23,46 +23,38 @@
 
             // ajax请求
             "ajax": {
-                'url' : '/courseManager/courseManager_index.shtml', //请求地址
+                'url' : '/courseManager/chapterManager_index.shtml', //请求地址
                 type:"POST",
                 //传递额外参数 (条件搜索)
-                // 'data' : function (d) {
-                //     d.test = 1;
-                // }
+                 'data' : function (d) {
+                     d.course_type_id = $("input[name=chapter_course_id]").val();
+                 }
             },
             // 显示字段
             "aoColumns": [{ "mData": "id",
                 "orderable": false,
                 "sDefaultContent" : "",
                 "sWidth" : "5%",
-            },{ "mData": "name",
-                "orderable": true,
-                "sDefaultContent" : "",
-                "sWidth" : "15%",
-            },{ "mData": "state",
+            },{ "mData": "chapterName",
                 "orderable": true,
                 "sDefaultContent" : "",
                 "sWidth" : "10%",
+            },{ "mData": "createTime",
+                "orderable": true,
+                "sDefaultContent" : "",
+                "sWidth" : "10%",
+                // 格式化时间戳
                 "render": function(data, type, full) {
-                    return data?"有效":"失效";
+                    var dt = new Date(data);
+                    return dt.Format("yyyy-MM-dd HH:mm:ss");
                 }
-            },{ "mData": "type",
-                "orderable": true,
-                "sDefaultContent" : "",
-                "sWidth" : "10%",
-            },{ "mData": "sortOrder",
-                "orderable": true,
-                "sDefaultContent" : "",
-                "sWidth" : "10%",
             },{ "mData": "null",
                 "orderable": false,
                 "sDefaultContent" : "",
-                "sWidth" : "20%",
+                "sWidth" : "5%",
                 // 返回自定义内容
                 "render": function(data, type, full) {
                     var html = "";
-
-                    html +="<a type='button' class='btn btn-warning btn-sm' href='/courseManager/chapterManager_index.shtml?course_type_id=" + full.id + "'>章节管理</a>";
 
                     if($("input[name='hasDel']").length > 0 && $("input[name='hasDel']").length)
                     {
@@ -111,7 +103,7 @@
 
             var index =  layer.confirm("确定这个文章分类？",function(){
                 var load = layer.load();
-                $.post('/courseManager/deleteCourseManagerById.shtml',{ids:id},function(result){
+                $.post('/courseManager/deleteChapterManagerById.shtml',{ids:id},function(result){
                     layer.close(load);
                     if(result && result.status != 200){
                         layer.msg(result.message);
