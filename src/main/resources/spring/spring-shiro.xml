@@ -15,6 +15,28 @@
 	<!-- 会话Session ID生成器 -->
 	<bean id="sessionIdGenerator" class="org.apache.shiro.session.mgt.eis.JavaUuidSessionIdGenerator"/>
 
+	<!-- 自定义的shiro Session监听 -->
+	<bean id="customSessionListener" class="com.modules.core.shiro.listenter.CustomSessionListener">
+		<property name="shiroSessionRepository" ref="jedisShiroSessionRepository"/>
+	</bean>
+	<!-- 自定义的shiro Session的监听生命周期 -->
+	<bean id="customShiroSessionDAO" class="com.modules.core.shiro.CustomShiroSessionDAO">
+		<property name="shiroSessionRepository" ref="jedisShiroSessionRepository"/>
+		<property name="sessionIdGenerator" ref="sessionIdGenerator"/>
+	</bean>
+	<!-- 自定义的-手动操作Session，管理Session -->
+	<bean id="customSessionManager" class="com.modules.core.shiro.session.CustomSessionManager">
+		<property name="shiroSessionRepository" ref="jedisShiroSessionRepository"/>
+		<property name="customShiroSessionDAO" ref="customShiroSessionDAO"/>
+	</bean>
+
+	<!-- 会话验证调度器 -->
+	<bean id="sessionValidationScheduler" class="org.apache.shiro.session.mgt.ExecutorServiceSessionValidationScheduler">
+		<!-- 间隔多少时间检查，不配置是60分钟 -->
+		<property name="interval" value="${session.validate.timespan}"/>
+		<property name="sessionManager" ref="sessionManager"/>
+	</bean>
+
 	<!-- 会话Cookie模板 -->
 	<!-- 适用于登录一个主域名网站，共享子域名的登录信息 -->
 	<bean id="sessionIdCookie" class="org.apache.shiro.web.servlet.SimpleCookie">
@@ -26,11 +48,6 @@
 	    <!-- 配置存储Session Cookie的domain为 一级域名
 	    <property name="domain" value="xxx.net"/>
 	     -->
-	</bean>
-
-	<!-- custom shiro session listener 自定义的shiro session监听 -->
-	<bean id="customSessionListener" class="com.modules.core.shiro.listenter.CustomSessionListener">
-	    <property name="shiroSessionRepository" ref="jedisShiroSessionRepository"/>
 	</bean>
 
 	<!-- 用户信息记住我功能的相关配置 -->
@@ -50,23 +67,7 @@
         <property name="cookie" ref="rememberMeCookie"/>
     </bean>
 
-	<!-- custom shiro session listener -->
-	<bean id="customShiroSessionDAO" class="com.modules.core.shiro.CustomShiroSessionDAO">
-	    <property name="shiroSessionRepository" ref="jedisShiroSessionRepository"/>
-	    <property name="sessionIdGenerator" ref="sessionIdGenerator"/>
-	</bean>
-	<!-- 手动操作Session，管理Session -->
-	<bean id="customSessionManager" class="com.modules.core.shiro.session.CustomSessionManager">
-		<property name="shiroSessionRepository" ref="jedisShiroSessionRepository"/>
-		<property name="customShiroSessionDAO" ref="customShiroSessionDAO"/>
-	</bean>
- 
-	<!-- 会话验证调度器 -->
-	<bean id="sessionValidationScheduler" class="org.apache.shiro.session.mgt.ExecutorServiceSessionValidationScheduler">
-		 <!-- 间隔多少时间检查，不配置是60分钟 -->
-	     <property name="interval" value="${session.validate.timespan}"/>
-	     <property name="sessionManager" ref="sessionManager"/>
-	</bean>
+
 	<!-- 安全管理器 -->
     <bean id="securityManager" class="org.apache.shiro.web.mgt.DefaultWebSecurityManager">
         <property name="realm" ref="sampleRealm"/>
@@ -107,28 +108,29 @@
 	<!-- 授权 认证 -->
 	<bean id="sampleRealm" class="com.modules.core.shiro.token.SampleRealm" ></bean>
 
-	<!-- Session Manager -->
+	<!-- Session Manager 相关配置-->
 	<bean id="sessionManager" class="org.apache.shiro.web.session.mgt.DefaultWebSessionManager">
 		<!-- 相隔多久检查一次session的有效性   -->
 	 	<property name="sessionValidationInterval" value="1800000"/>  
 	 	 <!-- session 有效时间为半小时 （毫秒单位）-->  
-	<property name="globalSessionTimeout" value="1800000"/>
-	   <property name="sessionDAO" ref="customShiroSessionDAO"/>
-	   <!-- session 监听，可以多个。 -->
-	   <property name="sessionListeners">
+		<property name="globalSessionTimeout" value="1800000"/>
+	   	<property name="sessionDAO" ref="customShiroSessionDAO"/>
+	   	<!-- session 监听，可以多个。 -->
+	   	<property name="sessionListeners">
 	       <list>
 	           <ref bean="customSessionListener"/>
 	       </list>
-	   </property>
-	   <!-- 间隔多少时间检查，不配置是60分钟 -->	
-	  <property name="sessionValidationScheduler" ref="sessionValidationScheduler"/>
-	  <!-- 是否开启 检测，默认开启 -->
-	  <property name="sessionValidationSchedulerEnabled" value="true"/>
-	   <!-- 是否删除无效的，默认也是开启 -->
-	  <property name="deleteInvalidSessions" value="true"/>
+	   	</property>
+		<!-- 间隔多少时间检查，不配置是60分钟 -->
+		<property name="sessionValidationScheduler" ref="sessionValidationScheduler"/>
+	  	<!-- 是否开启 检测，默认开启 -->
+		<property name="sessionValidationSchedulerEnabled" value="true"/>
+		<!-- 是否删除无效的，默认也是开启 -->
+		<property name="deleteInvalidSessions" value="true"/>
 		<!-- 会话Cookie模板 -->
 	   <property name="sessionIdCookie" ref="sessionIdCookie"/>
 	</bean>
+
 	<!-- session 创建、删除、查询 -->
 	<bean id="jedisShiroSessionRepository" class="com.modules.core.shiro.cache.JedisShiroSessionRepository" >
 		 <property name="jedisManager" ref="jedisManager"/>
