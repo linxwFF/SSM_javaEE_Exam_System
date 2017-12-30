@@ -30,7 +30,7 @@
             <li ><a><i class="fa fa-edit"></i> 个人中心 <span class="fa fa-chevron-down"></span></a>
                 <ul class="nav child_menu"  >
                     <li><a href="${basePath}/user/index.shtml">个人资料</a></li>
-                    <li><a href="${basePath}/user/updatePswd2.shtml">密码修改</a></li>
+                    <li><a href="${basePath}/user/updatePswd.shtml">密码修改</a></li>
                 </ul>
             </li>
 

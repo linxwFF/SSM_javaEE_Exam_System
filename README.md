@@ -38,6 +38,8 @@
 		理论上加另一个 name，就可以解决，现在把name 和type都加上，更保险。
 	 -->
 ```
+相关代码
+> com.core.shiro.cache
 
 #### 4. nginx
 > nginx-1.10.2
@@ -78,6 +80,52 @@ ftp.server.http.prefix=http://127.0.0.1:8888/img/
 #### 字符编码  utf-8
 #### JDK 1.8
 #### Spring 4.2.5
+#### Shiro 权限控制框架
+>配置文件
+
+```
+<property name="filterChainDefinitions" >
+	<value>
+		/** = anon
+		/page/login.jsp = anon
+		/page/register/* = anon
+		/page/index.jsp = authc
+		/page/addItem* = authc,roles[数据管理员]
+		/page/file* = authc,roleOR[普通用户,数据管理员]
+		/page/listItems* = authc,roleOR[数据管理员,普通用户]
+		/page/showItem* = authc,roleOR[数据管理员,普通用户]
+		/page/updateItem*=authc,roles[数据管理员]
+          </value>
+</property>
+```
+
+#### 用户密码加密
+> MD5(登录帐号 + “固定值” + 密码)
+
+```
+//Java代码。UserManager.md5Pswd(UUser user);
+/**
+ * 加工密码，和登录一致。
+ * @param user
+ * @return
+ */
+public static UUser md5Pswd(UUser user){
+	//密码为   email + '#' + pswd，然后MD5
+	user.setPswd(md5Pswd(user.getEmail(),user.getPswd()));
+	return user;
+}
+/**
+ * 字符串返回值
+ * @param email
+ * @param pswd
+ * @return
+ */
+public static String md5Pswd(String email ,String pswd){
+	pswd = String.format("%s#%s", email,pswd);
+	pswd = MathUtil.getMD5(pswd);
+	return pswd;
+}
+```
 
 
 #### 本项目框架 SSM（SpringMVC + Spring + Mybatis）

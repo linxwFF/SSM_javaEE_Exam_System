@@ -12,26 +12,7 @@ import org.apache.shiro.subject.support.DefaultSubjectContext;
 
 import java.util.*;
 
-/**
- * 
- * 开发公司：SOJSON在线工具 <p>
- * 版权所有：© www.sojson.com<p>
- * 博客地址：http://www.sojson.com/blog/  <p>
- * <p>
- * 
- * 用户Session 手动管理
- * 
- * <p>
- * 
- * 区分　责任人　日期　　　　说明<br/>
- * 创建　周柏成　2016年6月2日 　<br/>
- *
- * @author zhou-baicheng
- * @email  so@sojson.com
- * @version 1.0,2016年6月2日 <br/>
- * 
- */
-
+//自定义的session管理
 public class CustomSessionManager {
 
 	/**
@@ -39,7 +20,6 @@ public class CustomSessionManager {
 	 */
 	public static final String SESSION_STATUS ="online-status";
 	ShiroSessionRepository shiroSessionRepository;
-	
 	CustomShiroSessionDAO customShiroSessionDAO;
 	
 	/**

@@ -39,7 +39,7 @@ public class UserLoginController extends BaseController {
 	@RequestMapping(value="login",method=RequestMethod.GET)
 	public ModelAndView login(){
 		
-		return new ModelAndView("user/login2");
+		return new ModelAndView("user/login");
 	}
 	/**
 	 * 注册跳转
@@ -48,10 +48,10 @@ public class UserLoginController extends BaseController {
 	@RequestMapping(value="register",method=RequestMethod.GET)
 	public ModelAndView register(){
 		
-		return new ModelAndView("user/register2");
+		return new ModelAndView("user/register");
 	}
 	/**
-	 * 注册 && 登录
+	 * 注册提交
 	 * @param vcode		验证码	
 	 * @param entity	UUser实体
 	 * @return
@@ -106,7 +106,6 @@ public class UserLoginController extends BaseController {
 
 			/**
 			 * shiro 获取登录之前的地址
-			 * 之前0.1版本这个没判断空。
 			 */
 			SavedRequest savedRequest = WebUtils.getSavedRequest(request);
 			String url = null ;
