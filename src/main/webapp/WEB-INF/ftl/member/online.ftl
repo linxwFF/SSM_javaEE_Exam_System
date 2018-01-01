@@ -1,103 +1,146 @@
+
 <!DOCTYPE html>
-<html lang="zh-cn">
-	<head>
-		<meta charset="utf-8" />
-		<title>当前在线Session — SSM + Shiro Demo</title>
-		<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport" />
-		<link   rel="icon" href="${basePath}/favicon.ico" type="image/x-icon" />
-		<link   rel="shortcut icon" href="${basePath}/favicon.ico" />
-		<link href="${basePath}/js/common/bootstrap/3.3.5/css/bootstrap.min.css?${_v}" rel="stylesheet"/>
-		<link href="${basePath}/css/common/base.css?${_v}" rel="stylesheet"/>
-		<script  src="${basePath}/js/common/jquery/jquery1.8.3.min.js"></script>
-		<script  src="${basePath}/js/common/layer/layer.js"></script>
-		<script  src="${basePath}/js/common/bootstrap/3.3.5/js/bootstrap.min.js"></script>
-		<script  src="${basePath}/js/shiro.demo.js"></script>
-		<script >
-			<@shiro.hasPermission name="/member/changeSessionStatus.shtml">
-			$(function(){
-				$("a[v=onlineDetails]").on('click',function(){
-					var self = $(this);
-					var text = $.trim(self.text());
-					var index = layer.confirm("确定"+ text +"？",function(){
-						changeSessionStatus(self.attr('sessionId'),self.attr('status'),self);
-						layer.close(index);
-					});
-				});
-			});
-			//改变状态
-			function changeSessionStatus(sessionIds,status,self){
-				status = !parseInt(status);
-				//loading
-				var load = layer.load();
-				$.post("${basePath}/member/changeSessionStatus.shtml",{status:status,sessionIds:sessionIds},function(result){
-					layer.close(load);
-					if(result && result.status == 200){
-						return self.text(result.sessionStatusText),
-									self.attr('status',result.sessionStatus),
-										self.parent().prev().text(result.sessionStatusTextTd);
-										layer.msg('操作成功'),!1;
-					}else{
-						return layer.msg(result.message,function(){}),!1;
-					}		
-				},'json');
-			}
-			</@shiro.hasPermission>
-			
-		</script>
-	</head>
-	<body data-target="#one" data-spy="scroll">
-		
-		<@_top.top 2/>
-		<div class="container" style="padding-bottom: 15px;min-height: 300px; margin-top: 40px;">
-			<div class="row">
-				<@_left.member 2/>
-				<div class="col-md-10">
-					<h2>当前在线用户</h2>
-					<hr>
-					<form method="post" action="" id="formId" class="form-inline">
-						<div clss="well">
-					     	<p>这里是在线已经登录的<code>有效</code>Session，不能等同于当前在线用户，来源于Redis。</p>
-					     	<p>再者，说明一个问题，老有同学纠结怎么删除无效的Session，也就是删除用户直接关闭浏览器，导致无法继续使用的Session，我再次严正声明，这个Session不需要你删除，别纠结了，这个Session是有TTL，有效期是30分钟，30分钟这个Session没有更新就会剔除，故你不用纠结。</p>
-					     	<p>老有同学纠结这个，美其名曰为了更好的效率，为了效率你去干干其他的事情。</p>
-				        </div>
-					<hr>
-					<table class="table table-bordered">
-						<tr>
-							<th>SessionID</th>
-							<th>昵称</th>
-							<th>Email/帐号</th>
-							<th>创建回话</th>
-							<th>回话最后活动</th>
-							<th>状态</th>
-							<th>操作</th>
-						</tr>
-						<#if list?exists && list?size gt 0 >
-							<#list list as it>
-								<tr>
-									<td>${it.sessionId?default('未设置')}</td>
-									<td>${it.nickname?default('未设置')}</td>
-									<td>${it.email?default('未设置')}</td>
-									<td>${it.startTime?string('HH:mm:ss yy-MM-dd')}</td>
-									<td>${it.lastAccess?string('HH:mm:ss yy-MM-dd')}</td>
-									<td>${(it.sessionStatus)?string('有效','已踢出')}</td>
-									<td>
-										<a href="${basePath}/member/onlineDetails/${it.sessionId}.shtml">详情</a>
-										<@shiro.hasPermission name="/member/changeSessionStatus.shtml">
-											<a v="onlineDetails"href="javascript:void(0);" sessionId="${it.sessionId}" status="${(it.sessionStatus)?string(1,0)}">${(it.sessionStatus)?string('踢出','激活')}</a>
-										</@shiro.hasPermission>
-									</td>
-								</tr>
-							</#list>
-						<#else>
-							<tr>
-								<td class="center-block" callspan="4">没有用户</td>
-							</tr>
-						</#if>
-						
-					</table>
-				</div>
-			</div><#--/row-->
-		</div>
-			
-	</body>
+<html lang="en">
+<!-- header -->
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <!-- Meta, title, CSS, favicons, etc. -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title> 模拟考试系统 </title>
+
+    <!-- Bootstrap -->
+    <link href="${basePath}/static/vendors/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link href="${basePath}/static/vendors/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+    <!-- NProgress -->
+    <link href="${basePath}/static//vendors/nprogress/nprogress.css" rel="stylesheet">
+    <!-- 自定义样式 -->
+    <link href="${basePath}/static/build/css/custom.css" rel="stylesheet">
+    <!-- Datatables -->
+    <link rel="stylesheet" type="text/css" href="${basePath}/static/assets/css/jquery.dataTables.min.css">
+    <style>
+        .title{
+            display: block;
+            font-size: 2em;
+            -webkit-margin-before: 0.67em;
+            -webkit-margin-after: 0.67em;
+            -webkit-margin-start: 0px;
+            -webkit-margin-end: 0px;
+            font-weight: bold;
+            color: #000000;
+        }
+        .black{
+            color: #000000;
+        }
+        .btn-bg-color{
+            background-color:#00FFFF;
+        }
+
+        td.details-control {
+            background: url('${basePath}/static/assets/img/details_open.png') no-repeat center center;
+            cursor: pointer;
+        }
+        tr.shown td.details-control {
+            background: url('${basePath}/static/assets/img/details_close.png') no-repeat center center;
+        }
+
+
+    </style>
+</head>
+<!-- /header -->
+<body class="nav-md">
+<div class="container body">
+    <div class="main_container">
+
+        <!-- 左侧导航 -->
+        <div class="col-md-3 left_col">
+
+        <@left.left 1/>
+
+        </div>
+
+        <!-- 右侧顶部导航 -->
+        <div class="top_nav">
+        <@top.top 1/>
+        </div>
+        <!-- /右侧顶部导航 -->
+
+        <!-- 页面内容 -->
+        <div class="right_col" role="main">
+            <div class="row black">
+                <div class="col-md-12 col-sm-12 col-xs-12">
+                    <div class="x_panel">
+                        <div class="x_title">
+                            <h2>帐号管理<small>帐号列表 </small></h2>
+
+                            <!-- 右侧工具栏 -->
+                            <ul class="nav navbar-right panel_toolbox">
+                                <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a></li>
+                                <li><a class="close-link"><i class="fa fa-close"></i></a></li>
+                            </ul>
+
+                            <div class="clearfix"></div>
+                        </div>
+                        <div class="x_content">
+			            <span class="section">
+			                <p>这里是在线已经登录的有效Session，不能等同于当前在线用户，来源于Redis。</p>
+			            </span>
+                            <!-- 判读是否拥有查看Session信息的权限 -->
+                            <input type="hidden" name="hasGetDetail" value="1">
+                            <!-- 判读是否拥有查看改变Session状态的权限 -->
+                        <@shiro.hasPermission name="/member/changeSessionStatus.shtml">
+                            <input type="hidden" name="changeSessionStatus" value="1">
+                        </@shiro.hasPermission>
+
+                            <table id="table" class="table table-hover table-bordered table-condensed " cellspacing="0" width="100%">
+                                <thead>
+                                <tr>
+                                    <th></th>
+                                    <th>SessionID</th>
+                                    <th>昵称</th>
+                                    <th>Email/帐号</th>
+                                    <th>创建回话</th>
+                                    <th>回话最后活动</th>
+                                    <th>状态</th>
+                                    <th>操作</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                </tbody>
+                            </table>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <!-- /页面内容 -->
+
+        <!-- 脚部内容 -->
+    <@footer.footer 1/>
+        <!-- /脚部内容  -->
+    </div>
+</div>
+<!-- jQuery -->
+<script src="${basePath}/static/vendors/jquery/dist/jquery.min.js "></script>
+<!-- Bootstrap -->
+<script src="${basePath}/static/vendors/bootstrap/dist/js/bootstrap.min.js "></script>
+<!-- NProgress -->
+<script src="${basePath}/static/vendors/nprogress/nprogress.js"></script>
+<!-- 工具类 -->
+<script src="${basePath}/static/src/js/util.js "></script>
+<!-- Layer -->
+<script type="text/javascript" charset="utf8" src="${basePath}/static/src/js/layer/layer.js"></script>
+<!-- 自定义扩展JS -->
+<script src="${basePath}/static/build/js/custom.js"></script>
+<!-- 退出url -->
+<script baseUrl="${basePath}" src="${basePath}/static/build/js/user.login.js"></script>
+<!-- Datatables -->
+<script type="text/javascript" charset="utf8" src="${basePath}/static/assets/js/jquery.dataTables.min.js"></script>
+<script type="text/javascript" charset="utf8" src="${basePath}/static/build/js/loadData_menber_online.js"></script>
+</body>
 </html>

@@ -1,6 +1,5 @@
 package com.modules.permission.controller;
 
-import com.alibaba.fastjson.JSON;
 import com.common.controller.BaseController;
 import com.modules.permission.bo.URoleBo;
 import com.modules.permission.bo.UserRoleAllocationBo;
@@ -9,7 +8,6 @@ import com.modules.user.service.UUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -27,41 +25,27 @@ public class UserRoleAllocationController extends BaseController {
 	@Autowired
 	PermissionService permissionService;
 
-//	/**
-//	 * 用户角色权限分配
-//	 * @param modelMap
-//	 * @param pageNo
-//	 * @param findContent
-//	 * @return
-//	 */
-//	@RequestMapping(value="allocation")
-//	public ModelAndView allocation(ModelMap modelMap,Integer pageNo,String findContent){
-//		modelMap.put("findContent", findContent);
-//		Pagination<UserRoleAllocationBo> boPage = userService.findUserAndRole(modelMap,pageNo,pageSize);
-//		modelMap.put("page", boPage);
-//		return new ModelAndView("role/allocation2");
-//	}
-
 	/**
-	 * 用户角色权限分配
-	 */
+	 * 用户角色权限列表
+	 * @return
+     */
 	@RequestMapping(value="allocation",method = RequestMethod.GET)
 	public ModelAndView allocation(){
-		return new ModelAndView("role/allocation2");
+		return new ModelAndView("role/allocation");
 	}
-
-	//用户角色权限 数据
+	/**
+	 * 用户角色权限列表 dataTables json数据返回
+	 * @return
+     */
 	@RequestMapping(value="allocation",method = RequestMethod.POST)
 	@ResponseBody
-	public String allocationTable(ModelMap map){
+	public Map<String,Object> allocation_Table(){
 		List<UserRoleAllocationBo> list = userService.findAllUserAndRole();
-		map.put("data",list);
-		String jsonString = JSON.toJSONString(map);
-		return jsonString;
+		resultMap.put("data",list);
+		return resultMap;
 	}
-
 	/**
-	 * 根据用户ID查询权限
+	 * 根据用户ID查询权限  //todo这里有小显示用户权限的BUG待解决
 	 * @param id
 	 * @return
 	 */

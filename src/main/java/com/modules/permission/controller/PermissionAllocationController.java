@@ -1,6 +1,5 @@
 package com.modules.permission.controller;
 
-import com.alibaba.fastjson.JSON;
 import com.common.controller.BaseController;
 import com.modules.permission.bo.RolePermissionAllocationBo;
 import com.modules.permission.bo.UPermissionBo;
@@ -9,7 +8,6 @@ import com.modules.permission.service.RoleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -18,51 +16,35 @@ import org.springframework.web.servlet.ModelAndView;
 import java.util.List;
 import java.util.Map;
 
-/**
- *
- * 用户权限分配
- *
- */
 @Controller
 @Scope(value="prototype")
 @RequestMapping("permission")
 public class PermissionAllocationController extends BaseController {
-	
+
 	@Autowired
 	PermissionService permissionService;
 	@Autowired
 	RoleService roleService;
+
 	/**
 	 * 权限分配
-	 * @param modelMap
-	 * @param pageNo
-	 * @param findContent
 	 * @return
 	 */
-//	@RequestMapping(value="allocation")
-//	public ModelAndView allocation(ModelMap modelMap,Integer pageNo,String findContent){
-//		modelMap.put("findContent", findContent);
-//		Pagination<RolePermissionAllocationBo> boPage = roleService.findRoleAndPermissionPage(modelMap,pageNo,pageSize);
-//		modelMap.put("page", boPage);
-//		return new ModelAndView("permission/allocation");
-//	}
-
 	@RequestMapping(value="allocation",method = RequestMethod.GET)
 	public ModelAndView allocation(){
-		return new ModelAndView("permission/allocation2");
+		return new ModelAndView("permission/allocation");
 	}
-
-	//权限分配 _table
+	/**
+	 * 权限分配 dataTables json数据返回
+	 * @return
+     */
 	@RequestMapping(value="allocation",method = RequestMethod.POST)
 	@ResponseBody
-	public String allocation(ModelMap map){
-
+	public Map<String,Object> allocation_Table(){
 		List<RolePermissionAllocationBo> list = roleService.findAllRoleAndPermission();
-		map.put("data",list);
-		String jsonString = JSON.toJSONString(map);
-		return jsonString;
+		resultMap.put("data",list);
+		return resultMap;
 	}
-
 	/**
 	 * 根据角色ID查询权限
 	 * @param id

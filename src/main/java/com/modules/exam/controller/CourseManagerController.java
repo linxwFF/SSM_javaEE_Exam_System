@@ -32,24 +32,22 @@ public class CourseManagerController extends BaseController {
     @Autowired
     private ChapterManagerService chapterManagerService;
 
-    //列表
+    //课程列表
     @RequestMapping(value="courseManager_index",method = RequestMethod.GET)
     public ModelAndView courseManagerIndex(){
         return new ModelAndView("exam/backend/course_manager");
     }
 
-    //列表 _table
+    //课程列表 datatable json返回数据
     @RequestMapping(value="courseManager_index",method = RequestMethod.POST)
     @ResponseBody
-    public String courseManagerIndex(ModelMap map){
-
+    public Map<String,Object> courseManagerIndex_Table(){
         List<QCourse> allArticleCategory = courseManagerService.findAll_Table();
-        map.put("data",allArticleCategory);
-        String jsonString = JSON.toJSONString(map);
-        return jsonString;
+        resultMap.put("data",allArticleCategory);
+        return resultMap;
     }
 
-    //添加
+    //添加课程
     @RequestMapping(value="addCourseManager",method=RequestMethod.POST)
     @ResponseBody
     public Map<String,Object> addCourseManager(QCourse model){
@@ -65,7 +63,7 @@ public class CourseManagerController extends BaseController {
         return resultMap;
     }
 
-    //删除
+    //删除课程
     @RequestMapping(value="deleteCourseManagerById",method=RequestMethod.POST)
     @ResponseBody
     public Map<String,Object> deleteCourseManagerById(String ids){
@@ -80,25 +78,22 @@ public class CourseManagerController extends BaseController {
     }
 
 
-    //章节管理
-    //列表
+    //章节管理 列表
     @RequestMapping(value="chapterManager_index",method = RequestMethod.GET)
     public ModelAndView chapterManagerIndex(Integer course_type_id){
         return new ModelAndView("exam/backend/chapter_manager","course_type_id",course_type_id);
     }
 
-    //列表 _table
+    //章节管理 datatable json返回数据
     @RequestMapping(value="chapterManager_index",method = RequestMethod.POST)
     @ResponseBody
-    public String chapterManagerIndex(ModelMap map,Integer course_type_id){
-
+    public Map<String,Object> chapterManagerIndex_Table(Integer course_type_id){
         List<QChapter> allArticleCategory = chapterManagerService.findAll_TableByType(course_type_id);
-        map.put("data",allArticleCategory);
-        String jsonString = JSON.toJSONString(map);
-        return jsonString;
+        resultMap.put("data",allArticleCategory);
+        return resultMap;
     }
 
-    //添加
+    //添加章节
     @RequestMapping(value="addChapterManager",method=RequestMethod.POST)
     @ResponseBody
     public Map<String,Object> addChapterManager(QChapter model){
@@ -114,7 +109,7 @@ public class CourseManagerController extends BaseController {
         return resultMap;
     }
 
-    //删除
+    //删除章节
     @RequestMapping(value="deleteChapterManagerById",method=RequestMethod.POST)
     @ResponseBody
     public Map<String,Object> deleteChapterManagerById(String ids){

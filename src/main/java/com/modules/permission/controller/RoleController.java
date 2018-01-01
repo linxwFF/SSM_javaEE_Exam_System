@@ -1,6 +1,5 @@
 package com.modules.permission.controller;
 
-import com.alibaba.fastjson.JSON;
 import com.common.controller.BaseController;
 import com.common.model.URole;
 import com.common.utils.LoggerUtils;
@@ -9,7 +8,6 @@ import com.modules.user.manager.UserManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -29,27 +27,20 @@ public class RoleController extends BaseController {
 	 * 角色列表
 	 * @return
 	 */
-
-//	@RequestMapping(value="index")
-//	public ModelAndView index(String findContent,ModelMap modelMap){
-//		modelMap.put("findContent", findContent);
-//		Pagination<URole> role = roleService.findPage(modelMap,pageNo,pageSize);
-//		return new ModelAndView("role/index","page",role);
-//	}
-
 	@RequestMapping(value="index",method = RequestMethod.GET)
 	public ModelAndView index(){
-		return new ModelAndView("role/index2");
+		return new ModelAndView("role/index");
 	}
-
-	//角色列表 数据
+	/**
+	 * 角色列表 dataTables json数据返回
+	 * @return
+     */
 	@RequestMapping(value="index",method = RequestMethod.POST)
 	@ResponseBody
-	public String online_Table(ModelMap map){
+	public Map<String,Object> online_Table(){
 		List<URole> list = roleService.findAllRole();
-		map.put("data",list);
-		String jsonString = JSON.toJSONString(map);
-		return jsonString;
+		resultMap.put("data",list);
+		return resultMap;
 	}
 
 	/**
@@ -87,15 +78,6 @@ public class RoleController extends BaseController {
 
 //		return roleService.deleteRoleById(ids);
 	}
-
-//	/**
-//	 * 我的权限页面
-//	 * @return
-//	 */
-//	@RequestMapping(value="mypermission",method=RequestMethod.GET)
-//	public ModelAndView mypermission(){
-//		return new ModelAndView("permission/mypermission");
-//	}
 
 	/**
 	 * 个人资料-我的权限 bootstrap tree data

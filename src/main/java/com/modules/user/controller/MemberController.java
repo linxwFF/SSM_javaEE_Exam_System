@@ -36,7 +36,7 @@ public class MemberController extends BaseController {
      */
 	@RequestMapping(value="list",method=RequestMethod.GET)
 	public ModelAndView list(){
-		return new ModelAndView("member/list2");
+		return new ModelAndView("member/list");
 	}
 
 	/**
@@ -59,7 +59,7 @@ public class MemberController extends BaseController {
 	@RequestMapping(value="online",method = RequestMethod.GET)
 	public ModelAndView online(){
 		List<UserOnlineBo> list = customSessionManager.getAllUser();
-		return new ModelAndView("member/online2","list",list);
+		return new ModelAndView("member/online","list",list);
 	}
 	/**
 	 * 在线用户列表 dataTables json数据返回
