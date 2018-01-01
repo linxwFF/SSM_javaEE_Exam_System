@@ -98,6 +98,7 @@
     <include refid="Base_Column_List"/>
     FROM
     article_category
+    where parent_id = 0
   </select>
 
 </mapper>

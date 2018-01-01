@@ -1,11 +1,12 @@
 package com.modules.article.controller;
 
-import com.alibaba.fastjson.JSON;
 import com.common.controller.BaseController;
+import com.common.model.Article;
 import com.common.model.ArticleCategory;
-import com.common.model.UPermission;
 import com.common.utils.LoggerUtils;
+import com.modules.article.service.ArticleCategoryManagerService;
 import com.modules.article.service.ArticleManagerService;
+import com.modules.core.shiro.token.manager.TokenManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -26,22 +27,38 @@ import java.util.Map;
 public class ArticleManagerController extends BaseController {
 
     @Autowired
+    private ArticleCategoryManagerService articleCategoryManagerService;
+
+    @Autowired
     private ArticleManagerService articleManagerService;
 
     @RequestMapping(value = "add_article")
-    public ModelAndView index()
+    public ModelAndView index(ModelMap map)
     {
+        //文章分类
+        List<ArticleCategory> allArticleCategory = articleCategoryManagerService.findAll_Table();
+        map.put("article_category",allArticleCategory);
+
         return new ModelAndView("articleManager/add_article");
     }
 
     @RequestMapping(value = "add_article_do")
-    public ModelAndView add_article()
+    @ResponseBody
+    public Map<String,Object> add_article(Article article)
     {
-
-        return new ModelAndView("articleManager/add_article");
+        Map<String,Object> map = new HashMap<>();
+        article.setUserId(TokenManager.getUserId());
+        article.setAnthor(TokenManager.getNickname());
+        try {
+            articleManagerService.insert(article);
+            map.put("status", 200);
+        } catch (Exception e) {
+            map.put("status", 500);
+            map.put("message", "添加失败，请刷新后再试！");
+            LoggerUtils.fmtError(getClass(), e, "添加文章错误。source[%s]", articleManagerService.toString());
+        }
+        return map;
     }
-
-
 
 
     //文章分类列表
@@ -53,12 +70,10 @@ public class ArticleManagerController extends BaseController {
     //文章分类列表 _table
     @RequestMapping(value="article_category_manager_index",method = RequestMethod.POST)
     @ResponseBody
-    public String articleCategoryManagerIndexData(ModelMap map){
-
-        List<ArticleCategory> allArticleCategory = articleManagerService.findAll_Table();
-        map.put("data",allArticleCategory);
-        String jsonString = JSON.toJSONString(map);
-        return jsonString;
+    public Map<String,Object> articleCategoryManagerIndexData(){
+        List<ArticleCategory> allArticleCategory = articleCategoryManagerService.findAll_Table();
+        resultMap.put("data",allArticleCategory);
+        return resultMap;
     }
 
     //添加文章分类
@@ -66,7 +81,7 @@ public class ArticleManagerController extends BaseController {
     @ResponseBody
     public Map<String,Object> addArticleCategory(ArticleCategory articleCategory){
         try {
-            int count = articleManagerService.insert(articleCategory);
+            int count = articleCategoryManagerService.insert(articleCategory);
             resultMap.put("status", 200);
             resultMap.put("successCount", count);
         } catch (Exception e) {
@@ -88,7 +103,7 @@ public class ArticleManagerController extends BaseController {
         resultMap.put("message","删除成功了");
 //        return resultMap;
 
-		return articleManagerService.delete(ids);
+		return articleCategoryManagerService.delete(ids);
     }
 
 }

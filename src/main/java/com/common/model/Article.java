@@ -5,7 +5,7 @@ import java.util.Date;
 public class Article {
     private Integer id;
 
-    private Integer userId;
+    private Long userId;
 
     private String title;
 
@@ -29,7 +29,7 @@ public class Article {
 
     private String content;
 
-    public Article(Integer id, Integer userId, String title, String anthor, Integer typeId, String loadurl, Integer tag, String decoration, Integer state, Date updateTime, Date createTime, Date deleteTime, String content) {
+    public Article(Integer id, Long userId, String title, String anthor, Integer typeId, String loadurl, Integer tag, String decoration, Integer state, Date updateTime, Date createTime, Date deleteTime, String content) {
         this.id = id;
         this.userId = userId;
         this.title = title;
@@ -57,11 +57,11 @@ public class Article {
         this.id = id;
     }
 
-    public Integer getUserId() {
+    public Long getUserId() {
         return userId;
     }
 
-    public void setUserId(Integer userId) {
+    public void setUserId(Long userId) {
         this.userId = userId;
     }
 

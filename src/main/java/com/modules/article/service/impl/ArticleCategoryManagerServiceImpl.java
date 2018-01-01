@@ -1,11 +1,9 @@
 package com.modules.article.service.impl;
 
 import com.common.dao.ArticleCategoryMapper;
-import com.common.dao.ArticleMapper;
-import com.common.model.Article;
 import com.common.model.ArticleCategory;
 import com.common.utils.LoggerUtils;
-import com.modules.article.service.ArticleManagerService;
+import com.modules.article.service.ArticleCategoryManagerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,21 +12,22 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Created by LINxwFF on 2018/1/1.
+ * Created by LINxwFF on 2017/12/26.
  */
 @Service
-public class ArticleManagerServiceImpl implements ArticleManagerService {
+public class ArticleCategoryManagerServiceImpl implements ArticleCategoryManagerService {
+
     @Autowired
-    private ArticleMapper articleMapper;
+    private ArticleCategoryMapper articleCategoryMapper;
 
     @Override
     public List<ArticleCategory> findAll_Table() {
-        return articleMapper.findAll_Table();
+        return articleCategoryMapper.findAll_Table();
     }
 
     @Override
-    public int insert(Article article) {
-        return articleMapper.insertSelective(article);
+    public int insert(ArticleCategory articleCategory) {
+        return articleCategoryMapper.insertSelective(articleCategory);
     }
 
     @Override
@@ -67,6 +66,6 @@ public class ArticleManagerServiceImpl implements ArticleManagerService {
 
     @Override
     public int deleteByPrimaryKey(int id) {
-        return articleMapper.deleteByPrimaryKey(id);
+        return articleCategoryMapper.deleteByPrimaryKey(id);
     }
 }
