@@ -23,4 +23,7 @@ public interface ArticleMapper {
 
     //获取所有的文章列表
     List<ArticleListVo> findAll_Table();
+
+    //根据类别查询出新闻信息
+    List<ArticleListVo> findAllByType(Integer type);
 }

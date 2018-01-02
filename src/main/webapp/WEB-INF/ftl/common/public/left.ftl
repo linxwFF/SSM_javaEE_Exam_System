@@ -42,11 +42,16 @@
                 </ul>
             </li>
 
+        <li ><a><i class="fa fa-comments"></i> 消息中心 <span class="fa fa-chevron-down"></span></a>
+            <ul class="nav child_menu"  >
+                <li><a href="${basePath}/articleManager/beforeEndArticleList.shtml">考试动态</a></li>
+            </ul>
+        </li>
+
     <@shiro.hasAnyRoles name='888888,100004'>
     <#--拥有 角色888888（管理员） ||  100004（文章管理）-->
         <li ><a><i class="fa fa-clipboard"></i> 文章管理 <span class="fa fa-chevron-down"></span></a>
             <ul class="nav child_menu"  >
-                <li><a href="${basePath}/articleManager/add_article.shtml">添加文章</a></li>
                 <li><a href="${basePath}/articleManager/article_manager_index.shtml">文章管理</a></li>
                 <li><a href="${basePath}/articleManager/article_category_manager_index.shtml">文章分类管理</a></li>
             </ul>

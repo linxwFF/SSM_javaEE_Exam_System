@@ -212,4 +212,55 @@
     left JOIN article_category as b on a.type_id = b.id
     where a.delete_time = '0000-00-00 00:00:00'
   </select>
+
+  <select id="findAllByType" resultType="com.modules.article.bo.ArticleListVo" parameterType="java.lang.Integer">
+    SELECT
+    a.id, a.user_id as userId, a.title, a.anthor, a.type_id as typeId, a.loadURL, a.tag, a.decoration, a.state,
+    a.update_time as updateTime, a.create_time as createTime,content
+    ,b.name as articleCategoryName
+    FROM
+    article as a
+    left JOIN article_category as b on a.type_id = b.id
+    where a.delete_time = '0000-00-00 00:00:00'
+    and type_id = #{type}
+  </select>
+
+  <!--分页-->
+  <sql id="limit_sql">
+    <if test="page_sql != null and page_sql != ''">
+      ${page_sql}
+    </if>
+  </sql>
+
+  <sql id="where_all">
+    <where>
+      <if test="findContent != null and findContent !='' ">
+        and (
+        LOWER(a.title) like  LOWER(CONCAT("%",#{findContent,jdbcType=VARCHAR},"%"))
+        )
+      </if>
+      and a.delete_time = '0000-00-00 00:00:00'
+      <if test="type != null and type !=''">
+        and a.type_id = #{type}
+      </if>
+    </where>
+  </sql>
+
+  <select id="findAll" resultType="com.modules.article.bo.ArticleListVo">
+    SELECT
+    a.id, a.user_id as userId, a.title, a.anthor, a.type_id as typeId, a.loadURL, a.tag, a.decoration, a.state,
+    a.update_time as updateTime, a.create_time as createTime,content
+    ,b.name as articleCategoryName
+    FROM
+    article as a
+    left JOIN article_category as b on a.type_id = b.id
+    <include refid="where_all" />
+    <include refid="limit_sql" />
+  </select>
+
+  <select id="findCount" resultMap="BaseResultMap">
+    select count(a.id) from  article as a
+    left JOIN article_category as b on a.type_id = b.id
+    <include refid="where_all" />
+  </select>
 </mapper>

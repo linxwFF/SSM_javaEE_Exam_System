@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50711
 File Encoding         : 65001
 
-Date: 2018-01-01 19:03:54
+Date: 2018-01-02 18:06:55
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -21,7 +21,7 @@ SET FOREIGN_KEY_CHECKS=0;
 DROP TABLE IF EXISTS `article`;
 CREATE TABLE `article` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `user_id` int(11) DEFAULT NULL,
+  `user_id` bigint(11) DEFAULT NULL,
   `title` varchar(255) DEFAULT NULL,
   `anthor` varchar(255) DEFAULT NULL,
   `type_id` int(11) DEFAULT NULL,
@@ -34,11 +34,13 @@ CREATE TABLE `article` (
   `create_time` timestamp NULL DEFAULT '0000-00-00 00:00:00' COMMENT '创建时间',
   `delete_time` timestamp NULL DEFAULT '0000-00-00 00:00:00' COMMENT '删除时间',
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=15 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of article
 -- ----------------------------
+INSERT INTO `article` VALUES ('13', '1', '死阿胖穿花衣', '我是大帅哥2', '2', 'http://www.baidu.com', null, '死阿胖穿花衣死阿胖穿花衣死阿胖穿花衣死阿胖穿花衣死阿胖穿花衣', '1', '<p>死阿胖穿花衣死阿胖穿花衣死阿<strong>胖穿花衣死阿胖穿花衣死阿胖穿花衣</strong></p>', '2018-01-02 18:03:53', '2018-01-02 09:50:31', '0000-00-00 00:00:00');
+INSERT INTO `article` VALUES ('14', '1', '1231231', '我是大帅哥2', '2', 'http://www.baidu.com', null, '123123123', '1', '<p>1231231231</p>', '2018-01-02 18:03:52', '2018-01-02 11:13:36', '0000-00-00 00:00:00');
 
 -- ----------------------------
 -- Table structure for article_category
@@ -271,7 +273,6 @@ INSERT INTO `q_course` VALUES ('1', '0', '会计从业资格', '1', '1', '0', '0
 INSERT INTO `q_course` VALUES ('2', '1', '财经法规与会计职业道德', '1', '1', '1', '0000-00-00 00:00:00', '2017-12-16 22:08:32', null);
 INSERT INTO `q_course` VALUES ('3', '1', '会计电算化', '2', '1', '2', '0000-00-00 00:00:00', '2017-12-16 22:08:35', null);
 INSERT INTO `q_course` VALUES ('4', '1', '会计基础', '3', '1', '3', '0000-00-00 00:00:00', '2017-12-16 22:08:37', null);
-INSERT INTO `q_course` VALUES ('7', null, '1231', null, '1', '1', '0000-00-00 00:00:00', null, null);
 
 -- ----------------------------
 -- Table structure for q_questions
@@ -2923,7 +2924,7 @@ CREATE TABLE `u_permission` (
   `url` varchar(256) DEFAULT NULL COMMENT 'url地址',
   `name` varchar(64) DEFAULT NULL COMMENT 'url描述',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=31 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=37 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of u_permission
@@ -2944,15 +2945,20 @@ INSERT INTO `u_permission` VALUES ('17', '/role/addRole.shtml', '角色列表添
 INSERT INTO `u_permission` VALUES ('18', '/role/index.shtml', '角色列表');
 INSERT INTO `u_permission` VALUES ('19', '/permission/allocation.shtml', '权限分配列表');
 INSERT INTO `u_permission` VALUES ('20', '/role/allocation.shtml', '角色分配');
-INSERT INTO `u_permission` VALUES ('21', '/articleManager/addArticleCategory.shtml', '添加文章分类');
-INSERT INTO `u_permission` VALUES ('22', '/articleManager/deleteArticleCategoryById.shtml', '删除文章分类');
-INSERT INTO `u_permission` VALUES ('23', '/articleManager/article_category_manager_index.shtml', '文章分类列表');
+INSERT INTO `u_permission` VALUES ('21', '/articleManager/addArticleCategory.shtml', '文章分类管理_添加文章分类');
+INSERT INTO `u_permission` VALUES ('22', '/articleManager/deleteArticleCategoryById.shtml', '文章分类管理_删除文章分类');
+INSERT INTO `u_permission` VALUES ('23', '/articleManager/article_category_manager_index.shtml', '文章分类管理_列表');
 INSERT INTO `u_permission` VALUES ('24', '/courseManager/courseManager_index.shtml', '考试课程信息管理-列表');
 INSERT INTO `u_permission` VALUES ('25', '/courseManager/addCourseManager.shtml', '考试课程信息管理-添加');
 INSERT INTO `u_permission` VALUES ('26', '/courseManager/deleteCourseManagerById.shtml', '考试课程信息管理-删除');
 INSERT INTO `u_permission` VALUES ('27', '/courseManager/chapterManager_index.shtml', '课程章节管理_table');
 INSERT INTO `u_permission` VALUES ('28', '/courseManager/addChapterManager.shtml', '课程章节管理_添加');
 INSERT INTO `u_permission` VALUES ('29', '/courseManager/deleteChapterManagerById.shtml', '课程章节管理_删除');
+INSERT INTO `u_permission` VALUES ('32', '/articleManager/add_article.shtml', '文章管理_添加文章');
+INSERT INTO `u_permission` VALUES ('33', '/articleManager/add_article_do.shtml', '文章管理_添加文章提交');
+INSERT INTO `u_permission` VALUES ('34', '/articleManager/article_manager_index.shtml', '文章管理_列表');
+INSERT INTO `u_permission` VALUES ('35', '/articleManager/deleteArticleById.shtml', '文章管理_删除文章');
+INSERT INTO `u_permission` VALUES ('36', '/articleManager/ChangeStateById.shtml', '文章管理_改变文章发布状态');
 
 -- ----------------------------
 -- Table structure for u_role
@@ -2963,7 +2969,7 @@ CREATE TABLE `u_role` (
   `name` varchar(32) DEFAULT NULL COMMENT '角色名称',
   `type` varchar(10) DEFAULT NULL COMMENT '角色类型',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of u_role
@@ -2971,6 +2977,8 @@ CREATE TABLE `u_role` (
 INSERT INTO `u_role` VALUES ('1', '系统管理员', '888888');
 INSERT INTO `u_role` VALUES ('3', '权限角色', '100003');
 INSERT INTO `u_role` VALUES ('4', '用户中心', '100002');
+INSERT INTO `u_role` VALUES ('5', '文章管理', '100004');
+INSERT INTO `u_role` VALUES ('6', '考试相关管理中心', '100005');
 
 -- ----------------------------
 -- Table structure for u_role_permission
@@ -3020,6 +3028,27 @@ INSERT INTO `u_role_permission` VALUES ('1', '27');
 INSERT INTO `u_role_permission` VALUES ('1', '28');
 INSERT INTO `u_role_permission` VALUES ('1', '29');
 INSERT INTO `u_role_permission` VALUES ('1', '30');
+INSERT INTO `u_role_permission` VALUES ('1', '30');
+INSERT INTO `u_role_permission` VALUES ('1', '31');
+INSERT INTO `u_role_permission` VALUES ('1', '32');
+INSERT INTO `u_role_permission` VALUES ('1', '33');
+INSERT INTO `u_role_permission` VALUES ('1', '34');
+INSERT INTO `u_role_permission` VALUES ('1', '35');
+INSERT INTO `u_role_permission` VALUES ('1', '36');
+INSERT INTO `u_role_permission` VALUES ('6', '24');
+INSERT INTO `u_role_permission` VALUES ('6', '25');
+INSERT INTO `u_role_permission` VALUES ('6', '26');
+INSERT INTO `u_role_permission` VALUES ('6', '27');
+INSERT INTO `u_role_permission` VALUES ('6', '28');
+INSERT INTO `u_role_permission` VALUES ('6', '29');
+INSERT INTO `u_role_permission` VALUES ('5', '21');
+INSERT INTO `u_role_permission` VALUES ('5', '22');
+INSERT INTO `u_role_permission` VALUES ('5', '23');
+INSERT INTO `u_role_permission` VALUES ('5', '32');
+INSERT INTO `u_role_permission` VALUES ('5', '33');
+INSERT INTO `u_role_permission` VALUES ('5', '34');
+INSERT INTO `u_role_permission` VALUES ('5', '35');
+INSERT INTO `u_role_permission` VALUES ('5', '36');
 
 -- ----------------------------
 -- Table structure for u_user
@@ -3047,7 +3076,7 @@ CREATE TABLE `u_user` (
 -- ----------------------------
 -- Records of u_user
 -- ----------------------------
-INSERT INTO `u_user` VALUES ('1', '我是大帅哥2', 'admin', '57dd03ed397eabaeaa395eb740b770fd', '1', '123', '123', '1111111', '350322199312031531', '布鲁斯·维恩', '11', '13774545206', '2017-12-31 01:13:26', '2016-06-16 11:15:33', '2017-12-31 01:13:26');
+INSERT INTO `u_user` VALUES ('1', '系统管理员', 'admin', '57dd03ed397eabaeaa395eb740b770fd', '1', '123', '123', '1111111', '350322199312031531', '布鲁斯·维恩', '11', '13774545206', '2018-01-02 17:58:12', '2016-06-16 11:15:33', '2018-01-02 17:58:12');
 INSERT INTO `u_user` VALUES ('11', 'soso', '8446666@qq.com', 'd57ffbe486910dd5b26d0167d034f9ad', '0', null, null, null, null, null, null, null, '0000-00-00 00:00:00', '2016-05-26 20:50:54', '2016-06-16 11:24:35');
 INSERT INTO `u_user` VALUES ('12', '8446666', '8446666', '4afdc875a67a55528c224ce088be2ab8', '1', null, null, null, null, null, null, null, '0000-00-00 00:00:00', '2016-05-27 22:34:19', '2016-06-15 17:03:16');
 INSERT INTO `u_user` VALUES ('13', '121212', '212', '4afdc875a67a55528c224ce088be2ab8', '1', null, null, null, null, null, null, null, '0000-00-00 00:00:00', '2016-05-27 22:34:19', '2016-06-15 17:03:16');
@@ -3066,7 +3095,7 @@ INSERT INTO `u_user` VALUES ('25', 'gweg', '1231231', '4afdc875a67a55528c224ce08
 INSERT INTO `u_user` VALUES ('26', 'admin123', 'admin@admin.com', '904739ac025247bfe15c990e6ec190d1', '1', null, null, null, null, null, null, null, '0000-00-00 00:00:00', '2017-12-06 09:01:30', '2017-12-06 09:01:30');
 INSERT INTO `u_user` VALUES ('27', 'test', 'test@test.com', '9bc1c9830b6f3c37e9ebdb819887fd70', '0', null, null, null, null, null, null, null, '0000-00-00 00:00:00', '2017-12-06 21:48:28', '2017-12-06 21:48:49');
 INSERT INTO `u_user` VALUES ('28', 'admin11', 'admin11', '2884fd0a6880f2dc01cf36dfec438b0f', '1', null, null, null, null, null, null, null, '2017-12-07 19:08:42', '2017-12-07 19:08:42', '2017-12-07 19:08:42');
-INSERT INTO `u_user` VALUES ('29', 'test', 'test', '76122e23133a3f54ef9292d6be9d6e71', '1', null, null, null, null, null, null, null, '2017-12-19 15:07:14', '2017-12-15 16:14:41', '2017-12-19 15:07:14');
+INSERT INTO `u_user` VALUES ('29', 'test', 'test', '76122e23133a3f54ef9292d6be9d6e71', '1', null, null, null, null, null, null, null, '2018-01-02 17:38:23', '2017-12-15 16:14:41', '2018-01-02 17:38:23');
 INSERT INTO `u_user` VALUES ('30', '1312', '1231231212', 'a71b8a20182f14112b849e13b256419c', '1', null, null, null, null, null, null, null, '2017-12-31 00:15:49', '2017-12-31 00:15:49', '2017-12-31 00:15:49');
 
 -- ----------------------------

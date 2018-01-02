@@ -85,6 +85,10 @@
                             <input type="hidden" name="hasFor" value="1">
                         </@shiro.hasPermission>
 
+                        <@shiro.hasPermission name="/articleManager/add_article.shtml">
+                            <a href="${basePath}/articleManager/add_article.shtml"><button type="button" class="btn btn-success">新增文章</button></a>
+                        </@shiro.hasPermission>
+
                             <table id="table" class="table table-hover table-bordered table-condensed " cellspacing="0" width="100%">
                                 <thead>
                                 <tr>

@@ -2,12 +2,15 @@ package com.modules.article.service.impl;
 
 import com.common.dao.ArticleCategoryMapper;
 import com.common.dao.ArticleMapper;
+import com.common.dao.QCourseMapper;
 import com.common.model.Article;
 import com.common.model.ArticleCategory;
 import com.common.model.UUser;
 import com.common.utils.LoggerUtils;
 import com.modules.article.bo.ArticleListVo;
 import com.modules.article.service.ArticleManagerService;
+import com.modules.core.mybatis.BaseMybatisDao;
+import com.modules.core.mybatis.page.Pagination;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -19,7 +22,7 @@ import java.util.Map;
  * Created by LINxwFF on 2018/1/1.
  */
 @Service
-public class ArticleManagerServiceImpl implements ArticleManagerService {
+public class ArticleManagerServiceImpl extends BaseMybatisDao<ArticleMapper> implements ArticleManagerService {
     @Autowired
     private ArticleMapper articleMapper;
 
@@ -86,5 +89,15 @@ public class ArticleManagerServiceImpl implements ArticleManagerService {
             LoggerUtils.fmtError(getClass(), "改变文章的发布状态失败，id[%s],status[%s]", id,status);
         }
         return resultMap;
+    }
+
+    @Override
+    public List<ArticleListVo> findAllByType(Integer type) {
+        return articleMapper.findAllByType(type);
+    }
+
+    @Override
+    public Pagination<ArticleMapper> findByPage(Map<String, Object> resultMap, Integer pageNo, Integer pageSize) {
+        return super.findPage(resultMap, pageNo, pageSize);
     }
 }
