@@ -5,6 +5,7 @@ import com.common.dao.ArticleMapper;
 import com.common.model.Article;
 import com.common.model.ArticleCategory;
 import com.common.utils.LoggerUtils;
+import com.modules.article.bo.ArticleListVo;
 import com.modules.article.service.ArticleManagerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -22,7 +23,7 @@ public class ArticleManagerServiceImpl implements ArticleManagerService {
     private ArticleMapper articleMapper;
 
     @Override
-    public List<ArticleCategory> findAll_Table() {
+    public List<ArticleListVo> findAll_Table() {
         return articleMapper.findAll_Table();
     }
 

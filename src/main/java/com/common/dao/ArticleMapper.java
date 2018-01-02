@@ -2,6 +2,7 @@ package com.common.dao;
 
 import com.common.model.Article;
 import com.common.model.ArticleCategory;
+import com.modules.article.bo.ArticleListVo;
 
 import java.util.List;
 
@@ -21,5 +22,5 @@ public interface ArticleMapper {
     int updateByPrimaryKey(Article record);
 
     //获取所有的文章列表
-    List<ArticleCategory> findAll_Table();
+    List<ArticleListVo> findAll_Table();
 }

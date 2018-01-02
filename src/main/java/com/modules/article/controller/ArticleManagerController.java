@@ -4,6 +4,7 @@ import com.common.controller.BaseController;
 import com.common.model.Article;
 import com.common.model.ArticleCategory;
 import com.common.utils.LoggerUtils;
+import com.modules.article.bo.ArticleListVo;
 import com.modules.article.service.ArticleCategoryManagerService;
 import com.modules.article.service.ArticleManagerService;
 import com.modules.core.shiro.token.manager.TokenManager;
@@ -61,6 +62,45 @@ public class ArticleManagerController extends BaseController {
     }
 
 
+    //文章列表
+    @RequestMapping(value="article_manager_index",method = RequestMethod.GET)
+    public ModelAndView articleManagerIndex(){
+        return new ModelAndView("articleManager/article_manager_index");
+    }
+
+    //文章列表 datatable json返回数据
+    @RequestMapping(value="article_manager_index",method = RequestMethod.POST)
+    @ResponseBody
+    public Map<String,Object> articleManagerIndexData(){
+        List<ArticleListVo> articleList = articleManagerService.findAll_Table();
+        resultMap.put("data",articleList);
+        return resultMap;
+    }
+
+    //删除文章
+    @RequestMapping(value="deleteArticleById",method=RequestMethod.POST)
+    @ResponseBody
+    public Map<String,Object> deleteArticleById(String ids){
+
+        Map<String,Object> resultMap = new HashMap<String,Object>();
+        resultMap.put("status", 200);
+        resultMap.put("count", 1);
+        resultMap.put("message","删除成功了");
+//        return resultMap;
+
+        return articleManagerService.delete(ids);
+    }
+
+    //改变文章发布状态
+    @RequestMapping(value="ChangeStateById",method=RequestMethod.POST)
+    @ResponseBody
+    public Map<String,Object> ChangeStateById(Long id,Long status){
+        return null;
+//        return userService.updateForbidUserById(id,status);
+    }
+
+
+
     //文章分类列表
     @RequestMapping(value="article_category_manager_index",method = RequestMethod.GET)
     public ModelAndView articleCategoryManagerIndex(){
@@ -101,9 +141,9 @@ public class ArticleManagerController extends BaseController {
         resultMap.put("status", 200);
         resultMap.put("count", 1);
         resultMap.put("message","删除成功了");
-//        return resultMap;
+        return resultMap;
 
-		return articleCategoryManagerService.delete(ids);
+//		return articleCategoryManagerService.delete(ids);
     }
 
 }

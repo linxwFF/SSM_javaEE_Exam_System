@@ -2,6 +2,7 @@ package com.modules.article.service;
 
 import com.common.model.Article;
 import com.common.model.ArticleCategory;
+import com.modules.article.bo.ArticleListVo;
 
 import java.util.List;
 import java.util.Map;
@@ -12,7 +13,7 @@ import java.util.Map;
 public interface ArticleManagerService {
 
     //获取所有的文章
-    List<ArticleCategory> findAll_Table();
+    List<ArticleListVo> findAll_Table();
 
     //添加文章
     int insert(Article article);

@@ -212,7 +212,7 @@
                 return layer.msg(result.message);
             }
             layer.msg('添加成功。');
-            <#--window.location.href= "${basePath}/";-->
+            window.location.href= "${basePath}/articleManager/article_manager_index.shtml";
 
         },'json');
     }

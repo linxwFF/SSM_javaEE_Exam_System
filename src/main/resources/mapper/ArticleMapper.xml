@@ -202,10 +202,14 @@
     where id = #{id,jdbcType=INTEGER}
   </update>
 
-  <select id="findAll_Table" resultMap="BaseResultMap">
+  <select id="findAll_Table" resultType="com.modules.article.bo.ArticleListVo">
     SELECT
-    <include refid="Base_Column_List"/>
+    a.id, a.user_id as userId, a.title, a.anthor, a.type_id as typeId, a.loadURL, a.tag, a.decoration, a.state,
+    a.update_time as updateTime, a.create_time as createTime,content
+    ,b.name as articleCategoryName
     FROM
-    article
+    article as a
+    left JOIN article_category as b on a.type_id = b.id
+    where a.delete_time = '0000-00-00 00:00:00'
   </select>
 </mapper>
