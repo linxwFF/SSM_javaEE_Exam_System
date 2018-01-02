@@ -94,10 +94,11 @@ public class ArticleManagerController extends BaseController {
     //改变文章发布状态
     @RequestMapping(value="ChangeStateById",method=RequestMethod.POST)
     @ResponseBody
-    public Map<String,Object> ChangeStateById(Long id,Long status){
-        return null;
-//        return userService.updateForbidUserById(id,status);
+    public Map<String,Object> ChangeStateById(Integer id,Integer status){
+        return articleManagerService.updateChangeStateById(id,status);
     }
+
+    //TODO 文章前端页面展示
 
 
 

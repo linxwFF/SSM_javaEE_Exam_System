@@ -14,20 +14,20 @@ function ChangeStateById(status,id){
                 var forItem = $("#forItem_"+id);
 
                 if(text=="已发布"){
-                    forItem.text("待发布");
+                    forItem.text("已发布");
 
                     var text1 = "javascript:ChangeStateById(0,"+id+")";
                     forItem.attr("href",text1);
 
-                    forItem.removeClass("btn-success");
-                    forItem.addClass("btn-warning");
+                    forItem.removeClass("btn-warning");
+                    forItem.addClass("btn-success");
                 }else{
-                    forItem.text("已发布");
+                    forItem.text("待发布");
 
                     var text1 = "javascript:ChangeStateById(1,"+id+")";
                     forItem.attr("href",text1);
-                    forItem.removeClass("btn-warning");
-                    forItem.addClass("btn-success");
+                    forItem.removeClass("btn-success");
+                    forItem.addClass("btn-warning");
                 }
 
             }
@@ -58,6 +58,7 @@ function ChangeStateById(status,id){
             // "bAutoWidth" : true, //自适应宽度
             // "ordering" : false, //全局禁用排序
             // "bStateSave" : false, //保持状态
+            'order' : [5,'desc'],   //默认排序
 
             // ajax请求
             "ajax": {
@@ -88,13 +89,13 @@ function ChangeStateById(status,id){
                 "render": function(data, type, full) {
 
                     var html_status = "";
-                    var status = data.status == 1 ? 0 : 1;
-                    var status_text = data.status == 1 ? '已发布' : '待发布';
-                    var status_class = data.status == 1 ? 'btn-success' : 'btn-warning';
+                    var status = data ? 0 : 1;
+                    var status_text = data == 1 ? '已发布' : '待发布';
+                    var status_class = data == 1 ? 'btn-success' : 'btn-warning';
 
                     if($("input[name='hasFor']").length > 0 && $("input[name='hasFor']").length)
                     {
-                        html_status += '<a id="forItem_'+full.id+'" type="button" class="forbid btn '+status_class+' btn-sm" href="javascript:ChangeStateById('+status+','+full.id+')">'+status_text+'</a>';
+                        html_status += '<a id="forItem_'+full.id+'" type="button" class="btn '+status_class+' btn-sm" href="javascript:ChangeStateById('+status+','+full.id+')">'+status_text+'</a>';
                     }
 
                     return html_status;

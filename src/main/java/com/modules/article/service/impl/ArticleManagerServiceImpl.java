@@ -4,6 +4,7 @@ import com.common.dao.ArticleCategoryMapper;
 import com.common.dao.ArticleMapper;
 import com.common.model.Article;
 import com.common.model.ArticleCategory;
+import com.common.model.UUser;
 import com.common.utils.LoggerUtils;
 import com.modules.article.bo.ArticleListVo;
 import com.modules.article.service.ArticleManagerService;
@@ -69,5 +70,21 @@ public class ArticleManagerServiceImpl implements ArticleManagerService {
     @Override
     public int deleteByPrimaryKey(int id) {
         return articleMapper.deleteByPrimaryKey(id);
+    }
+
+    @Override
+    public Map<String, Object> updateChangeStateById(Integer id, Integer status) {
+        Map<String,Object> resultMap = new HashMap<String,Object>();
+        try {
+            Article article = articleMapper.selectByPrimaryKey(id);
+            article.setState(status);
+            articleMapper.updateByPrimaryKeySelective(article);
+            resultMap.put("status", 200);
+        } catch (Exception e) {
+            resultMap.put("status", 500);
+            resultMap.put("message", "操作失败，请刷新再试！");
+            LoggerUtils.fmtError(getClass(), "改变文章的发布状态失败，id[%s],status[%s]", id,status);
+        }
+        return resultMap;
     }
 }

@@ -116,10 +116,10 @@
                                     <div class="col-md-9 col-sm-9 col-xs-12">
                                         <div id="gender" class="btn-group" data-toggle="buttons">
                                             <label class="btn btn-default active" data-toggle-class="btn-primary" data-toggle-passive-class="btn-default">
-                                                <input type="radio" name="state" value="1" checked> &nbsp; 发布 &nbsp;
+                                                <input type="radio" name="state" value="0" checked> &nbsp; 发布 &nbsp;
                                             </label>
                                             <label class="btn btn-default" data-toggle-class="btn-primary" data-toggle-passive-class="btn-default">
-                                                <input type="radio" name="state" value="2"> 待发布
+                                                <input type="radio" name="state" value="1"> 待发布
                                             </label>
                                         </div>
                                     </div>

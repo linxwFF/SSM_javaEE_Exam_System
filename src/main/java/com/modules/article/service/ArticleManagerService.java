@@ -23,4 +23,7 @@ public interface ArticleManagerService {
 
     //删除文章
     int deleteByPrimaryKey(int id);
+
+    //改变文章发布状态
+    Map<String, Object> updateChangeStateById(Integer id, Integer status);
 }
