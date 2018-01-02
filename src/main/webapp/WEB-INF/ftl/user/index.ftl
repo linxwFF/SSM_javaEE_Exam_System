@@ -156,7 +156,7 @@
                                                 修改密码-请点击
                                             </td>
                                             <td class="text-center">
-                                                <a href="${basePath}/user/updatePswd2.shtml" style="color: red;"><i class="fa fa-bullseye"></i><b>修改密码</b><a>
+                                                <a href="${basePath}/user/updatePswd.shtml" style="color: red;"><i class="fa fa-bullseye"></i><b>修改密码</b><a>
                                             </td>
                                         </tr>
                                         <tr>

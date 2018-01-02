@@ -85,7 +85,7 @@
                         <@shiro.hasPermission name="/courseManager/addCourseManager.shtml">
                             <span class="section">
                                     <button onclick="$('#add').modal();" type="button" class="btn btn-success">新增课程信息</button>
-                                </span>
+                            </span>
                         </@shiro.hasPermission>
 
                             <table id="table" class="table table-hover table-bordered table-condensed " cellspacing="0" width="100%">

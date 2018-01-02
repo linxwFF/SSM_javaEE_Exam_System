@@ -40,14 +40,5 @@
         </div>
     </div>
 </div>
-<div class="col-md-4">
-    <div class="panel panel-info">
-        <div class="panel-heading"><h4><b class="black">考试提醒</b></h4></div>
-        <div class="panel-body">
-            <div class="content">
-                <p style="font-size: 17px;">请按照我们设置的课程，尽快学习，有不懂的可以通过网页底部QQ给老师留言。祝您考试成功！</p>
-            </div>
-        </div>
-    </div>
-</div>
+
 </#macro>

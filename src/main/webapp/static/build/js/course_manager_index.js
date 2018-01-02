@@ -62,7 +62,7 @@
                 "render": function(data, type, full) {
                     var html = "";
 
-                    html +="<a type='button' class='btn btn-warning btn-sm' href='/courseManager/chapterManager_index.shtml?course_type_id=" + full.id + "'>章节管理</a>";
+                    html +="<a type='button' class='btn btn-warning btn-sm' href='/courseManager/chapterManager_index.shtml?course_type_id=" + full.type + "'>章节管理</a>";
 
                     if($("input[name='hasDel']").length > 0 && $("input[name='hasDel']").length)
                     {

@@ -6,7 +6,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
 
-    <title>登录页</title>
+    <title>登录</title>
     <meta name="keywords" content="">
     <meta name="description" content="">
     <link href="${basePath}/static/assets/css/bootstrap.css" rel="stylesheet">
@@ -42,7 +42,7 @@
                     <li><i class="fa fa-arrow-circle-o-right m-r-xs"></i> 优势五 <p><b>随机组卷：</b>模拟机考随机精选试题组卷，含金量高，直击考试</p></li>
                 </ul>
                 <strong>还没有账号？ <a href="#" id="register">立即注册&raquo;</a></strong><br />
-                <strong>试用账号获取 <a href="#" >立即获取&raquo;</a></strong>
+                <#--<strong>试用账号获取 <a href="#" >立即获取&raquo;</a></strong>-->
             </div>
         </div>
 
@@ -56,8 +56,8 @@
             <form id="_form" action="" method="post">
                 <h4 class="no-margins">登录：</h4>
                 <p class="m-t-md">登录模拟考试系统</p>
-                <input type="text" id="username" class="form-control uname" placeholder="Account" value="" name="account" />
-                <input type="password" id="password" class="form-control pword m-b" placeholder="Password" value="" name="password" />
+                <input type="text" id="username" class="form-control uname" placeholder="帐号" value="" name="account" />
+                <input type="password" id="password" class="form-control pword m-b" placeholder="密码" value="" name="password" />
                 <label><input type="checkbox" checked="checked"  id="rememberMe"style="width: 10px; height: 10px;">记住我</label>
                 <a href="#">忘记密码了？</a>
             </form>
@@ -67,7 +67,7 @@
     </div>
     <div class="signup-footer">
         <div class="pull-left">
-            &copy; 2016 woaixuexi.site
+            &copy; 2018 woaixuexi.site
         </div>
     </div>
 </div>

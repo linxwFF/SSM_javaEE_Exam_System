@@ -108,7 +108,7 @@ public class ArticleManagerController extends BaseController {
         return new ModelAndView("articleManager/article_category_manager_index");
     }
 
-    //文章分类列表 _table
+    //文章分类列表 datatable json返回数据
     @RequestMapping(value="article_category_manager_index",method = RequestMethod.POST)
     @ResponseBody
     public Map<String,Object> articleCategoryManagerIndexData(){

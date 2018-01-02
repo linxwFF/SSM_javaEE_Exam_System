@@ -6,7 +6,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
 
-    <title>注册页面</title>
+    <title>注册</title>
     <meta name="keywords" content="">
     <meta name="description" content="">
     <link href="${basePath}/static/assets/css/bootstrap.css" rel="stylesheet">
@@ -63,16 +63,16 @@
             </form>
 
             <div class="col-sm-6">
-                <button class="btn btn-success btn-block" id="register">Register</button>
+                <button class="btn btn-success btn-block" id="register">注册</button>
             </div>
             <div class="col-sm-6">
-                <button class="btn btn-danger btn-block" id="login" >Login</button>
+                <button class="btn btn-danger btn-block" id="login" >登录</button>
             </div>
         </div>
     </div>
     <div class="signup-footer">
         <div class="pull-left">
-            &copy; 2016 woaixuexi.site
+            &copy; 2018 woaixuexi.site
         </div>
     </div>
 </div>
@@ -135,7 +135,7 @@
 
         //跳转 登录
         $("#login").click(function(){
-            window.location.href="login.shtml";
+            window.location.href="${basePath}/u/login.shtml";
         });
         //跳转 注册
         // $("#register").click(function(){
