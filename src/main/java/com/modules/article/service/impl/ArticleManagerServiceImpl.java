@@ -9,6 +9,7 @@ import com.common.model.UUser;
 import com.common.utils.LoggerUtils;
 import com.modules.article.bo.ArticleListVo;
 import com.modules.article.service.ArticleManagerService;
+import com.modules.article.utils.ArticleMybatisDao;
 import com.modules.core.mybatis.BaseMybatisDao;
 import com.modules.core.mybatis.page.Pagination;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,7 +23,7 @@ import java.util.Map;
  * Created by LINxwFF on 2018/1/1.
  */
 @Service
-public class ArticleManagerServiceImpl extends BaseMybatisDao<ArticleMapper> implements ArticleManagerService {
+public class ArticleManagerServiceImpl extends ArticleMybatisDao<ArticleMapper> implements ArticleManagerService {
     @Autowired
     private ArticleMapper articleMapper;
 

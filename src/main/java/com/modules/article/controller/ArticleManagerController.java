@@ -65,8 +65,8 @@ public class ArticleManagerController extends BaseController {
     }
 
     //文章前端列表 根据分类
-    @RequestMapping(value="beforeEndArticleList",method = RequestMethod.GET)
-    public ModelAndView beforeEndArticleList(ModelMap map, Integer pageNo, String findContent,Integer type){
+    @RequestMapping(value="beforeEndArticleList")
+    public ModelAndView beforeEndArticleList(ModelMap map, Integer pageNo,Integer type){
 
 //        //通知消息
 //        List<ArticleListVo> info_type1 = articleManagerService.findAllByType(1);
@@ -78,24 +78,16 @@ public class ArticleManagerController extends BaseController {
 //        map.put("type1",info_type1);
 //        map.put("type2",info_type2);
 //        map.put("type3",info_type3);
-
         //分页，列表
-        map.put("findContent", findContent);
-        map.put("type",1);
-        Pagination<ArticleMapper> page_type1 = articleManagerService.findByPage(map,pageNo,pageSize);
-        map.put("page_type1", page_type1);
-
-
-        map.put("findContent", findContent);
-        map.put("type",2);
-        Pagination<ArticleMapper> page_type2 = articleManagerService.findByPage(map,pageNo,pageSize);
-        map.put("page_type2", page_type2);
-
-
-        map.put("findContent", findContent);
-        map.put("type",3);
-        Pagination<ArticleMapper> page_type3 = articleManagerService.findByPage(map,pageNo,pageSize);
-        map.put("page_type3", page_type3);
+        if(type == null || type == 1){
+            map.put("type",1);
+            Pagination<ArticleMapper> page = articleManagerService.findByPage(map,pageNo,pageSize);
+            map.put("page", page);
+        }else{
+            map.put("type",type);
+            Pagination<ArticleMapper> page = articleManagerService.findByPage(map,pageNo,pageSize);
+            map.put("page", page);
+        }
 
         return new ModelAndView("articleManager/beforeEnd/beforeEndArticleList");
     }

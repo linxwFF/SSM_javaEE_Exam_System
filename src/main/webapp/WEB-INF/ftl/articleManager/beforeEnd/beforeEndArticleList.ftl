@@ -76,29 +76,62 @@
 
                             <div class="" role="tabpanel" data-example-id="togglable-tabs">
                                 <ul id="myTab" class="nav nav-tabs bar_tabs" role="tablist">
-                                    <li role="presentation" class="active"><a href="#tab_content1" id="home-tab" role="tab" data-toggle="tab" aria-expanded="true">消息通知</a>
+
+                                    <li role="presentation" class="<#if type==1>active</#if>">
+                                        <a href="#tab_content1" <#if type!=1>onclick="_subType(1)"</#if> id="home-tab" role="tab" data-toggle="tab" aria-expanded="true">消息通知</a>
                                     </li>
-                                    <li role="presentation" class=""><a href="#tab_content2" role="tab" id="profile-tab" data-toggle="tab" aria-expanded="false">考试动态</a>
+                                    <li role="presentation" class="<#if type==2>active</#if>">
+                                        <a href="#tab_content2" <#if type!=2>onclick="_subType(2)"</#if>  role="tab" id="profile-tab" data-toggle="tab" aria-expanded="false">考试动态</a>
                                     </li>
-                                    <li role="presentation" class=""><a href="#tab_content3" role="tab" id="profile-tab2" data-toggle="tab" aria-expanded="false">备考文库</a>
+                                    <li role="presentation" class="<#if type==3>active</#if>">
+                                        <a href="#tab_content3" <#if type!=3>onclick="_subType(3)"</#if>  role="tab" id="profile-tab2" data-toggle="tab" aria-expanded="false">备考文库</a>
                                     </li>
+                                <#if type==1>
+                                <#--分页表单-->
+                                    <form method="post" action="" id="formId" class="form-inline">
+                                        <input type="hidden" value="1" name="type" id="typePage">
+                                    </form>
+                                </#if>
+                                <#if type==2>
+                                <#--分页表单-->
+                                    <form method="post" action="" id="formId" class="form-inline">
+                                        <input type="hidden" value="2" name="type" id="typePage">
+                                    </form>
+                                </#if>
+                                <#if type==3>
+                                <#--分页表单-->
+                                    <form method="post" action="" id="formId" class="form-inline">
+                                        <input type="hidden" value="3" name="type" id="typePage">
+                                    </form>
+                                </#if>
+
+                                    <script>
+                                        function _subType(type)
+                                        {
+                                            $("#formId").empty();
+                                            $("#formId").append($("<input type='hidden' value='" + type +"' name='type'>"));
+                                            _submitform(1);
+                                        }
+                                    </script>
+
                                 </ul>
                                 <div id="myTabContent" class="tab-content">
-                                    <div role="tabpanel" class="tab-pane fade active in" id="tab_content1" aria-labelledby="home-tab">
+
+                                    <div role="tabpanel" class="tab-pane fade <#if type==1>active in</#if>" id="tab_content1" aria-labelledby="home-tab">
                                         <div class="panel-body">
                                             <table class="table table-striped">
                                                 <thead>
                                                 <tr>
                                                     <th width="5%">#</th>
-                                                    <th width="75%">标题</th>
-                                                    <th width="10%">所属类别</th>
-                                                    <th width="10%">发布时间</th>
+                                                    <th width="65%">标题</th>
+                                                    <th width="15%">所属类别</th>
+                                                    <th width="15%">发布时间</th>
                                                 </tr>
                                                 </thead>
                                                 <tbody>
 
-                                                <#if page_type1?exists && page_type1.list?size gt 0 >
-                                                    <#list page_type1.list as it>
+                                                <#if page?exists && page.list?size gt 0 >
+                                                    <#list page.list as it>
                                                 <tr>
                                                     <th scope="row">${it_index+1}</th>
                                                     <td>${it.title}</td>
@@ -111,29 +144,29 @@
                                                 </tbody>
                                             </table>
 
-                                        <#if page_type1?exists && page_type1.list?size gt 0>
+                                        <#if page?exists && page.list?size gt 0>
                                             <div class="col-md-12 col-sm-12 col-xs-12 text-center">
-                                            ${page_type1.pageHtml}
+                                            ${page.pageHtml}
                                             </div>
                                         </#if>
                                         </div>
                                     </div>
 
-                                    <div role="tabpanel" class="tab-pane fade" id="tab_content2" aria-labelledby="profile-tab">
+                                    <div role="tabpanel" class="tab-pane fade <#if type==2>active in</#if>" id="tab_content2" aria-labelledby="profile-tab">
                                         <div class="panel-body">
                                             <table class="table table-striped">
                                                 <thead>
                                                 <tr>
                                                     <th width="5%">#</th>
-                                                    <th width="75%">标题</th>
-                                                    <th width="10%">所属类别</th>
-                                                    <th width="10%">发布时间</th>
+                                                    <th width="65%">标题</th>
+                                                    <th width="15%">所属类别</th>
+                                                    <th width="15%">发布时间</th>
                                                 </tr>
                                                 </thead>
                                                 <tbody>
 
-                                                <#if page_type2?exists && page_type2.list?size gt 0 >
-                                                    <#list page_type2.list as it>
+                                                <#if page?exists && page.list?size gt 0 >
+                                                    <#list page.list as it>
                                                     <tr>
                                                         <th scope="row">${it_index+1}</th>
                                                         <td>${it.title}</td>
@@ -146,29 +179,29 @@
                                                 </tbody>
                                             </table>
 
-                                        <#if page_type2?exists && page_type2.list?size gt 0>
+                                        <#if page?exists && page.list?size gt 0>
                                             <div class="col-md-12 col-sm-12 col-xs-12 text-center">
-                                            ${page_type2.pageHtml}
+                                            ${page.pageHtml}
                                             </div>
                                         </#if>
                                         </div>
                                     </div>
 
-                                    <div role="tabpanel" class="tab-pane fade" id="tab_content3" aria-labelledby="profile-tab">
+                                    <div role="tabpanel" class="tab-pane fade <#if type==3>active in</#if>" id="tab_content3" aria-labelledby="profile-tab">
                                         <div class="panel-body">
                                             <table class="table table-striped">
                                                 <thead>
                                                 <tr>
                                                     <th width="5%">#</th>
-                                                    <th width="75%">标题</th>
-                                                    <th width="10%">所属类别</th>
-                                                    <th width="10%">发布时间</th>
+                                                    <th width="65%">标题</th>
+                                                    <th width="15%">所属类别</th>
+                                                    <th width="15%">发布时间</th>
                                                 </tr>
                                                 </thead>
                                                 <tbody>
 
-                                                <#if page_type3?exists && page_type3.list?size gt 0 >
-                                                    <#list page_type3.list as it>
+                                                <#if page?exists && page.list?size gt 0 >
+                                                    <#list page.list as it>
                                                     <tr>
                                                         <th scope="row">${it_index+1}</th>
                                                         <td>${it.title}</td>
@@ -181,9 +214,9 @@
                                                 </tbody>
                                             </table>
 
-                                        <#if page_type3?exists && page_type3.list?size gt 0>
+                                        <#if page?exists && page.list?size gt 0>
                                             <div class="col-md-12 col-sm-12 col-xs-12 text-center">
-                                            ${page_type3.pageHtml}
+                                            ${page.pageHtml}
                                             </div>
                                         </#if>
                                         </div>

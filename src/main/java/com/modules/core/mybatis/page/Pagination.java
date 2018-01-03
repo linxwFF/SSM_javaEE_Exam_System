@@ -37,7 +37,7 @@ public class Pagination<T> extends SimplePage implements java.io.Serializable,
 	}
 
 	
-	/**SOJSON SEO 翻页版本*/
+	/**翻页版本*/
 	public String getWebPage(String page){
 		StringBuffer pageHtml = new StringBuffer("<ul class='pagination'>");
 		if(this.getPageNo()>1){

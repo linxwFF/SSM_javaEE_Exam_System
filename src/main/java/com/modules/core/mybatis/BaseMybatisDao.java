@@ -25,7 +25,7 @@ import java.util.Map;
 @SuppressWarnings( { "unchecked" })
 public class BaseMybatisDao<T> extends SqlSessionDaoSupport {
 
-	private String NAMESPACE;
+	protected String NAMESPACE;
 	final static  Class<? extends Object> SELF = BaseMybatisDao.class;
 	protected final Log logger = LogFactory.getLog(BaseMybatisDao.class);
 	/**默认的查询Sql id*/
@@ -240,7 +240,7 @@ public class BaseMybatisDao<T> extends SqlSessionDaoSupport {
 	 * @return
 	 * @throws SQLException
 	 */
-	private PreparedStatement getPreparedStatement(String sql,
+	protected PreparedStatement getPreparedStatement(String sql,
 			List<ParameterMapping> parameterMappingList,
 			Map<String, Object> params, Connection conn) throws SQLException {
 		/**
@@ -265,7 +265,7 @@ public class BaseMybatisDao<T> extends SqlSessionDaoSupport {
 	 * @return
 	 * @throws SQLException
 	 */
-	private PreparedStatement getPreparedStatement4Count(String sql,
+	protected PreparedStatement getPreparedStatement4Count(String sql,
 			List<ParameterMapping> parameterMappingList,
 			Map<String, Object> params, Connection conn) throws SQLException {
 		PreparedStatement ps = conn.prepareStatement(StringUtils.trim(sql));
