@@ -6,6 +6,7 @@ import com.common.dao.QCourseMapper;
 import com.common.model.Article;
 import com.common.model.ArticleCategory;
 import com.common.utils.LoggerUtils;
+import com.modules.article.bo.ArticleDetailVo;
 import com.modules.article.bo.ArticleListVo;
 import com.modules.article.service.ArticleCategoryManagerService;
 import com.modules.article.service.ArticleManagerService;
@@ -68,16 +69,6 @@ public class ArticleManagerController extends BaseController {
     @RequestMapping(value="beforeEndArticleList")
     public ModelAndView beforeEndArticleList(ModelMap map, Integer pageNo,Integer type){
 
-//        //通知消息
-//        List<ArticleListVo> info_type1 = articleManagerService.findAllByType(1);
-//        //考试动态
-//        List<ArticleListVo> info_type2 = articleManagerService.findAllByType(2);
-//        //备考文库
-//        List<ArticleListVo> info_type3 = articleManagerService.findAllByType(3);
-//
-//        map.put("type1",info_type1);
-//        map.put("type2",info_type2);
-//        map.put("type3",info_type3);
         //分页，列表
         if(type == null || type == 1){
             map.put("type",1);
@@ -92,9 +83,16 @@ public class ArticleManagerController extends BaseController {
         return new ModelAndView("articleManager/beforeEnd/beforeEndArticleList");
     }
 
-
-
     //文章前端详情
+    @RequestMapping(value="Detail")
+    @ResponseBody
+    public Map<String,Object> DetailById(Integer id){
+
+        ArticleDetailVo result = articleManagerService.selectById(id);
+        resultMap.put("data",result);
+
+        return resultMap;
+    }
 
 
     //文章列表

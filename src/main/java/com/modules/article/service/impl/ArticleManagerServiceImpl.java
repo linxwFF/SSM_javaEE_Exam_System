@@ -7,6 +7,7 @@ import com.common.model.Article;
 import com.common.model.ArticleCategory;
 import com.common.model.UUser;
 import com.common.utils.LoggerUtils;
+import com.modules.article.bo.ArticleDetailVo;
 import com.modules.article.bo.ArticleListVo;
 import com.modules.article.service.ArticleManagerService;
 import com.modules.article.utils.ArticleMybatisDao;
@@ -100,5 +101,10 @@ public class ArticleManagerServiceImpl extends ArticleMybatisDao<ArticleMapper> 
     @Override
     public Pagination<ArticleMapper> findByPage(Map<String, Object> resultMap, Integer pageNo, Integer pageSize) {
         return super.findPage(resultMap, pageNo, pageSize);
+    }
+
+    @Override
+    public ArticleDetailVo selectById(Integer id) {
+        return articleMapper.selectById(id);
     }
 }

@@ -34,6 +34,7 @@
       <arg column="content" jdbcType="LONGVARCHAR" javaType="java.lang.String" />
     </constructor>
   </resultMap>
+
   <sql id="Base_Column_List" >
     id, user_id, title, anthor, type_id, loadURL, tag, decoration, state, update_time, 
     create_time, delete_time
@@ -48,7 +49,21 @@
     <include refid="Blob_Column_List" />
     from article
     where id = #{id,jdbcType=INTEGER}
+    and a.delete_time = '0000-00-00 00:00:00'
   </select>
+
+  <select id="selectById" resultType="com.modules.article.bo.ArticleDetailVo" parameterType="java.lang.Integer" >
+    SELECT
+    a.id, a.title, a.anthor, a.loadURL, a.tag, a.decoration,
+    a.update_time as updateTime,a.content,
+    b.name as categoryName
+    FROM
+    article as a
+    left JOIN article_category as b on a.type_id = b.id
+    where a.id = #{id,jdbcType=INTEGER}
+    and a.delete_time = '0000-00-00 00:00:00'
+  </select>
+
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
     delete from article
     where id = #{id,jdbcType=INTEGER}
@@ -216,7 +231,7 @@
   <select id="findAllByType" resultType="com.modules.article.bo.ArticleListVo" parameterType="java.lang.Integer">
     SELECT
     a.id, a.user_id as userId, a.title, a.anthor, a.type_id as typeId, a.loadURL, a.tag, a.decoration, a.state,
-    a.update_time as updateTime, a.create_time as createTime,content
+    a.update_time as updateTime, a.create_time as createTime,a.content
     ,b.name as articleCategoryName
     FROM
     article as a
@@ -258,7 +273,7 @@
     <include refid="limit_sql" />
   </select>
 
-  <select id="findCount" resultMap="BaseResultMap">
+  <select id="findCount" resultType="com.modules.article.bo.ArticleListVo">
     select count(a.id) from  article as a
     left JOIN article_category as b on a.type_id = b.id
     <include refid="where_all" />

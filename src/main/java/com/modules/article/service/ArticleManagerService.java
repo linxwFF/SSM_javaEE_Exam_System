@@ -4,6 +4,7 @@ import com.common.dao.ArticleMapper;
 import com.common.dao.QCourseMapper;
 import com.common.model.Article;
 import com.common.model.ArticleCategory;
+import com.modules.article.bo.ArticleDetailVo;
 import com.modules.article.bo.ArticleListVo;
 import com.modules.core.mybatis.page.Pagination;
 
@@ -36,4 +37,6 @@ public interface ArticleManagerService {
     //消息，分页
     Pagination<ArticleMapper> findByPage(Map<String, Object> resultMap, Integer pageNo, Integer pageSize);
 
+    //文章详情
+    ArticleDetailVo selectById(Integer id);
 }
