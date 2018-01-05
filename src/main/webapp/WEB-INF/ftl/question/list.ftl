@@ -9,7 +9,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title> 模拟考试系统 </title>
+    <title> 模拟考试系统 - 题目管理列表</title>
 
     <!-- Bootstrap -->
     <link href="${basePath}/static/vendors/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -73,7 +73,7 @@
                 <div class="col-md-12 col-sm-12 col-xs-12">
                     <div class="x_panel">
                         <div class="x_title">
-                            <h2>答题记录<small>随机答题模式 </small></h2>
+                            <h2>题目管理<small>题目列表 </small></h2>
 
                             <!-- 右侧工具栏 -->
                             <ul class="nav navbar-right panel_toolbox">
@@ -84,24 +84,32 @@
                             <div class="clearfix"></div>
                         </div>
                         <div class="x_content">
-                            <a href="/exam/analysisReport.shtml?type=${type}&courseType=${courseType}&mode=${mode}">
-                                <button type="button" class="btn btn-success">生成分析报表</button>
-                            </a>
-                            <input type="hidden" name="type" value="${type}">
-                            <input type="hidden" name="courseType" value="${courseType}">
-                            <input type="hidden" name="mode" value="${mode}">
+
+                        <!-- 添加考题 -->
+                        <@shiro.hasPermission name="/QuestionManager/insert.shtml">
+                        <a href="/QuestionManager/insert.shtml">
+                            <button type="button" class="btn btn-success">添加考题</button>
+                        </a>
+                        </@shiro.hasPermission>
+                        <!-- 删除 -->
+                        <@shiro.hasPermission name="/QuestionManager/delete.shtml">
+                            <input type="hidden" name="hasDel" value="1">
+                        </@shiro.hasPermission>
+
+                        <!-- 修改 -->
+                        <@shiro.hasPermission name="/QuestionManager/update.shtml">
+                            <input type="hidden" name="hasUp" value="1">
+                        </@shiro.hasPermission>
+
 
                             <table id="table" class="table table-hover table-bordered table-condensed " cellspacing="0" width="100%">
                                 <thead>
                                 <tr>
+                                    <th></th>
                                     <th>ID</th>
-                                    <th>考卷名称</th>
-                                    <th>考试时间</th>
-                                    <th>花费时间</th>
-                                    <th>总题目数</th>
-                                    <th>正确题数</th>
-                                    <th>错误题数</th>
-                                    <th>分数</th>
+                                    <th>考题</th>
+                                    <th>题型</th>
+                                    <th>科目</th>
                                     <th>创建时间</th>
                                     <th>操作</th>
                                 </tr>
@@ -139,6 +147,6 @@
 <script baseUrl="${basePath}" src="${basePath}/static/build/js/user.login.js"></script>
 <!-- Datatables -->
 <script type="text/javascript" charset="utf8" src="${basePath}/static/assets/js/jquery.dataTables.min.js"></script>
-<script type="text/javascript" charset="utf8" src="${basePath}/static/build/js/get_answer_records.js"></script>
+<script type="text/javascript" charset="utf8" src="${basePath}/static/build/js/loadData_question_list.js"></script>
 </body>
 </html>

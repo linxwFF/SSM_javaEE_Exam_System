@@ -63,6 +63,7 @@
         <li ><a><i class="fa fa-calculator"></i> 考试相关管理中心 <span class="fa fa-chevron-down"></span></a>
             <ul class="nav child_menu"  >
                 <li><a href="${basePath}/courseManager/courseManager_index.shtml">课程管理</a></li>
+                <li><a href="${basePath}/QuestionManager/list.shtml">题目管理</a></li>
             </ul>
         </li>
     </@shiro.hasAnyRoles>

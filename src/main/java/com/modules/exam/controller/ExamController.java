@@ -416,4 +416,19 @@ public class ExamController extends BaseController {
     }
 
 
+    //生成答题分析报表
+    @RequestMapping(value = "analysisReport")
+    @ResponseBody
+    public String analysisReport(Integer type,Integer courseType,Integer mode)
+    {
+        Map<String,Object> map = new HashMap<>();
+
+        List<AnswerRecordsListVo> answerRecordsListVoList = examService.getAnswerRecords(type,courseType,mode);
+
+        map.put("data", answerRecordsListVoList);
+
+        String jsonString = JSON.toJSONString(map);
+
+        return jsonString;
+    }
 }

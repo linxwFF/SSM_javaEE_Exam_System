@@ -279,4 +279,28 @@
     ORDER BY id LIMIT #{limit};
   </select>
 
+  <select id="findAll_Table" resultType="com.modules.exam.bo.QQuestionVo">
+    SELECT
+    a.id, a.subject,a.type,
+    a.choose_A,a.choose_B,a.choose_C,a.choose_D,a.choose_E,a.choose_F,a.choose_G,
+    a.choose_right,a.analysis,
+    a.update_time,a.create_time,a.img_url,
+    b.text as typeName,c.name as CourseName,d.name as courseTypeIdName,
+    e.chapter_name as chapterName
+    FROM
+    q_questions as a
+    LEFT JOIN dicts as b on a.type = b.value
+    LEFT JOIN (select * from q_course where parent_id = 0) as c on a.course_type = c.type
+    LEFT JOIN q_course as d on a.course_type_id = d.type
+    LEFT JOIN q_chapter as e on a.chapter_id = e.id
+    WHERE a.delete_time = '0000-00-00 00:00:00'
+    and b.code = 'question_type'
+--     根据考试项目
+    and d.parent_id = 1
+    limit 0,5
+  </select>
+
+
+
+
 </mapper>

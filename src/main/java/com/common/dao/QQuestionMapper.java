@@ -1,6 +1,7 @@
 package com.common.dao;
 
 import com.common.model.QQuestion;
+import com.modules.exam.bo.QQuestionVo;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
@@ -30,4 +31,6 @@ public interface QQuestionMapper {
                                         @Param("course_type_id")Integer course_type_id,
                                         @Param("limit")Integer limit
                                         );
+    //获取所有的题目
+    List<QQuestionVo> findAll_Table();
 }
