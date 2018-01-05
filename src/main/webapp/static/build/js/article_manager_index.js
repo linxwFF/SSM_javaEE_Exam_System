@@ -8,7 +8,7 @@ function ChangeStateById(status,id){
         $.post('/articleManager/ChangeStateById.shtml',{status:status,id:id},function(result){
             layer.close(load);
             if(result && result.status != 200){
-                return layer.msg(result.message,so.default),!0;
+                return layer.msg(result.message);
             }else{
                 layer.msg(text +'成功');
                 var forItem = $("#forItem_"+id);

@@ -49,7 +49,7 @@
     <include refid="Blob_Column_List" />
     from article
     where id = #{id,jdbcType=INTEGER}
-    and a.delete_time = '0000-00-00 00:00:00'
+    and delete_time = '0000-00-00 00:00:00'
   </select>
 
   <select id="selectById" resultType="com.modules.article.bo.ArticleDetailVo" parameterType="java.lang.Integer" >
