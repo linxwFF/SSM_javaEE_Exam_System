@@ -297,7 +297,6 @@
     and b.code = 'question_type'
 --     根据考试项目
     and d.parent_id = 1
-    limit 0,5
   </select>
 
 

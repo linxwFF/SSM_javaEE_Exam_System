@@ -146,37 +146,91 @@
             var chooseE = d.choose_F == undefined ? '未设置' : d.choose_F;
             var chooseG = d.choose_G == undefined ? '未设置' : d.choose_G;
 
-            var type = d.type == undefined ? '未设置' : d.type;
 
-            var chooseRight = d.choose_right == undefined ? '未设置' : d.choose_right;
+            if(d.choose_right == "1"){
+                var chooseRight = "正确";
+            }else if(d.choose_right == "0") {
+                var chooseRight = "错误";
+            }else{
+                var chooseRight = d.choose_right == undefined ? '未设置' : d.choose_right;
+            }
+
             var analysis = d.analysis == undefined ? '未设置' : d.analysis;
+
+            var courseName = d.courseName == undefined ? '未设置' : d.courseName;
+            var courseTypeIdName = d.courseTypeIdName == undefined ? '未设置' : d.courseTypeIdName;
+            var chapterName = d.chapterName == undefined ? '未设置' : d.chapterName;
 
             var html = '<table class="table table-striped table-bordered dataTable no-footer dtr-inline" width="100%"  cellspacing="0" border="0">';
 
+            if(d.type == undefined || d.type == 1){
+                html +=
+                    '<tr>'+
+                    '<td width="25%">选项A:</td>'+
+                    '<td width="25%">'+chooseA +'</td>'+
+                    '<td width="25%">选项B:</td>'+
+                    '<td width="25%">'+ chooseB +'</td>'+
+                    '</tr>'+
+
+                    '<tr>'+
+                    '<td width="25%">选项C:</td>'+
+                    '<td width="25%">'+chooseC+'</td>'+
+                    '<td width="25%">选项D:</td>'+
+                    '<td width="25%">'+chooseD+'</td>'+
+                    '</tr>';
+            }else if(d.type == 2){
+                html +=
+                    '<tr>'+
+                    '<td width="25%">选项A:</td>'+
+                    '<td width="25%">'+chooseA +'</td>'+
+                    '<td width="25%">选项B:</td>'+
+                    '<td width="25%">'+ chooseB +'</td>'+
+                    '</tr>'+
+
+                    '<tr>'+
+                    '<td width="25%">选项C:</td>'+
+                    '<td width="25%">'+chooseC+'</td>'+
+                    '<td width="25%">选项D:</td>'+
+                    '<td width="25%">'+chooseD+'</td>'+
+                    '</tr>'+
+
+                    '<tr>'+
+                    '<td width="25%">选项E:</td>'+
+                    '<td width="25%">'+chooseE+'</td>'+
+                    '<td width="25%">选项F:</td>'+
+                    '<td width="25%">'+chooseF+'</td>'+
+                    '</tr>'+
+
+                    '<tr>'+
+                    '<td width="25%">选项G:</td>'+
+                    '<td width="25%">'+chooseG+'</td>'+
+                    '</tr>';
+            }
+
             html +=
                 '<tr>'+
-                '<td width="25%">选项A:</td>'+
-                '<td width="25%">'+chooseA +'</td>'+
-                '<td width="25%">选项B:</td>'+
-                '<td width="25%">'+ chooseB +'</td>'+
+                '<td width="25%">正确答案:</td>'+
+                '<td colspan="3" width="25%">'+chooseRight+'</td>'+
                 '</tr>'+
 
                 '<tr>'+
-                '<td width="25%">选项C:</td>'+
-                '<td width="25%">'+chooseC+'</td>'+
-                '<td width="25%">选项D:</td>'+
-                '<td width="25%">'+chooseD+'</td>'+
-                '</tr>';
-
-            html +=
-                '<tr>'+
-                '<td >正确答案:</td>'+
-                '<td colspan="3">'+chooseRight+'</td>'+
+                '<td width="25%">选项解析:</td>'+
+                '<td colspan="3" width="25%">'+analysis+'</td>'+
                 '</tr>'+
 
                 '<tr>'+
-                '<td >选项解析:</td>'+
-                '<td colspan="3">'+analysis+'</td>'+
+                '<td width="25%">考试项目:</td>'+
+                '<td colspan="3" width="25%">'+courseName+'</td>'+
+                '</tr>'+
+
+                '<tr>'+
+                '<td width="25%">考试科目:</td>'+
+                '<td colspan="3" width="25%">'+courseTypeIdName+'</td>'+
+                '</tr>'+
+
+                '<tr>'+
+                '<td width="25%">章节:</td>'+
+                '<td colspan="3" width="25%">'+chapterName+'</td>'+
                 '</tr>'+
                 '</table>';
 
