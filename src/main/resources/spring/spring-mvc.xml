@@ -150,7 +150,9 @@
 					/common/public/left.ftl as left,
 					/common/public/top.ftl as top,
 					/common/public/main.ftl as main,
-					/common/public/footer.ftl as footer
+					/common/public/footer.ftl as footer,
+
+					/common/public/ArticleDetail.ftl as ArticleDetail
 				</prop>
 			</props>
 		</property>

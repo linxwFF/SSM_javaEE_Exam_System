@@ -121,7 +121,7 @@ function ChangeStateById(status,id){
                 "render": function(data, type, full) {
                     var html = "";
 
-                    html +="<a type='button' class='btn btn-warning btn-sm' href='/articleManager/detailById.shtml?course_type_id=" + full.id + "'>文章预览</a>";
+                    html +="<a type='button' onclick='ajax_loadDetail("+full.id+")' class='btn btn-warning btn-sm' href='javascript:void(0);'>文章预览</a>";
 
                     if($("input[name='hasDel']").length > 0 && $("input[name='hasDel']").length)
                     {
@@ -185,6 +185,5 @@ function ChangeStateById(status,id){
             });
 
         });
-
     }
 })();

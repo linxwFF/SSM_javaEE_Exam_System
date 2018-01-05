@@ -113,6 +113,9 @@
         </div>
         <!-- /页面内容 -->
 
+    <#--详细页-->
+    <@ArticleDetail.ArticleDetail 1/>
+
     <!-- 脚部内容 -->
     <@footer.footer 1/>
     <!-- /脚部内容  -->
