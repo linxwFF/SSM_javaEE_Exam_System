@@ -208,15 +208,7 @@
       <if test="chapterId != null" >
         chapter_id = #{chapterId,jdbcType=INTEGER},
       </if>
-      <if test="updateTime != null" >
-        update_time = #{updateTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="createTime != null" >
-        create_time = #{createTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="deleteTime != null" >
-        delete_time = #{deleteTime,jdbcType=TIMESTAMP},
-      </if>
+        update_time = now(),
       <if test="imgUrl != null" >
         img_url = #{imgUrl,jdbcType=VARCHAR},
       </if>
@@ -239,9 +231,8 @@
       course_type = #{courseType,jdbcType=INTEGER},
       course_type_id = #{courseTypeId,jdbcType=INTEGER},
       chapter_id = #{chapterId,jdbcType=INTEGER},
-      update_time = #{updateTime,jdbcType=TIMESTAMP},
-      create_time = #{createTime,jdbcType=TIMESTAMP},
-      delete_time = #{deleteTime,jdbcType=TIMESTAMP},
+      update_time = now(),
+      create_time = now(),
       img_url = #{imgUrl,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>

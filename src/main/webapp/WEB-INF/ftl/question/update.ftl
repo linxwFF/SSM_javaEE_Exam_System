@@ -83,7 +83,7 @@
                                 </div>
 
                                 <form action="" method="post" id="_form">
-                                    <input type="hidden" name="id" id="id" value="${qQuestion.subject?default('未设置')}">
+                                    <input type="hidden" name="id" id="id" value="${qQuestion.id?default('未设置')}">
                                     <table class="table table-bordered">
                                         <tbody>
                                         <tr>
@@ -93,7 +93,7 @@
                                 </span>
                                             </td>
                                             <td class="text-center" colspan="3">
-                                                <input readonly="readonly" name="subject"  class="form-control col-md-3 col-xs-12 " value="${qQuestion.subject?default('未设置')}" placeholder="请输入昵称">
+                                                <input  name="subject"  class="form-control col-md-3 col-xs-12 " value="${qQuestion.subject?default('未设置')}" placeholder="请输入昵称">
                                             </td>
                                         </tr>
 
@@ -105,7 +105,7 @@
                                 </span>
                                             </td>
                                             <td class="text-center">
-                                                <input readonly="readonly"  class="form-control col-md-2 col-xs-12 "
+                                                <input   class="form-control col-md-2 col-xs-12 "
                                                        name= "chooseA" id="chooseA" value="${qQuestion.chooseA?default('未设置')}" placeholder="请输入昵称">
                                             </td>
                              </tr>
@@ -116,7 +116,7 @@
                                 </span>
                                     </td>
                                     <td class="text-center">
-                                        <input readonly="readonly" name="chooseB"  class="form-control col-md-3 col-xs-12 " value="${qQuestion.chooseB?default('未设置')}" placeholder="">
+                                        <input  name="chooseB"  class="form-control col-md-3 col-xs-12 " value="${qQuestion.chooseB?default('未设置')}" placeholder="">
                                     </td>
                                 </tr>
 
@@ -127,7 +127,7 @@
                                 </span>
                                 </td>
                                 <td class="text-center">
-                                    <input readonly="readonly" name="chooseC"  class="form-control col-md-3 col-xs-12 " value="${qQuestion.chooseC?default('未设置')}"placeholder="请输入昵称">
+                                    <input  name="chooseC"  class="form-control col-md-3 col-xs-12 " value="${qQuestion.chooseC?default('未设置')}"placeholder="请输入昵称">
                                 </td>
                             <tr>
                             <td class="text-center">
@@ -136,7 +136,7 @@
                                 </span>
                                 </td>
                                 <td class="text-center">
-                                    <input readonly="readonly" name="chooseD"  class="form-control col-md-3 col-xs-12 " value="${qQuestion.chooseD?default('未设置')}" placeholder="请输入昵称">
+                                    <input  name="chooseD"  class="form-control col-md-3 col-xs-12 " value="${qQuestion.chooseD?default('未设置')}" placeholder="请输入昵称">
                                 </td>
                             </tr>
     </#if>
@@ -148,7 +148,7 @@
                             </span>
                             </td>
                             <td class="text-center">
-                                <input readonly="readonly"  class="form-control col-md-2 col-xs-12 "
+                                <input   class="form-control col-md-2 col-xs-12 "
                                        name= "chooseA" id="chooseA" value="${qQuestion.chooseA?default('未设置')}" placeholder="请输入昵称">
                             </td>
                          </tr>
@@ -160,7 +160,7 @@
                             </td>
 
                             <td class="text-center">
-                                <input readonly="readonly" name="chooseB"  class="form-control col-md-3 col-xs-12 " value="${qQuestion.chooseB?default('未设置')}" placeholder="">
+                                <input  name="chooseB"  class="form-control col-md-3 col-xs-12 " value="${qQuestion.chooseB?default('未设置')}" placeholder="">
                             </td>
                         </tr>
 
@@ -171,7 +171,7 @@
                                 </span>
                             </td>
                             <td class="text-center">
-                                <input readonly="readonly" name="chooseC"  class="form-control col-md-3 col-xs-12 " value="${qQuestion.chooseC?default('未设置')}"placeholder="请输入昵称">
+                                <input  name="chooseC"  class="form-control col-md-3 col-xs-12 " value="${qQuestion.chooseC?default('未设置')}"placeholder="请输入昵称">
                             </td>
                          </tr>
 
@@ -182,7 +182,7 @@
                                                     </span>
                             </td>
                             <td class="text-center">
-                                <input readonly="readonly" name="chooseD"  class="form-control col-md-3 col-xs-12 " value="${qQuestion.chooseD?default('未设置')}" placeholder="请输入昵称">
+                                <input  name="chooseD"  class="form-control col-md-3 col-xs-12 " value="${qQuestion.chooseD?default('未设置')}" placeholder="请输入昵称">
                             </td>
                              </tr>
                             <tr>
@@ -192,7 +192,7 @@
                              </span>
                              </td>
                             <td class="text-center">
-                                <input readonly="readonly" name="chooseE"  class="form-control col-md-3 col-xs-12 " value="${qQuestion.chooseE?default('未设置')}" placeholder="">
+                                <input  name="chooseE"  class="form-control col-md-3 col-xs-12 " value="${qQuestion.chooseE?default('未设置')}" placeholder="">
                             </td>
                             </tr>
 
@@ -203,7 +203,7 @@
                             </span>
                             </td>
                             <td class="text-center">
-                                <input readonly="readonly" name="chooseF"  class="form-control col-md-3 col-xs-12 " value="${qQuestion.chooseF?default('未设置')}"placeholder="请输入昵称">
+                                <input  name="chooseF"  class="form-control col-md-3 col-xs-12 " value="${qQuestion.chooseF?default('未设置')}"placeholder="请输入昵称">
                             </td>
                             <tr>
                             <td class="text-center">
@@ -212,7 +212,7 @@
                              </span>
                             </td>
                             <td class="text-center">
-                                <input readonly="readonly" name="chooseG"  class="form-control col-md-3 col-xs-12 " value="${qQuestion.chooseG?default('未设置')}" placeholder="请输入昵称">
+                                <input  name="chooseG"  class="form-control col-md-3 col-xs-12 " value="${qQuestion.chooseG?default('未设置')}" placeholder="请输入昵称">
                             </td>
                             </tr>
                         </tr>
@@ -226,7 +226,7 @@
                                     </span>
                             </td>
                             <td class="text-center">
-                                <input readonly="readonly"  class="form-control col-md-2 col-xs-12 "
+                                <input   class="form-control col-md-2 col-xs-12 "
                                        name= "chooseA" id="chooseA" value="${qQuestion.chooseA?default('未设置')}" placeholder="请输入昵称">
                             </td>
 
@@ -236,7 +236,7 @@
                                     </span>
                             </td>
                             <td class="text-center">
-                                <input readonly="readonly"  class="form-control col-md-2 col-xs-12 "
+                                <input   class="form-control col-md-2 col-xs-12 "
                                        name= "chooseA" id="chooseA" value="${qQuestion.chooseB?default('未设置')}" placeholder="请输入昵称">
                             </td>
     </tr>
@@ -247,7 +247,7 @@
                          </span>
                          </td>
                             <td class="text-center" colspan="3">
-                                <input readonly="readonly" name="choose_right"  class="form-control col-md-3 col-xs-12 " value="${qQuestion.chooseRight?default('未设置')}" placeholder="请输入昵称">
+                                <input  name="choose_right"  class="form-control col-md-3 col-xs-12 " value="${qQuestion.chooseRight?default('未设置')}" placeholder="请输入昵称">
                             </td>
                         </tr>
                         <tr>
@@ -258,16 +258,14 @@
                          </span>
                         </td>
                         <td class="text-center" colspan="3">
-                            <input readonly="readonly" name="analysis"  class="form-control col-md-3 col-xs-12 " value="${qQuestion.analysis?default('未设置')}" placeholder="请输入昵称">
+                            <input  name="analysis"  class="form-control col-md-3 col-xs-12 " value="${qQuestion.analysis?default('未设置')}" placeholder="请输入昵称">
                         </td>
                     </tr>
 <tr>
 
 
-
                                             <th class="text-center" colspan="4">
-                                                <button type="button" class="btn btn-warning btn-lg" id="edit">修改</button>
-                                                <button type="button" class="btn btn-success hidden btn-lg" id="submit">提交</button>
+                                                <button type="button" class="btn btn-success btn-lg" id="submit">提交</button>
                                             </th>
                                         </tr>
                                         </tbody>
@@ -303,12 +301,6 @@
 
 <script>
     $(document).ready(function() {
-        //编辑
-        $("#edit").click(function(){
-            $("input").removeAttr("readonly");
-            $("textarea").removeAttr("readonly");
-            $("#submit").removeClass("hidden");
-        });
         //修改操作
         $('#submit').click(function(){
 
@@ -342,7 +334,7 @@
         };
 
             $.ajax({
-                url:"${basePath}/examManage/update_question.shtml",
+                url:"${basePath}/QuestionManager/update.shtml",
                 data:data,
                 type:"post",
                 dataType:"json",
@@ -359,7 +351,7 @@
                     }else{
                         layer.msg(result.message);
                         setTimeout(function(){
-                            window.location.href= "${basePath}/examManage/list.shtml";
+                            window.location.href= "${basePath}/QuestionManager/list.shtml";
                         },1000)
                     }
                 },

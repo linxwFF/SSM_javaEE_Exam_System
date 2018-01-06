@@ -7,7 +7,6 @@ import com.common.utils.LoggerUtils;
 import com.modules.exam.bo.QQuestionVo;
 import com.modules.exam.service.CourseService;
 import com.modules.exam.service.QuestionManagerService;
-import com.modules.exam.service.impl.CourseServiceImpl;
 import net.sf.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
