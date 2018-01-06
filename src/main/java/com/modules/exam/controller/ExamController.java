@@ -418,17 +418,18 @@ public class ExamController extends BaseController {
 
     //生成答题分析报表
     @RequestMapping(value = "analysisReport")
-    @ResponseBody
-    public String analysisReport(Integer type,Integer courseType,Integer mode)
+    public ModelAndView analysisReport(ModelMap map,Integer type,Integer courseType,Integer mode)
     {
-        Map<String,Object> map = new HashMap<>();
-
         List<AnswerRecordsListVo> answerRecordsListVoList = examService.getAnswerRecords(type,courseType,mode);
 
-        map.put("data", answerRecordsListVoList);
+        //成绩
 
-        String jsonString = JSON.toJSONString(map);
+        //正确题数目
 
-        return jsonString;
+        //错误题数目
+
+        map.put("data",answerRecordsListVoList);
+
+        return new ModelAndView("exam/analysisReport");
     }
 }
