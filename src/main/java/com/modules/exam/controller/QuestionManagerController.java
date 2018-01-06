@@ -1,13 +1,17 @@
 package com.modules.exam.controller;
 
 import com.common.controller.BaseController;
+import com.common.model.QCourse;
 import com.common.model.QQuestion;
 import com.common.utils.LoggerUtils;
 import com.modules.exam.bo.QQuestionVo;
+import com.modules.exam.service.CourseService;
 import com.modules.exam.service.QuestionManagerService;
+import com.modules.exam.service.impl.CourseServiceImpl;
 import net.sf.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -27,6 +31,9 @@ public class QuestionManagerController extends BaseController{
     @Autowired
     QuestionManagerService questionManagerService;
 
+    @Autowired
+    CourseService courseService;
+
     @RequestMapping(value="list",method= RequestMethod.GET)
     public ModelAndView list(){
         return new ModelAndView("question/list");
@@ -44,9 +51,36 @@ public class QuestionManagerController extends BaseController{
 
     //显示增加题库的页面
     @RequestMapping(value="insert",method= RequestMethod.GET)
-    public ModelAndView show_insert(){
+    public ModelAndView show_insert(ModelMap map){
+        List<QCourse> data = courseService.findAll_Course();
+        map.put("data",data);
         return new ModelAndView("question/insert");
     }
+
+    //查询项目
+    @RequestMapping(value="selectCourseType",method= RequestMethod.POST)
+    @ResponseBody
+    public Map<String,Object> selectCourseType(){
+        //考试科目
+        Map<String,Object> map = new HashMap<>();
+        List<QCourse> data = courseService.findAll_Course();
+        map.put("data",data);
+
+        return map;
+    }
+
+    //查询科目
+    @RequestMapping(value="selectCourseTypeId",method= RequestMethod.POST)
+    @ResponseBody
+    public Map<String,Object> selectCourseTypeId(Integer parent_id){
+        //考试科目
+        Map<String,Object> map = new HashMap<>();
+        List<QCourse> data = courseService.findAll_CourseTypeId(parent_id);
+        map.put("data",data);
+
+        return map;
+    }
+
 
     //增加考题操作
     @RequestMapping(value="insert",method = RequestMethod.POST)

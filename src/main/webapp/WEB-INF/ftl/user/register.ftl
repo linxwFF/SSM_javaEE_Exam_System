@@ -143,7 +143,7 @@
         // });
 
         //显示错误信息
-        function displayErrorMsg(str,focus=null)
+        function displayErrorMsg(str,focus)
         {
             $("#error").removeClass("hidden");
             $("#errorMsg").text(str);

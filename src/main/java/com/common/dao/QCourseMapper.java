@@ -24,4 +24,10 @@ public interface QCourseMapper {
 
     //获取所有的 _table
     List<QCourse> findAll_Table();
+
+    //获取所有的考试项目
+    List<QCourse> findAll_Course();
+
+    //考试所有的考试科目
+    List<QCourse> findAll_CourseTypeId(Integer parent_id);
 }

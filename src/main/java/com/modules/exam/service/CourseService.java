@@ -4,6 +4,7 @@ import com.common.dao.QCourseMapper;
 import com.common.model.QCourse;
 import com.modules.core.mybatis.page.Pagination;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -19,4 +20,10 @@ public interface CourseService {
 
     //考试科目信息
     QCourse findCourseTypeById(Integer parent_id,Integer type);
+
+    //获取所有的考试项目
+    List<QCourse> findAll_Course();
+
+    //考试所有的考试科目
+    List<QCourse> findAll_CourseTypeId(Integer parent_id);
 }

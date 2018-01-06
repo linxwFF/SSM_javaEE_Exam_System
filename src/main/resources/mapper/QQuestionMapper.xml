@@ -45,14 +45,14 @@
       choose_E, choose_F, choose_G, 
       choose_right, analysis, type, 
       course_type, course_type_id, chapter_id, 
-      update_time, create_time, delete_time, 
+      update_time, create_time,
       img_url)
     values (#{id,jdbcType=INTEGER}, #{subject,jdbcType=VARCHAR}, #{chooseA,jdbcType=VARCHAR}, 
       #{chooseB,jdbcType=VARCHAR}, #{chooseC,jdbcType=VARCHAR}, #{chooseD,jdbcType=VARCHAR}, 
       #{chooseE,jdbcType=VARCHAR}, #{chooseF,jdbcType=VARCHAR}, #{chooseG,jdbcType=VARCHAR}, 
       #{chooseRight,jdbcType=VARCHAR}, #{analysis,jdbcType=VARCHAR}, #{type,jdbcType=VARCHAR}, 
       #{courseType,jdbcType=INTEGER}, #{courseTypeId,jdbcType=INTEGER}, #{chapterId,jdbcType=INTEGER}, 
-      #{updateTime,jdbcType=TIMESTAMP}, #{createTime,jdbcType=TIMESTAMP}, #{deleteTime,jdbcType=TIMESTAMP}, 
+      now(), now(),
       #{imgUrl,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.common.model.QQuestion" >
@@ -103,15 +103,8 @@
       <if test="chapterId != null" >
         chapter_id,
       </if>
-      <if test="updateTime != null" >
         update_time,
-      </if>
-      <if test="createTime != null" >
         create_time,
-      </if>
-      <if test="deleteTime != null" >
-        delete_time,
-      </if>
       <if test="imgUrl != null" >
         img_url,
       </if>
@@ -162,15 +155,9 @@
       <if test="chapterId != null" >
         #{chapterId,jdbcType=INTEGER},
       </if>
-      <if test="updateTime != null" >
-        #{updateTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="createTime != null" >
-        #{createTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="deleteTime != null" >
-        #{deleteTime,jdbcType=TIMESTAMP},
-      </if>
+      now(),
+      now(),
+
       <if test="imgUrl != null" >
         #{imgUrl,jdbcType=VARCHAR},
       </if>

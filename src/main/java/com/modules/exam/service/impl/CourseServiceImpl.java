@@ -8,6 +8,7 @@ import com.modules.exam.service.CourseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -32,5 +33,15 @@ public class CourseServiceImpl extends BaseMybatisDao<QCourseMapper> implements 
     @Override
     public QCourse findCourseTypeById(Integer parent_id, Integer type) {
         return qCourseMapper.findCourseTypeById(parent_id,type);
+    }
+
+    @Override
+    public List<QCourse> findAll_Course() {
+        return qCourseMapper.findAll_Course();
+    }
+
+    @Override
+    public List<QCourse> findAll_CourseTypeId(Integer parent_id) {
+        return qCourseMapper.findAll_CourseTypeId(parent_id);
     }
 }
