@@ -141,7 +141,7 @@
     and p.course_id = #{courseType}
     and p.mode = #{mode}
     and a.user_id = #{user_id}
-    ORDER BY a.update_time desc
+    ORDER BY a.update_time ASC
   </select>
 
   <select id="getAnswerRecordsDetailVoBySrandom" resultType="com.modules.exam.bo.AnswerRecordsDetailVo">

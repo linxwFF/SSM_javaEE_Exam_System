@@ -233,6 +233,7 @@ public class ExamController extends BaseController {
         map.put("courseType",courseType);
         map.put("mode",mode);
 
+        //通过考卷序列号反序列化的方式返回考题数据
         List<QQuestion> qQuestionList = examService.jsontoListQquestion(srandom);
 
         List<Answer> answerList = new ArrayList<>();
@@ -368,6 +369,22 @@ public class ExamController extends BaseController {
         //修正考卷状态 0未考试过  1考试过
         examService.updateEPaperState(srandom,1);
 
+        //考卷信息
+        Map<String,Object> InfoMap = new HashMap<>();
+        //考卷序列号
+        InfoMap.put("srandom",srandom);
+        //考试花费时间
+        InfoMap.put("take_time",take_time);
+        //正确题数
+        InfoMap.put("right_num",right_num);
+        //错误题数
+        InfoMap.put("error_num",error_num);
+        //分数
+        InfoMap.put("score",score);
+        //题目数
+        InfoMap.put("total_num",total_num);
+        map.put("InfoMap",InfoMap);
+
         return new ModelAndView("exam/handPaper");
     }
 
@@ -421,12 +438,6 @@ public class ExamController extends BaseController {
     public ModelAndView analysisReport(ModelMap map,Integer type,Integer courseType,Integer mode)
     {
         List<AnswerRecordsListVo> answerRecordsListVoList = examService.getAnswerRecords(type,courseType,mode);
-
-        //成绩
-
-        //正确题数目
-
-        //错误题数目
 
         map.put("data",answerRecordsListVoList);
 

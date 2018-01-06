@@ -57,7 +57,80 @@
         <!-- /右侧顶部导航 -->
 
         <!-- 页面内容 -->
-        <div class="right_col" role="main">
+        <div class="right_col black" role="main">
+            <div class="row">
+                <div class="col-md-12 col-sm-12 col-xs-12">
+                    <div class="x_panel">
+                        <div class="x_title">
+                            <h2>考卷信息： </h2>
+                            <ul class="nav navbar-right panel_toolbox">
+                                <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                                </li>
+                                <li><a class="close-link"><i class="fa fa-close"></i></a>
+                                </li>
+                            </ul>
+                            <div class="clearfix"></div>
+                        </div>
+                        <div class="x_content">
+
+                            <div class="panel panel-primary">
+                                <table class="table table-bordered">
+                                    <thead>
+                                    <tr>
+                                        <th class="text-center" colspan="6"><span style="color:#FF4500;">考卷序列号: ${InfoMap.srandom!}  </span></th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+
+                                    <tr>
+                                        <td class="text-center">
+                                            考试花费时间：
+                                        </td>
+                                        <td class="text-center">
+                                        ${InfoMap.take_time!}
+                                        </td>
+
+                                        <td class="text-center">
+                                            题目总数：
+                                        </td>
+                                        <td class="text-center">
+                                        ${InfoMap.total_num!}
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="text-center">
+                                            正确题数：
+                                        </td>
+                                        <td class="text-center">
+                                        ${InfoMap.right_num!}
+                                        </td>
+                                        <td class="text-center">
+                                            错误题数：
+                                        </td>
+                                        <td class="text-center">
+                                        ${InfoMap.error_num!}
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="text-center">
+                                            分数：
+                                        </td>
+                                        <td class="text-center" colspan="2">
+                                        ${InfoMap.score!}
+                                        </td>
+
+                                    </tr>
+
+
+                                    </tbody>
+                                </table>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
             <div class="row">
                 <div class="panel panel-primary">
                     <div class="panel-body">
@@ -66,7 +139,7 @@
                             <button type="button" class="btn btn-success">再考一次</button>
                             </a>
                             <a href="/exam/get_model_list.shtml?type=${type}&courseType=${courseType}&mode=${mode}">
-                                <button type="button" class="btn btn-warning">返回考试模式</button>
+                                <button type="button" class="btn btn-warning">返回</button>
                             </a>
                     </div>
                     <div class="ln_solid"></div>

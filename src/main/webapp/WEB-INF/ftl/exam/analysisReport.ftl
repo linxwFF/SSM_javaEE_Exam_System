@@ -236,7 +236,7 @@
                         ]
                     },
                         {
-                            label: "# 错误题数",
+                            label: "# 正确题数",
                             backgroundColor: "#03586A",
                             data: [
                             <#if data?exists && data?size gt 0 >
