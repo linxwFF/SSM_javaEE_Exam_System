@@ -7,6 +7,7 @@ import com.common.model.QCourse;
 import com.common.utils.LoggerUtils;
 import com.modules.exam.service.ChapterManagerService;
 import com.modules.exam.service.CourseManagerService;
+import com.modules.exam.service.CourseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -32,9 +33,15 @@ public class CourseManagerController extends BaseController {
     @Autowired
     private ChapterManagerService chapterManagerService;
 
+    @Autowired
+    private CourseService courseService;
+
     //课程列表
     @RequestMapping(value="courseManager_index",method = RequestMethod.GET)
-    public ModelAndView courseManagerIndex(){
+    public ModelAndView courseManagerIndex(ModelMap map){
+        List<QCourse> courses = courseService.findAll_Course();
+        map.put("courses",courses);
+
         return new ModelAndView("exam/backend/course_manager");
     }
 
@@ -42,9 +49,22 @@ public class CourseManagerController extends BaseController {
     @RequestMapping(value="courseManager_index",method = RequestMethod.POST)
     @ResponseBody
     public Map<String,Object> courseManagerIndex_Table(){
-        List<QCourse> allArticleCategory = courseManagerService.findAll_Table();
-        resultMap.put("data",allArticleCategory);
+        List<QCourse> courses = courseService.findAll_Course();
+        resultMap.put("data",courses);
         return resultMap;
+    }
+
+    //查询科目
+    @RequestMapping(value="selectCourseTypeId",method= RequestMethod.POST)
+    @ResponseBody
+    public Map<String,Object> selectCourseTypeId(Integer parent_id){
+        //考试科目
+        Map<String,Object> map = new HashMap<>();
+        List<QCourse> data = courseService.findAll_CourseTypeId(parent_id);
+        map.put("data",data);
+        map.put("status",200);
+
+        return map;
     }
 
     //添加课程
@@ -66,15 +86,8 @@ public class CourseManagerController extends BaseController {
     //删除课程
     @RequestMapping(value="deleteCourseManagerById",method=RequestMethod.POST)
     @ResponseBody
-    public Map<String,Object> deleteCourseManagerById(String ids){
-
-        Map<String,Object> resultMap = new HashMap<String,Object>();
-        resultMap.put("status", 200);
-        resultMap.put("count", 1);
-        resultMap.put("message","假装删除成功了");
-        return resultMap;
-
-//        return courseManagerService.delete(ids);
+    public Map<String,Object> deleteCourseManagerById(Integer id){
+        return courseManagerService.delete(id);
     }
 
 

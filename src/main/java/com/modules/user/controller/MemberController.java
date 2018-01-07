@@ -96,7 +96,7 @@ public class MemberController extends BaseController {
 		resultMap.put("count", 1);
 		resultMap.put("message","假装删除成功了");
 		return resultMap;
-		//return userService.deleteUserById(ids);	//真正的删除
+//		return userService.deleteUserById(ids);	//真正的删除
 	}
 	/**
 	 * 禁止登录

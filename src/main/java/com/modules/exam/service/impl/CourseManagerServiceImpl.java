@@ -32,41 +32,26 @@ public class CourseManagerServiceImpl implements CourseManagerService {
     }
 
     @Override
-    public Map<String, Object> delete(String ids) {
+    public Map<String, Object> delete(Integer id) {
         Map<String,Object> resultMap = new HashMap<String,Object>();
         try {
-            int count=0;
-            String resultMsg ="删除%s条，失败%s条";
-            String[] idArray = new String[]{};
-            if(com.common.utils.StringUtils.contains(ids, ",")){
-                idArray = ids.split(",");
+
+            //查询子课目 //有就返回0.不让删除
+            List<QCourse> subQcourses = qCourseMapper.findAll_CourseTypeId(id);
+            if(subQcourses.size() > 0){
+                resultMap.put("status", 500);
+                resultMap.put("message", "该课程下有子科目，请先删除子项目");
             }else{
-                idArray = new String[]{ids};
+                resultMap.put("status", 200);
+                resultMap.put("message","删除成功");
+                qCourseMapper.deleteByPrimaryKey(id);
             }
 
-            c:for (String idx : idArray) {
-                int id = Integer.parseInt(idx);
-                if(new Long(1).equals(id)){
-                    resultMsg = "操作成功";
-                    continue c;
-                }else{
-                    count+=this.deleteByPrimaryKey(id);
-                }
-            }
-
-            resultMap.put("status", 200);
-            resultMap.put("count", count);
-            resultMap.put("resultMsg", resultMsg);
         } catch (Exception e) {
-            LoggerUtils.fmtError(getClass(), e, "根据IDS删除出现错误，ids[%s]", ids);
+            LoggerUtils.fmtError(getClass(), e, "根据IDS删除出现错误，ids[%s]", id);
             resultMap.put("status", 500);
             resultMap.put("message", "删除出现错误，请刷新后再试！");
         }
         return resultMap;
-    }
-
-    @Override
-    public int deleteByPrimaryKey(int id) {
-        return qCourseMapper.deleteByPrimaryKey(id);
     }
 }

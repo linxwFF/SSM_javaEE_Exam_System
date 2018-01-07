@@ -17,9 +17,6 @@ public interface CourseManagerService {
     //添加
     int insert(QCourse model);
 
-    //批量删除
-    Map<String, Object> delete(String ids);
-
     //删除
-    int deleteByPrimaryKey(int id);
+    Map<String, Object> delete(Integer id);
 }

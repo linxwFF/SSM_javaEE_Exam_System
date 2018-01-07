@@ -37,6 +37,14 @@
             background-color:#00FFFF;
         }
 
+        td.details-control {
+            background: url('${basePath}/static/assets/img/details_open.png') no-repeat center center;
+            cursor: pointer;
+        }
+        tr.shown td.details-control {
+            background: url('${basePath}/static/assets/img/details_close.png') no-repeat center center;
+        }
+
 
     </style>
 </head>
@@ -91,9 +99,9 @@
                             <table id="table" class="table table-hover table-bordered table-condensed " cellspacing="0" width="100%">
                                 <thead>
                                 <tr>
+                                    <th></th>
                                     <th>ID</th>
                                     <th>分类名</th>
-                                    <th>状态</th>
                                     <th>类型</th>
                                     <th>排序</th>
                                     <th>操作</th>
@@ -127,8 +135,23 @@
                     <div class="modal-body">
                         <form id="boxRoleForm">
                             <div class="form-group">
+                                <label for="recipient-name" class="control-label">选择课程项目:</label>
+                                <select class="form-control" name="parentId" id="parentId">
+                                    <option value="0" selected>当期为顶级课程</option>
+                                    <#if courses?exists && courses?size gt 0 >
+                                        <#list courses as it>
+                                            <option value="${it.id}">${it.name}</option>
+                                        </#list>
+                                    </#if>
+                                </select>
+                            </div>
+                            <div class="form-group">
                                 <label for="recipient-name" class="control-label">名称:</label>
                                 <input type="text" class="form-control" name="name" id="name" placeholder="请输入分类名称"/>
+                            </div>
+                            <div class="form-group">
+                                <label for="recipient-name" class="control-label">类型(*唯一):</label>
+                                <input type="number" class="form-control" id="type" name="type"  placeholder="请输入类型">
                             </div>
                             <div class="form-group">
                                 <label for="recipient-name" class="control-label">状态:</label>
@@ -138,6 +161,7 @@
                                 <label for="recipient-name" class="control-label">排序:</label>
                                 <input type="number" class="form-control" id="sortOrder" name="sortOrder"  placeholder="请输入排序">
                             </div>
+
                         </form>
                     </div>
                     <div class="modal-footer">
@@ -174,6 +198,8 @@
         var name = $('#name').val();
         var state = $('#state').val();
         var sortOrder = $('#sortOrder').val();
+        var type = $("#type").val();
+        var parentId = $("#parentId").val();
 
         if($.trim(name) == ''){
             return layer.msg('名称不能为空。');
@@ -184,9 +210,18 @@
         if($.trim(sortOrder) == ''){
             return layer.msg('排序不能为空。');
         }
+        if($.trim(type) == ''){
+            return layer.msg('类型不能为空。');
+        }
     <#--loding-->
         var load = layer.load();
-        $.post('${basePath}/courseManager/addCourseManager.shtml',{name:name,state:state,sortOrder:sortOrder},function(result){
+        $.post('${basePath}/courseManager/addCourseManager.shtml',
+                {   name:name,
+                    state:state,
+                    sortOrder:sortOrder,
+                    type:type,
+                    parentId:parentId
+                },function(result){
             layer.close(load);
             if(result && result.status != 200){
                 return layer.msg(result.message);

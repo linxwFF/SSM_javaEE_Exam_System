@@ -1,3 +1,21 @@
+function del(id){
+    var index =  layer.confirm("确定这个文章分类？",function(){
+        var load = layer.load();
+        $.post('/courseManager/deleteCourseManagerById.shtml',{id:id},function(result){
+            layer.close(load);
+            if(result && result.status != 200){
+                layer.msg(result.message);
+                return ;
+            }else{
+                layer.msg(result.message);
+                location.replace(location.href);
+            }
+        },'json');
+        layer.close(index);
+    });
+}
+
+
 (function() {
     'use strict';
 
@@ -31,7 +49,13 @@
                 // }
             },
             // 显示字段
-            "aoColumns": [{ "mData": "id",
+            "aoColumns": [{
+                "class":          'details-control',
+                "orderable":      false,
+                "mData":           null,
+                "sDefaultContent": '',
+                "sWidth" : "5%",
+            },{ "mData": "id",
                 "orderable": false,
                 "sDefaultContent" : "",
                 "sWidth" : "5%",
@@ -39,13 +63,6 @@
                 "orderable": true,
                 "sDefaultContent" : "",
                 "sWidth" : "15%",
-            },{ "mData": "state",
-                "orderable": true,
-                "sDefaultContent" : "",
-                "sWidth" : "10%",
-                "render": function(data, type, full) {
-                    return data?"有效":"失效";
-                }
             },{ "mData": "type",
                 "orderable": true,
                 "sDefaultContent" : "",
@@ -61,8 +78,6 @@
                 // 返回自定义内容
                 "render": function(data, type, full) {
                     var html = "";
-
-                    html +="<a type='button' class='btn btn-warning btn-sm' href='/courseManager/chapterManager_index.shtml?course_type_id=" + full.type + "'>章节管理</a>";
 
                     if($("input[name='hasDel']").length > 0 && $("input[name='hasDel']").length)
                     {
@@ -111,7 +126,7 @@
 
             var index =  layer.confirm("确定这个文章分类？",function(){
                 var load = layer.load();
-                $.post('/courseManager/deleteCourseManagerById.shtml',{ids:id},function(result){
+                $.post('/courseManager/deleteCourseManagerById.shtml',{id:id},function(result){
                     layer.close(load);
                     if(result && result.status != 200){
                         layer.msg(result.message);
@@ -119,7 +134,7 @@
                     }else{
                         row.remove().draw( true ); //删除选择行
                         layer.msg(result.message);
-                        location.reload();
+                        location.replace(location.href);
                     }
                 },'json');
                 layer.close(index);
@@ -127,5 +142,73 @@
 
         });
 
+        /* 格式化每一行的数据隐藏格式 */
+        function format ( d ) {
+            var html = '<table id="extra_property'+d.id+'" class="table table-striped table-bordered dataTable no-footer dtr-inline" width="100%"  cellspacing="0" border="0">' +
+
+                '</table>';
+            return html;
+        }
+
+        $('#table tbody').on('click', 'td.details-control', function () {
+            var tr = $(this).closest('tr');
+            var row = table.row( tr );
+            var id = table.row( $(this).parents('tr') ).data().id;
+
+            $.ajax({
+                type:'post',
+                url: '/courseManager/selectCourseTypeId.shtml',
+                data: {parent_id:id},
+                success:function(data){
+
+                    if(data.data.length > 0 ){
+                        var strHtml = '<tr>'+
+                            '<td>ID</td>'+
+                            '<td>分类名</td>'+
+                            '<td>类型</td>'+
+                            '<td>排序</td>'+
+                            '<td>操作</td>'+
+                            '</tr>';
+                        $('#extra_property'+id).append(strHtml);
+
+                        $.each(data.data,function(key,value){
+                            ajaxCallback(value,id);  //回调函数
+                        });
+                    }else{
+                        var strHtml = '<tr>'+
+                            '<td>无子课程信息</td>'+
+                            '</tr>';
+                        $('#extra_property'+id).append(strHtml);
+                    }
+
+                }
+            });
+
+            if ( row.child.isShown() ) {
+                // This row is already open - close it
+                row.child.hide();
+                tr.removeClass('shown');
+            }
+            else {
+                // Open this row
+                row.child( format(row.data()) ).show();
+                tr.addClass('shown');
+            }
+        });
+
+
+        function ajaxCallback(data,id){
+
+            var strHtml = "<tr>" +
+                "<td>"+data.id+"</td>" +
+                "<td>"+data.name+"</td>" +
+                "<td>"+data.type+"</td>" +
+                "<td>"+data.sortOrder+"</td>" +
+                "<td><a type=\"button\" class=\"btn btn-warning btn-sm\" href=\"/courseManager/chapterManager_index.shtml?course_type_id="+data.id+"\">章节管理</a>" +
+                "<a type=\"button\" class=\"btn btn-danger  btn-sm\" onclick=\"del("+data.id+")\">删除</a></td>"
+                "</tr>";
+
+            $('#extra_property'+id).append(strHtml);
+        }
     }
 })();
