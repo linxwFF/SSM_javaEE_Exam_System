@@ -12,13 +12,14 @@
       <arg column="update_time" jdbcType="TIMESTAMP" javaType="java.util.Date" />
       <arg column="create_time" jdbcType="TIMESTAMP" javaType="java.util.Date" />
       <arg column="delete_time" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+      <arg column="img_url" jdbcType="VARCHAR" javaType="java.lang.String" />
     </constructor>
   </resultMap>
   <sql id="Base_Column_List" >
-    id, parent_id, name, type, status, sort_order, update_time, create_time, delete_time
+    id, parent_id, name, type, status, sort_order, update_time, create_time, delete_time,img_url
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
-    select 
+    select
     <include refid="Base_Column_List" />
     from q_course
     where id = #{id,jdbcType=INTEGER}
@@ -28,14 +29,14 @@
     where id = #{id,jdbcType=INTEGER}
   </delete>
   <insert id="insert" parameterType="com.common.model.QCourse" >
-    insert into q_course (id, parent_id, name, 
-      type, status, sort_order, 
-      update_time, create_time
-      )
-    values (#{id,jdbcType=INTEGER}, #{parentId,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, 
-      #{type,jdbcType=INTEGER}, #{status,jdbcType=BIT}, #{sortOrder,jdbcType=INTEGER}, 
-      now(),now()
-      )
+    insert into q_course (id, parent_id, name,
+    type, status, sort_order,
+    update_time, create_time,img_url
+    )
+    values (#{id,jdbcType=INTEGER}, #{parentId,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR},
+    #{type,jdbcType=INTEGER}, #{status,jdbcType=BIT}, #{sortOrder,jdbcType=INTEGER},
+    now(),now(),#{img_url,jdbcType=VARCHAR}
+    )
   </insert>
   <insert id="insertSelective" parameterType="com.common.model.QCourse" >
     insert into q_course
@@ -58,6 +59,9 @@
       <if test="sortOrder != null" >
         sort_order,
       </if>
+      <if test="imgUrl != null" >
+        img_url,
+      </if>
       update_time,
       create_time,
     </trim>
@@ -79,6 +83,9 @@
       </if>
       <if test="sortOrder != null" >
         #{sortOrder,jdbcType=INTEGER},
+      </if>
+      <if test="imgUrl != null" >
+        #{imgUrl,jdbcType=INTEGER},
       </if>
       now(),
       now(),
@@ -103,28 +110,23 @@
       <if test="sortOrder != null" >
         sort_order = #{sortOrder,jdbcType=INTEGER},
       </if>
-      <if test="updateTime != null" >
-        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      <if test="imgUrl != null" >
+        img_url = #{imgUrl,jdbcType=INTEGER},
       </if>
-      <if test="createTime != null" >
-        create_time = #{createTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="deleteTime != null" >
-        delete_time = #{deleteTime,jdbcType=TIMESTAMP},
-      </if>
+        update_time = now(),
+        create_time = now(),
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.common.model.QCourse" >
     update q_course
     set parent_id = #{parentId,jdbcType=INTEGER},
-      name = #{name,jdbcType=VARCHAR},
-      type = #{type,jdbcType=INTEGER},
-      status = #{status,jdbcType=BIT},
-      sort_order = #{sortOrder,jdbcType=INTEGER},
-      update_time = #{updateTime,jdbcType=TIMESTAMP},
-      create_time = #{createTime,jdbcType=TIMESTAMP},
-      delete_time = #{deleteTime,jdbcType=TIMESTAMP}
+    name = #{name,jdbcType=VARCHAR},
+    type = #{type,jdbcType=INTEGER},
+    status = #{status,jdbcType=BIT},
+    sort_order = #{sortOrder,jdbcType=INTEGER},
+    update_time = now(),
+    create_time = now()
     where id = #{id,jdbcType=INTEGER}
   </update>
 

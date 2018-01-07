@@ -21,7 +21,9 @@ public class QCourse {
 
     private Date deleteTime;
 
-    public QCourse(Integer id, Integer parentId, String name, Integer type, Boolean status, Integer sortOrder, Date updateTime, Date createTime, Date deleteTime) {
+    private String imgUrl;
+
+    public QCourse(Integer id, Integer parentId, String name, Integer type, Boolean status, Integer sortOrder, Date updateTime, Date createTime, Date deleteTime, String imgUrl) {
         this.id = id;
         this.parentId = parentId;
         this.name = name;
@@ -31,6 +33,7 @@ public class QCourse {
         this.updateTime = updateTime;
         this.createTime = createTime;
         this.deleteTime = deleteTime;
+        this.imgUrl = imgUrl;
     }
 
     public QCourse() {
@@ -107,5 +110,13 @@ public class QCourse {
 
     public void setDeleteTime(Date deleteTime) {
         this.deleteTime = deleteTime;
+    }
+
+    public String getImgUrl() {
+        return imgUrl;
+    }
+
+    public void setImgUrl(String imgUrl) {
+        this.imgUrl = imgUrl == null ? null : imgUrl.trim();
     }
 }

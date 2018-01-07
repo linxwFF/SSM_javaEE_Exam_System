@@ -19,6 +19,11 @@
     <link href="${basePath}/static/build/css/custom.css" rel="stylesheet">
     <!-- Datatables -->
     <link rel="stylesheet" type="text/css" href="${basePath}/static/assets/css/jquery.dataTables.min.css">
+
+    <#--uploadImg-->
+    <link rel="stylesheet" type="text/css" href="${basePath}/static/build/css/bootstrap-fileinput.css">
+
+
     <style>
         .title{
             display: block;
@@ -130,7 +135,7 @@
                 <div class="modal-content">
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                        <h4 class="modal-title" id="addPermissionLabel">添加课程信息管理</h4>
+                        <h4 class="modal-title" id="addPermissionLabel">添加课程信息</h4>
                     </div>
                     <div class="modal-body">
                         <form id="boxRoleForm">
@@ -162,7 +167,32 @@
                                 <input type="number" class="form-control" id="sortOrder" name="sortOrder"  placeholder="请输入排序">
                             </div>
 
+                            <div class="form-group">
+                                <label for="recipient-name" class="control-label">课程图片:</label>
+                                <input type="hidden" name="imgUrl" id="imgUrl">
                         </form>
+
+                                <form id="uploadForm" enctype='multipart/form-data'>
+                                    <div class="form-group">
+                                        <div class="fileinput fileinput-new" data-provides="fileinput"  id="exampleInputUpload">
+                                            <div class="fileinput-new thumbnail" style="width: 200px;height: auto;max-height:150px;">
+                                                <img id='picImg' style="width: 100%;height: auto;max-height: 140px;" src="${basePath}/static/assets/images/noimage.png" alt="" />
+                                            </div>
+                                            <div class="fileinput-preview fileinput-exists thumbnail" style="max-width: 200px; max-height: 150px;"></div>
+                                            <div>
+                                                <span class="btn btn-primary btn-file">
+                                                    <span class="fileinput-new">选择文件</span>
+                                                    <span class="fileinput-exists">换一张</span>
+                                                    <input type="file" name="upfile" id="upfile" accept="image/gif,image/jpeg,image/x-png"/>
+                                                </span>
+                                                <a href="javascript:;" class="btn btn-warning fileinput-exists" data-dismiss="fileinput">移除</a>
+                                                <button type="button" id="uploadSubmit" class="btn btn-info">上传图片</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
@@ -190,7 +220,8 @@
 <!-- Datatables -->
 <script type="text/javascript" charset="utf8" src="${basePath}/static/assets/js/jquery.dataTables.min.js"></script>
 <script type="text/javascript" charset="utf8" src="${basePath}/static/build/js/course_manager_index.js"></script>
-
+<!-- 图片上传 -->
+<script src="${basePath}/static/build/js/bootstrap-fileinput.js"></script>
 <script>
     <@shiro.hasPermission name="/courseManager/addCourseManager.shtml">
     <#--添加权限-->
@@ -200,6 +231,7 @@
         var sortOrder = $('#sortOrder').val();
         var type = $("#type").val();
         var parentId = $("#parentId").val();
+        var imgUrl = $("#imgUrl").val();
 
         if($.trim(name) == ''){
             return layer.msg('名称不能为空。');
@@ -220,7 +252,8 @@
                     state:state,
                     sortOrder:sortOrder,
                     type:type,
-                    parentId:parentId
+                    parentId:parentId,
+                    imgUrl:imgUrl
                 },function(result){
             layer.close(load);
             if(result && result.status != 200){
@@ -232,6 +265,37 @@
         },'json');
     }
     </@shiro.hasPermission>
+</script>
+
+<#--上传图片-->
+<script type="text/javascript">
+    $(function () {
+        //比较简洁，细节可自行完善
+        $('#uploadSubmit').click(function () {
+            var data = new FormData($('#uploadForm')[0]);
+
+            console.log(data.get("upfile"));
+
+            $.ajax({
+                url: '/uploadImage.shtml',
+                type: 'POST',
+                data: data,
+                async: false,
+                cache: false,
+                contentType: false,
+                processData: false,
+                success: function (data) {
+                    $("#imgUrl").val(data.targetFileName);
+                    layer.msg('上传成功。');
+                },
+                error: function (data) {
+                    layer.msg('上传失败。');
+                    console.log("一般是FTP服务器没开");
+                }
+            });
+        });
+
+    })
 </script>
 </body>
 </html>

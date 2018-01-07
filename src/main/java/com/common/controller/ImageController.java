@@ -68,6 +68,7 @@ public class ImageController {
             map.put("url",url);                        //能访问到你现在图片的路径 这里
             map.put("title",fileName);
             map.put("original",fileName);
+            map.put("targetFileName",targetFileName);
 
         } catch (IOException e) {
             logger.error("上传文件异常",e);
@@ -80,6 +81,5 @@ public class ImageController {
         }
         return map;
     }
-
 
 }
