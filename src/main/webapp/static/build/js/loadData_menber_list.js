@@ -117,7 +117,7 @@ function initTable() {
                 "render": function(data, type, full) {
                     var html = "";
 
-                    html +="<a type='button' class='btn btn-warning btn-sm' href='/member/get_user_info/" + full.id + ".shtml'>详情</a>";
+                    //html +="<a type='button' class='btn btn-warning btn-sm' href='/member/get_user_info/" + full.id + ".shtml'>详情</a>";
 
                     if($("input[name='hasDel']").length > 0 && $("input[name='hasDel']").length)
                     {
