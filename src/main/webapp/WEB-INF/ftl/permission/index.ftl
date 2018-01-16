@@ -64,7 +64,7 @@
                 <div class="col-md-12 col-sm-12 col-xs-12">
                     <div class="x_panel">
                         <div class="x_title">
-                            <h2>帐号管理<small>帐号列表 </small></h2>
+                            <h2>权限管理<small>权限列表 </small></h2>
 
                             <!-- 右侧工具栏 -->
                             <ul class="nav navbar-right panel_toolbox">
@@ -90,8 +90,8 @@
                                 <thead>
                                 <tr>
                                     <th>ID</th>
-                                    <th>角色名称</th>
-                                    <th>角色类型</th>
+                                    <th>权限名称</th>
+                                    <th>权限类型</th>
                                     <th>操作</th>
                                 </tr>
                                 </thead>

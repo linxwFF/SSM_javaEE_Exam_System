@@ -59,7 +59,7 @@
                 <input type="text" id="username" class="form-control uname" placeholder="帐号" value="" name="account" />
                 <input type="password" id="password" class="form-control pword m-b" placeholder="密码" value="" name="password" />
                 <label><input type="checkbox" checked="checked"  id="rememberMe"style="width: 10px; height: 10px;">记住我</label>
-                <a href="#">忘记密码了？</a>
+                <#--<a href="#">忘记密码了？</a>-->
             </form>
             <button class="btn btn-success btn-block" id="login">登录</button>
         </div>

@@ -124,13 +124,14 @@
                     </div>
                     <div class="modal-body">
                         <form id="boxRoleForm">
+                            <input type="hidden" value="0" name="parent_id" id="parent_id"/>
                             <div class="form-group">
                                 <label for="recipient-name" class="control-label">分类名称:</label>
                                 <input type="text" class="form-control" name="name" id="name" placeholder="请输入分类名称"/>
                             </div>
                             <div class="form-group">
                                 <label for="recipient-name" class="control-label">状态:</label>
-                                <input type="number" class="form-control" id="state" name="state"  placeholder="请输入状态">
+                                <input type="number" class="form-control" id="state" name="state" value="1"  placeholder="请输入状态">
                             </div>
                             <div class="form-group">
                                 <label for="recipient-name" class="control-label">排序:</label>
@@ -172,6 +173,7 @@
         var name = $('#name').val();
         var state = $('#state').val();
         var sortOrder = $('#sortOrder').val();
+        var parentId = $('#parent_id').val();
 
         if($.trim(name) == ''){
             return layer.msg('分类名称不能为空。');
@@ -184,7 +186,7 @@
         }
     <#--loding-->
         var load = layer.load();
-        $.post('${basePath}/articleManager/addArticleCategory.shtml',{name:name,state:state,sortOrder:sortOrder},function(result){
+        $.post('${basePath}/articleManager/addArticleCategory.shtml',{name:name,state:state,sortOrder:sortOrder,parentId:parentId},function(result){
             layer.close(load);
             if(result && result.status != 200){
                 return layer.msg(result.message);

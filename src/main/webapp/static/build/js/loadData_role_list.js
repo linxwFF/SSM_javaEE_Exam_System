@@ -89,7 +89,7 @@
         var row = table.row($(this).parents('tr'))
         var id = row.data().id; //获取选中行数据.id
 
-        var index =  layer.confirm("确定这个用户？",function(){
+        var index =  layer.confirm("确定删除这个角色？",function(){
             var load = layer.load();
             $.post('/role/deleteRoleById.shtml',{ids:id},function(result){
                 layer.close(load);

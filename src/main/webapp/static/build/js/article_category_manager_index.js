@@ -103,7 +103,7 @@
             var row = table.row($(this).parents('tr'))
             var id = row.data().id; //获取选中行数据.id
 
-            var index =  layer.confirm("确定这个文章分类？",function(){
+            var index =  layer.confirm("确定这个文章？",function(){
                 var load = layer.load();
                 $.post('/articleManager/deleteArticleCategoryById.shtml',{ids:id},function(result){
                     layer.close(load);

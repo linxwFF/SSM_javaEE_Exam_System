@@ -124,7 +124,7 @@ function del(id){
             var row = table.row($(this).parents('tr'))
             var id = row.data().id; //获取选中行数据.id
 
-            var index =  layer.confirm("确定这个文章分类？",function(){
+            var index =  layer.confirm("确定这个课程？",function(){
                 var load = layer.load();
                 $.post('/courseManager/deleteCourseManagerById.shtml',{id:id},function(result){
                     layer.close(load);
