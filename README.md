@@ -141,6 +141,8 @@ public static String md5Pswd(String email ,String pswd){
     * Shiro Freemarker标签使用。
     * Shiro 登录后跳转到最后一个访问的页面。
 
+    ![image](http://opo4hqpqj.bkt.clouddn.com/permission.png)
+
 2. 用户管理
     * 用户禁止登录Demo。
     * 在线显示，在线用户管理（踢出登录）。
@@ -153,6 +155,10 @@ public static String md5Pswd(String email ,String pswd){
     * 管理员权限的自动添加（当有一个权限创建，自动添加到管理员角色下，保证管理员是最大权限）。
     * 一个帐号多处登录限制，踢出用户。
 
+    ![image](http://opo4hqpqj.bkt.clouddn.com/user.png)
+
+    ![image](http://opo4hqpqj.bkt.clouddn.com/login.png)
+
 3. 考试中心
     * 试题的增删改查。
     * 考试项目的增删改查。
@@ -161,5 +167,26 @@ public static String md5Pswd(String email ,String pswd){
     * 随机生成考卷。
     * 查看考卷的列表和详细信息。
     * 查看答题列表和详细信息（包括错题和对题分数等）。
+    * 考试结果分析。
+
+    ![image](http://opo4hqpqj.bkt.clouddn.com/exam.png)
 
 4. 消息中心
+    * 消息的增删改查。
+
+    ![image](http://opo4hqpqj.bkt.clouddn.com/article.png)
+
+5. 答题子系统
+   * 提供随机组卷答题
+   * 考试结果显示
+
+   ![image](http://opo4hqpqj.bkt.clouddn.com/start_exam.png)
+
+   ![image](http://opo4hqpqj.bkt.clouddn.com/start_end.png)
+
+6. 用户个人中心
+   * 个人信息显示
+   * 密码修改等
+   * 用户拥有的权限查看
+
+   ![image](http://opo4hqpqj.bkt.clouddn.com/user_info.png)
